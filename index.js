@@ -2,9 +2,16 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var port = 80
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/html/index.html');
 });
+
+ app.get(/^(.+)$/, function(req, res){ 
+     res.sendFile(__dirname + '/html' + req.params[0]); 
+ });
+
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -17,6 +24,6 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(80, function(){
-  console.log('listening on *:80');
+http.listen(port, function(){
+  console.log('listening on *:' + port);
 });
