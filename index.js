@@ -3,6 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var port = 88
+var cacheData = []
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/html/index.html');
