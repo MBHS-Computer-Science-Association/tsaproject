@@ -10,7 +10,7 @@ angular.module('project', [])
     $scope.notifs = [];
 
     $scope.addNotif = function(notif) {
-      $scope.notifs.unshift(notif);
+      $scope.notifs.push(notif);
     }
 
   }]);
