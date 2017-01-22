@@ -4,10 +4,6 @@ var io = require('socket.io')(http);
 
 var port = 88
 
-app.get('/', function(req, res){
-	res.sendFile(__dirname + '/html/index.html');
-});
-
 app.get(/^(.+)$/, function(req, res){ 
 	res.sendFile(__dirname + '/html' + req.params[0]); 
 });
@@ -58,7 +54,7 @@ io.on('connection', function(socket){
 	/**
 		gets announcements
 	**/
-	socket.on('', function(callback){
+	socket.on('getAnnouncements', function(callback){
 	});
 
 	socket.on('', function(user){
