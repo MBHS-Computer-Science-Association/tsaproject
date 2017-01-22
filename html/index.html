@@ -4,25 +4,23 @@
   	<meta charset="UTF-8">
     <title>Socket.IO chat</title>
 
-    <link rel="stylesheet" href="chat.css">
+    <!-- Socket.IO -->
+    <script src="\externalScripts\socket.io-1.4.5.js"></script>
 
-    <!-- Socket.IO CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+    <!-- jQuery -->
+    <script src="\externalScripts\jquery-3.1.1.min.js"></script>
 
-    <!-- jQuery CDN -->
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- Semantic UI css-->
+    <link rel="stylesheet" src="\Semantic-UI-1.0\dist\semantic.min.css" />
 
-    <!-- Semantic UI CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" integrity="sha256-BQwSEeLxuDggfePeFdo3V906rcvcJpkSAYr/Lqc2oSo="
-      crossorigin="anonymous" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js" integrity="sha256-BlYXc67JeIFZfxjseL6XCBWFi7MwxKoUEF6rPIzHmBM="
-      crossorigin="anonymous"></script>
+
+    <script src="\Semantic-UI-1.0\dist\semantic.min.js" ></script>
 
     <!-- AngularJS CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="\externalScripts\angular.min.js"></script>
 
-    <!-- AngularJS Custom App -->
-    <script src="notifs.js"></script>
+    <!-- AngularJS Custom Apps -->
+    <script src="scripts/notifs.js"></script>
 
   </head>
   <body>
@@ -30,7 +28,7 @@
     <div class="ui container">
 
 
-      <ul id="messages"></ul>
+      <!-- <ul id="messages"></ul> -->
       <form action="">
         <input id="m" autocomplete="off" /><button>Send</button>
       </form>
