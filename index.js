@@ -12,18 +12,31 @@ app.get('/', function(req, res){
      res.sendFile(__dirname + '/html' + req.params[0]); 
  });
 
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
-    io.emit('chat message',msg);
-  });
-});
-
-http.listen(port, function(){
+ http.listen(port, function(){
   console.log('listening on *:' + port);
 });
+
+// User connection
+io.on('connection', function(socket){
+  console.log('User Connected');
+  
+  socket.on('disconnect', function(){
+    console.log('User Disconnected');
+  });
+  
+  socket.on('', function(nick, pin, pass){
+  });
+
+  socket.on('', function(nick, pin, pass){
+  });
+
+  socket.on('', function(nick, pin, pass){
+  });
+
+  socket.on('', function(nick, pin, pass){
+  });
+
+  socket.on('', function(nick, pin, pass){
+  });
+});
+
