@@ -1,25 +1,64 @@
 <!doctype html>
-<html>
+<html ng-app="project">
   <head>
+  	<meta charset="UTF-8">
     <title>Socket.IO chat</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-    </style>
+
+    <link rel="stylesheet" href="chat.css">
+
+    <!-- Socket.IO CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+
+    <!-- jQuery CDN -->
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <!-- Semantic UI CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" integrity="sha256-BQwSEeLxuDggfePeFdo3V906rcvcJpkSAYr/Lqc2oSo="
+      crossorigin="anonymous" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.js" integrity="sha256-BlYXc67JeIFZfxjseL6XCBWFi7MwxKoUEF6rPIzHmBM="
+      crossorigin="anonymous"></script>
+
+    <!-- AngularJS CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+
+    <!-- AngularJS Custom App -->
+    <script src="notifs.js"></script>
+
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <div class="ui container">
+
+
+      <ul id="messages"></ul>
+      <form action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+      </form>
+
+      <div id="feed" class="ui feed" ng-controller="NotifController">
+          <div class="event" ng-repeat="notif in notifs">
+            <div class="label">
+              <img src="{{notif.imgurl}}">
+            </div>
+            <div class="content">
+              <div class="summary">
+                {{notif.summary}}
+                <div class="date">
+                  {{notif.date}}
+                </div>
+              </div>
+              <div class="meta">
+                <a class="like">
+                  <i class="like icon"></i> {{notif.likes}} Likes
+                </a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+
     <script>
       var socket = io();
       $('form').submit(function(){
@@ -30,6 +69,8 @@
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
       });
+
+      socket.on('notification', addNotification);
     </script>
   </body>
 </html>
