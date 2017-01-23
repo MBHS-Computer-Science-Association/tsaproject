@@ -12,6 +12,23 @@ http.listen(port, function(){
 	console.log('listening on *:' + port);
 });
 
+/**
+	Group Object
+	name-String: Name of group
+	messages-Array: List of messages
+**/
+var groups = new Array() // Array of Group
+
+var announcements = new Array() // Array of Message
+
+
+/**
+	List of Users
+	
+**/
+var users = {}
+
+
 // User connection
 io.on('connection', function(socket){
 	console.log('User Connected');
@@ -32,7 +49,7 @@ io.on('connection', function(socket){
 	**/  
 	socket.on('groupMessage', function(user, group, message){
 		if(auth(user)){
-
+			io.emit('groupMessage',user,group,message);
 		}
 	});
 
@@ -41,7 +58,7 @@ io.on('connection', function(socket){
 	**/  
 	socket.on('announcement', function(user, announcement){
 		if(auth(user) && isAdmin(user)){
-
+			io.emit('announcement',user, announcement);
  		}
 	});
 
@@ -49,12 +66,14 @@ io.on('connection', function(socket){
 		gets groups and messages under it
 	**/
 	socket.on('getGroups', function(callback){
+		callback(groups);
 	});
 
 	/**
 		gets announcements
 	**/
 	socket.on('getAnnouncements', function(callback){
+		callback(announcements);
 	});
 
 	socket.on('', function(user){
