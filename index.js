@@ -2,28 +2,101 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var port = 88
+var port = process.env.PORT || 80;
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/html/index.html');
-});
-
- app.get(/^(.+)$/, function(req, res){ 
-     res.sendFile(__dirname + '/html' + req.params[0]); 
- });
-
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
-    io.emit('chat message',msg);
-  });
+app.get(/^(.+)$/, function(req, res){ 
+	res.sendFile(__dirname + '/html' + req.params[0]); 
 });
 
 http.listen(port, function(){
-  console.log('listening on *:' + port);
+	console.log('listening on *:' + port);
 });
+
+/**
+	Group Object
+	name-String: Name of group
+	messages-Array: List of messages
+**/
+var groups = new Array() // Array of Group
+
+var announcements = new Array() // Array of Message
+
+
+/**
+	List of Users
+	key: pin-Integer
+
+**/
+var users = {}
+
+
+// User connection
+io.on('connection', function(socket){
+	console.log('User Connected');
+  
+	socket.on('disconnect', function(){
+		console.log('User Disconnected');
+	});
+  
+	/**
+		User Object
+		pin-Integer: The pin of the items
+		nick-String: The nickname of the user
+		pin-Integer: The unique pin number of the user
+		pass-String: The hash of the user's password
+	**/
+
+	/**
+		send message to groups
+	**/  
+	socket.on('groupMessage', function(user, group, message){
+		if(auth(user)){
+			io.emit('groupMessage',user,group,message);
+		}
+	});
+
+	/**
+		send announcements to entire group
+	**/  
+	socket.on('announcement', function(user, announcement){
+		if(auth(user) && isAdmin(user)){
+			io.emit('announcement',user, announcement);
+ 		}
+	});
+
+	/**
+		gets groups and messages under it
+	**/
+	socket.on('getGroups', function(callback){
+		callback(groups);
+	});
+
+	/**
+		gets announcements
+	**/
+	socket.on('getAnnouncements', function(callback){
+		callback(announcements);
+	});
+
+	socket.on('', function(user){
+	});
+});
+
+/**
+	determines if the user is an authenticated
+	return: Boolean
+**/
+function auth(user){
+	if(users[user.pin].password === user.password){
+		return true;
+	}
+	return false;
+}
+
+/**
+	determines if the user is an administrator
+	return: Boolean
+**/
+function isAdmin(user){
+	return ifUusers[user.pin].isAdmin;
+}
