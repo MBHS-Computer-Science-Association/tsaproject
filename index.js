@@ -24,7 +24,8 @@ var announcements = new Array() // Array of Message
 
 /**
 	List of Users
-	
+	key: pin-Integer
+
 **/
 var users = {}
 
@@ -39,6 +40,7 @@ io.on('connection', function(socket){
   
 	/**
 		User Object
+		pin-Integer: The pin of the items
 		nick-String: The nickname of the user
 		pin-Integer: The unique pin number of the user
 		pass-String: The hash of the user's password
@@ -85,7 +87,10 @@ io.on('connection', function(socket){
 	return: Boolean
 **/
 function auth(user){
-
+	if(users[user.pin].password === user.password){
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -93,5 +98,5 @@ function auth(user){
 	return: Boolean
 **/
 function isAdmin(user){
-
+	return ifUusers[user.pin].isAdmin;
 }
