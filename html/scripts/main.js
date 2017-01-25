@@ -1,3 +1,5 @@
+var	socket = io();
+
 io.emit('getGroups', function(){
 	// puts initial groups down
 });
