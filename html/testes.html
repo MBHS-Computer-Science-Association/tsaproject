@@ -7,15 +7,24 @@
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.js"></script>
     	<script>
+			var nickname = "";
     	$( document ).ready(function() {
-
-    		$('.menu .item')
- 			 .tab()
-			;
-		});</script>
+				$("#submitbut").click(function(){
+			    nickname = $("#textinput").val() +"<br>";
+			    $("#textinput").val('');
+			  });
+				$('.menu .browse').popup({
+							inline     : true,
+							hoverable  : true,
+							position   : 'top right',
+							delay: {
+								show: 300,
+								hide: 800
+			}});
+			  });</script>
 	</head>
 
-	<body>
+	<body style="margin-left:1%;">
 	<h1>Jambo v.0.0.0.0.1</h1>
 	<div class="ui purple vertical segment">
 		<h5>The one stop event app!</h5>
@@ -115,11 +124,28 @@
 
 				</div>
 		</div>
-		<div></div>
-
-
-
-
+		<div class="ui menu" style="position: fixed;top: auto; left: auto; bottom: 0; right: 0; width: auto;">
+        <a class="browse item">
+          <i class="settings icon"></i>
+        </a>
+        <div class="ui fluid popup top right transition hidden">
+          <div class="ui one column relaxed divided grid">
+            <div class="column">
+              <h4 class="ui header">Settings</h4>
+              <div class="ui link list">
+                <a class="item">
+									<form>
+							  		<input id="textinput" class = "ui container" type ="text" style="width:100px">
+							  		<input id="submitbut" type="button" autocomplete="off" value="Submit"></input>
+									</form>
+								</a>
+                <a class="item">Linen</a>
+                <a class="item">Cotton</a>
+                <a class="item">Viscose</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 	</body>
-
 </html>
