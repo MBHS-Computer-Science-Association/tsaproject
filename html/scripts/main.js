@@ -20,6 +20,8 @@ socket.on('newGroup', function(newGroup){
 	// put down new group
 });
 
+socket.on('setStateUser', setStateUser(user, state));
+
 //sends message to server
 function sendMessage(user, group, messages){
 	io.emit('groupMessage', user, group, messsage);
