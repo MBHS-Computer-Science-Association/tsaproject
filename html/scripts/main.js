@@ -20,6 +20,8 @@ socket.on('newGroup', function(newGroup){
 	// put down new group
 });
 
+socket.on('setStateUser', setStateUser(user, state));
+
 //sends message to server
 function sendMessage(user, group, messages){
 	io.emit('groupMessage', user, group, messsage);
@@ -37,5 +39,11 @@ function getNewUser(user, pass){
 }
 
 function createNewGroup(user, groupName){
-	return io.emit('newGroup', user, groupName);
+	io.emit('newGroup', user, groupName);
+}
+
+function getUsers(){
+	io.emit('getUsers', function(userList){
+		return userList;
+	});
 }
