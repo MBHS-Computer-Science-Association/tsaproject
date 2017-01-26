@@ -12,6 +12,16 @@ var config = {
 
 var pool = new pg.Pool(config);
 
+function database(){
+  pool.connect(function (err, client, done){
+    client.query('CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)', function(err, client, done) {
+      if(err){
+          return console.log("database already existing");
+      }
+    });
+
+  });
+}
 
 function insertData(param){
   pool.connect(function(err, client, done) {
