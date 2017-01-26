@@ -33,7 +33,7 @@ function sendAnnouncement(user, announcement){
 function getNewUser(user, pass){
 	return io.emit('newUser', user, pass, function(user){
 		return user;
-	});javascript:;
+	});
 }
 
 function createNewGroup(user, groupName){
