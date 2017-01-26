@@ -14,20 +14,39 @@ http.listen(port, function(){
 
 /**
 	Group Object
+
+	id-Int: id of group
+
 	name-String: Name of group
 	messages-Array: List of messages
 **/
 var groups = new Array() // Array of Group
 
+var nextGroupID = 1; // id to serve to next new group
+
 var announcements = new Array() // Array of Message
+
+/**
+	Message Object
+	text-String: text of message
+	username-String: username of author
+**/
 
 
 /**
 	List of Users
-	key: pin-Integer
+	key: id-Integer
 
 **/
 var users = {}
+var nextUserID = 1; // id to serve to next new user
+
+// Load the database into groups, announcements and users
+function loadDB(){
+	// load the groups announcements users nextGroupID, and nextUserID from the db
+}
+
+loadDB();
 
 
 // User connection
@@ -40,9 +59,10 @@ io.on('connection', function(socket){
   
 	/**
 		User Object
-		pin-Integer: The pin of the items
+
+		id-Integer: The id of the items
+
 		nick-String: The nickname of the user
-		pin-Integer: The unique pin number of the user
 		pass-String: The hash of the user's password
 	**/
 
@@ -51,6 +71,15 @@ io.on('connection', function(socket){
 	**/  
 	socket.on('groupMessage', function(user, group, message){
 		if(auth(user)){
+
+
+			for (var i = 0; i<groups.length; i++){
+				if(group.id==groups[i].id){
+					group[i].messages.push(message);
+					// Write to DB
+				}
+			}
+
 			io.emit('groupMessage',user,group,message);
 		}
 	});
@@ -60,8 +89,33 @@ io.on('connection', function(socket){
 	**/  
 	socket.on('announcement', function(user, announcement){
 		if(auth(user) && isAdmin(user)){
+
+
+			announcements.push(announcement);
+			// Write to DB
+
 			io.emit('announcement',user, announcement);
  		}
+	});
+
+	socket.on('newGroup', function(user, groupName){
+		var newGroup;
+		newGroup.id = nextGroupID++;
+		newGroup.name = groupName;
+		newGroup.messages = new Array();
+		// write to DB
+		groups.push(newGroup);
+		io.emit('newGroup', newGroup);
+	});
+
+	socket.on('newUser', function(name, pass, callback){
+		var newUser;
+		newUser.name = name;
+		newUser.pass = pass;
+		newUser.id =nextUserID++;
+		users[id] = newUser;
+		// write to DB
+		callback(user);
 	});
 
 	/**
