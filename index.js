@@ -14,11 +14,14 @@ http.listen(port, function(){
 
 /**
 	Group Object
+
 	id-Int: id of group
+
 	name-String: Name of group
 	messages-Array: List of messages
 **/
 var groups = new Array() // Array of Group
+
 var nextGroupID = 1; // id to serve to next new group
 
 var announcements = new Array() // Array of Message
@@ -45,6 +48,7 @@ function loadDB(){
 
 loadDB();
 
+
 // User connection
 io.on('connection', function(socket){
 	console.log('User Connected');
@@ -55,7 +59,9 @@ io.on('connection', function(socket){
   
 	/**
 		User Object
+
 		id-Integer: The id of the items
+
 		nick-String: The nickname of the user
 		pass-String: The hash of the user's password
 	**/
@@ -65,12 +71,15 @@ io.on('connection', function(socket){
 	**/  
 	socket.on('groupMessage', function(user, group, message){
 		if(auth(user)){
+
+
 			for (var i = 0; i<groups.length; i++){
 				if(group.id==groups[i].id){
 					group[i].messages.push(message);
 					// Write to DB
 				}
 			}
+
 			io.emit('groupMessage',user,group,message);
 		}
 	});
@@ -80,8 +89,11 @@ io.on('connection', function(socket){
 	**/  
 	socket.on('announcement', function(user, announcement){
 		if(auth(user) && isAdmin(user)){
+
+
 			announcements.push(announcement);
 			// Write to DB
+
 			io.emit('announcement',user, announcement);
  		}
 	});
