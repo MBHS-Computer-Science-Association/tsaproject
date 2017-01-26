@@ -132,6 +132,13 @@ io.on('connection', function(socket){
 		callback(announcements);
 	});
 
+	/**
+		gets list of users that are online
+	**/
+	socket.on('getUsers', function(callback){
+		callback(users);
+	});
+
 	socket.on('', function(user){
 	});
 });
