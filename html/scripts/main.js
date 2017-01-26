@@ -1,5 +1,6 @@
 var	socket = io();
 
+
 io.emit('getGroups', function(){
 	// puts initial groups down
 });
@@ -46,4 +47,8 @@ function getUsers(){
 	io.emit('getUsers', function(userList){
 		return userList;
 	});
+}
+
+function setOnline(user){
+	io.emit('setStatus', "online");
 }
