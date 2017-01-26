@@ -6,8 +6,10 @@ function setStateUser(user, state) {
 }
 
 var app = angular.module('projectApp', []);
-app.controller('usersCtrl', function($scope) {
 
+// Controller for updating the Userlist on the client side
+app.controller('usersCtrl', function($scope) {
+// Holds User list, including state, updated by server
     $scope.users = [
     	{
     		name: "Lars Memmington",
@@ -18,15 +20,15 @@ app.controller('usersCtrl', function($scope) {
     		state: "Disabled"
     	}
     ];
-
+//Adds User to list
     $scope.addUser = function(user) {
       $scope.users.push(user);
     }
-
+//Sets a user's state
     $scope.setStateUser = function(user, state) {
     	console.log('not implemented');
     }
-
+//Generates the iconography for the user based on their state
     $scope.getColorFromState = function(state) {
     	switch(state){
     		case "Active":
