@@ -33,9 +33,15 @@ function sendAnnouncement(user, announcement){
 function getNewUser(user, pass){
 	return io.emit('newUser', user, pass, function(user){
 		return user;
-	});
+	});javascript:;
 }
 
 function createNewGroup(user, groupName){
-	return io.emit('newGroup', user, groupName);
+	io.emit('newGroup', user, groupName);
+}
+
+function getUsers(){
+	io.emit('getUsers', function(userList){
+		return userList;
+	});
 }
