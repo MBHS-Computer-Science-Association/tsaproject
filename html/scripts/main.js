@@ -1,6 +1,5 @@
 var	socket = io();
 
-
 socket.emit('getGroups', function(){
 	// puts initial groups down
 });
@@ -35,6 +34,7 @@ function sendAnnouncement(user, announcement){
 	io.emit('announcement', user, announcement);
 }
 
+// creates and returns a new user
 function getNewUser(user, pass){
 	return io.emit('newUser', user, pass, function(user){
 		return user;
@@ -51,6 +51,7 @@ function getUsers(){
 	});
 }
 
+// Sets a user to the given status
 function setOnline(user){
 	io.emit('setStatus', "online");
 }
@@ -94,7 +95,6 @@ app.controller('usersCtrl', function($scope) {
     			return "light grey";
     	}
     }
-
 });
 
 app.controller('messageCtrl', function($scope) {
