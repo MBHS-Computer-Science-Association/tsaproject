@@ -1,35 +1,23 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var db = require(database);
 
 var port = process.env.PORT || 80;
 
-app.get(/^(.+)$/, function(req, res){ 
-	res.sendFile(__dirname + '/html' + req.params[0]); 
+app.get(/^(.+)$/, function(req, res){
+	res.sendFile(__dirname + '/html' + req.params[0]);
 });
 
 http.listen(port, function(){
 	console.log('listening on *:' + port);
 });
 
-/**
-	Group Object
-	id-Int: id of group
-	name-String: Name of group
-	messages-Array: List of messages
-**/
 var groups = new Array(); // Array of Group
 
 var nextGroupID = 1; // id to serve to next new group
 
 var announcements = new Array(); // Array of Message
-
-/**
-	Message Object
-	text-String: text of message
-	username-String: username of author
-**/
-
 
 /**
 	List of Users
@@ -40,7 +28,9 @@ var nextUserID = 1; // id to serve to next new user
 
 // Load the database into groups, announcements and users
 function loadDB(){
-	// load the groups announcements users nextGroupID, and nextUserID from the db
+	users = db.readData('\'SELECT * name FROM Groups WHERE id=\'\'\'');
+	groups = db.readData('\'SELECT * name FROM Users WHERE id=\'\'\'');
+
 }
 
 loadDB();
@@ -49,22 +39,14 @@ loadDB();
 // User connection
 io.on('connection', function(socket){
 	console.log('User Connected');
-  
+
 	socket.on('disconnect', function(){
 		console.log('User Disconnected');
 	});
-  
-	/**
-		User Object
-		id-Integer: The id of the the user
-		nick-String: The nickname of the user
-		pass-String: The hash of the user's password
-		status-String: status of user, "online" or "offline"
-	**/
 
 	/**
 		send message to groups
-	**/  
+	**/
 	socket.on('groupMessage', function(user, group, message){
 		if(auth(user)){
 
@@ -72,7 +54,7 @@ io.on('connection', function(socket){
 			for (var i = 0; i<groups.length; i++){
 				if(group.id==groups[i].id){
 					group[i].messages.push(message);
-					// Write to DB
+					db.insertData();
 				}
 			}
 
@@ -82,7 +64,7 @@ io.on('connection', function(socket){
 
 	/**
 		send announcements to entire group
-	**/  
+	**/
 	socket.on('announcement', function(user, announcement){
 		if(auth(user) && isAdmin(user)){
 

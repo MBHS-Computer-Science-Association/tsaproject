@@ -14,7 +14,17 @@ var pool = new pg.Pool(config);
 
 function database(){
   pool.connect(function (err, client, done){
-    client.query('CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)', function(err, client, done) {
+    client.query('CREATE TABLE Users(name VARCHAR(64) NOT NULL, pin VARCHAR(4) NOT NULL, admin BOOLEAN NOT NULL, status BOOLEAN NOT NULL, userID INT PRIMARY KEY NOT NULL)', function(err, client, done) {
+      if(err){
+          return console.log("database already existing");
+      }
+    });
+    client.query('CREATE TABLE Groups(name VARCHAR(64) NOT NULL, userID INT NOT NULL, messageID INT NOT NULL, annoucementID INT NOT NULL, groupID INT PRIMARY KEY NOT NULL)', function(err, client, done) {
+      if(err){
+          return console.log("database already existing");
+      }
+    });
+    client.query('CREATE TABLE Users(message varchar(256) NOT NULL, userID INT NOT NULL, )', function(err, client, done) {
       if(err){
           return console.log("database already existing");
       }
@@ -22,6 +32,7 @@ function database(){
 
   });
 }
+database();
 
 function insertData(param){
   pool.connect(function(err, client, done) {
@@ -29,7 +40,6 @@ function insertData(param){
       done();
       return console.error('Error fetching client from pool', err);
     }
-    //'CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)'
     const query = client.query(param);
     query.on('end', () => { done(); });
   });
