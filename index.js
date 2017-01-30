@@ -4,8 +4,8 @@ var io = require('socket.io')(http);
 
 var port = process.env.PORT || 80;
 
-app.get(/^(.+)$/, function(req, res){ 
-	res.sendFile(__dirname + '/html' + req.params[0]); 
+app.get(/^(.+)$/, function(req, res){
+	res.sendFile(__dirname + '/html' + req.params[0]);
 });
 
 http.listen(port, function(){
@@ -49,11 +49,11 @@ loadDB();
 // User connection
 io.on('connection', function(socket){
 	console.log('User Connected');
-  
+
 	socket.on('disconnect', function(){
 		console.log('User Disconnected');
 	});
-  
+
 	/**
 		User Object
 		id-Integer: The id of the the user
@@ -64,7 +64,7 @@ io.on('connection', function(socket){
 
 	/**
 		send message to groups
-	**/  
+	**/
 	socket.on('groupMessage', function(user, group, message){
 		if(auth(user)){
 
@@ -82,7 +82,7 @@ io.on('connection', function(socket){
 
 	/**
 		send announcements to entire group
-	**/  
+	**/
 	socket.on('announcement', function(user, announcement){
 		if(auth(user) && isAdmin(user)){
 
@@ -150,6 +150,7 @@ io.on('connection', function(socket){
 
 /**
 	gets the user object from the db
+	param: userId
 **/
 function getUserObject(user){
 	for(var i =0; i<users.length; i++){
