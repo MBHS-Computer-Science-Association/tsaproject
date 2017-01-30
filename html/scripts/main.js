@@ -22,29 +22,29 @@ socket.on('newGroup', function(newGroup){
 
 //sends message to server
 function sendMessage(user, group, messages){
-	io.emit('groupMessage', user, group, messsage);
+	socket.emit('groupMessage', user, group, messsage);
 }
 
 //sends announcement to server
 function sendAnnouncement(user, announcement){
-	io.emit('announcement', user, announcement);
+	socket.emit('announcement', user, announcement);
 }
 
 // creates and returns a new user
 function getNewUser(user, pass){
-	return io.emit('newUser', user, pass, function(user){
+	return socket.emit('newUser', user, pass, function(user){
 		return user;
 	});
 }
 
 function createNewGroup(user, groupName){
-	io.emit('newGroup', user, groupName);
+	socket.emit('newGroup', user, groupName);
 }
 
 
 // Sets a user to the given status
 function setOnline(user){
-	io.emit('setStatus', "online");
+	socket.emit('setStatus', "online");
 }
 
 var app = angular.module('projectApp', []);
@@ -87,7 +87,7 @@ app.controller('messageCtrl', function($scope) {
 
 
 function getUsers(){
-	io.emit('getUsers', function(userList){
+	socket.emit('getUsers', function(userList){
 		var scope = angular.element('[ng-controller=usersCtrl]').scope();
 		scope.setUserList(userList);
 		scope.$apply();
