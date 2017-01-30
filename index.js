@@ -45,37 +45,39 @@ var announcements = new Array(); // Array of Message
 var users = new Array();
 var nextUserID = 1; // id to serve to next new user
 
-users.push({
-	id: nextUserID++,
-	nick: "Nicholas",
-	pass: "passwd",
-	status: "online"
-});
-
-users.push({
-	id: nextUserID++,
-	nick: "Charles",
-	pass: "passwd",
-	status: "online"
-});
-
-users.push({
-	id: nextUserID++,
-	nick: "Lars",
-	pass: "passwd",
-	status: "online"
-});
-
-users.push({
-	id: nextUserID++,
-	nick: "Roth",
-	pass: "passwd",
-	status: "online"
-});
-
 // Load the database into groups, announcements and users
 function loadDB(){
 	// load the groups announcements users nextGroupID, and nextUserID from the db
+
+	// Database mock
+	// remove when database code is working
+	users.push({
+		id: nextUserID++,
+		nick: "Nicholas",
+		pass: "passwd",
+		status: "online"
+	});
+
+	users.push({
+		id: nextUserID++,
+		nick: "Charles",
+		pass: "passwd",
+		status: "offline"
+	});
+
+	users.push({
+		id: nextUserID++,
+		nick: "Lars",
+		pass: "passwd",
+		status: "offline"
+	});
+
+	users.push({
+		id: nextUserID++,
+		nick: "Roth",
+		pass: "passwd",
+		status: "offline"
+	});
 }
 
 loadDB();
@@ -112,7 +114,6 @@ io.on('connection', function(socket){
 	**/
 	socket.on('announcement', function(user, announcement){
 		if(auth(user) && isAdmin(user)){
-
 
 			announcements.push(announcement);
 			// Write to DB
@@ -162,7 +163,13 @@ io.on('connection', function(socket){
 		gets list of users that are online
 	**/
 	socket.on('getUsers', function(callback){
-		callback(users);
+		// SECURITY: strip users of passwords before sending to client
+		var serverList = users;
+		var clientList = new Array();
+		for each (user in serverList) {
+			clientList.push({nick: user.nick, status: user.status});
+		}
+		callback(clientList);
 	});
 
 	socket.on('setStatus', function(user, status){
