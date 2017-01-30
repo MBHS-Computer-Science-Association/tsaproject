@@ -14,17 +14,15 @@ http.listen(port, function(){
 
 /**
 	Group Object
-
 	id-Int: id of group
-
 	name-String: Name of group
 	messages-Array: List of messages
 **/
-var groups = new Array() // Array of Group
+var groups = new Array(); // Array of Group
 
 var nextGroupID = 1; // id to serve to next new group
 
-var announcements = new Array() // Array of Message
+var announcements = new Array(); // Array of Message
 
 /**
 	Message Object
@@ -36,9 +34,8 @@ var announcements = new Array() // Array of Message
 /**
 	List of Users
 	key: id-Integer
-
 **/
-var users = {}
+var users = new Array();
 var nextUserID = 1; // id to serve to next new user
 
 // Load the database into groups, announcements and users
@@ -59,11 +56,10 @@ io.on('connection', function(socket){
   
 	/**
 		User Object
-
-		id-Integer: The id of the items
-
+		id-Integer: The id of the the user
 		nick-String: The nickname of the user
 		pass-String: The hash of the user's password
+		status-String: status of user, "online" or "offline"
 	**/
 
 	/**
@@ -108,12 +104,15 @@ io.on('connection', function(socket){
 		io.emit('newGroup', newGroup);
 	});
 
+	/**
+		creates a new user
+	**/
 	socket.on('newUser', function(name, pass, callback){
 		var newUser;
 		newUser.name = name;
 		newUser.pass = pass;
 		newUser.id =nextUserID++;
-		users[id] = newUser;
+		users.push(newUser);
 		// write to DB
 		callback(user);
 	});
@@ -139,16 +138,33 @@ io.on('connection', function(socket){
 		callback(users);
 	});
 
+	socket.on('setStatus', function(user, status){
+
+	});
+
 	socket.on('', function(user){
 	});
+
+
 });
+
+/**
+	gets the user object from the db
+**/
+function getUserObject(user){
+	for(var i =0; i<users.length; i++){
+		if(users[i].id = user.id){
+			return users[i];
+		}
+	}
+}
 
 /**
 	determines if the user is an authenticated
 	return: Boolean
 **/
 function auth(user){
-	if(users[user.pin].password === user.password){
+	if(getUserObject(user).password === user.password){
 		return true;
 	}
 	return false;
@@ -159,5 +175,5 @@ function auth(user){
 	return: Boolean
 **/
 function isAdmin(user){
-	return ifUusers[user.pin].isAdmin;
+	return getUserObject(user).isAdmin;
 }
