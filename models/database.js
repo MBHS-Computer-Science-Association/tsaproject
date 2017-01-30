@@ -24,7 +24,13 @@ function database(){
           return console.log("database already existing");
       }
     });
-    client.query('CREATE TABLE Users(message varchar(256) NOT NULL, userID INT NOT NULL, )', function(err, client, done) {
+    //add date later
+    client.query('CREATE TABLE Messages(message varchar(256) NOT NULL, userID INT NOT NULL, messageID INT PRIMARY KEY NOT NULL)', function(err, client, done) {
+      if(err){
+          return console.log("database already existing");
+      }
+    });
+    client.query('CREATE TABLE Annoucements(name VARCHAR(256) NOT NULL, userID INT NOT NULL, annoucementID INT PRIMARY KEY NOT NULL)', function(err, client, done) {
       if(err){
           return console.log("database already existing");
       }
