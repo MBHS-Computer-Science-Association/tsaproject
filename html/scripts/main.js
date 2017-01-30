@@ -47,6 +47,15 @@ function setOnline(user){
 	socket.emit('setStatus', "online");
 }
 
+// Grabs the users from the server and updates AngularJS with them
+function getUsers(){
+	socket.emit('getUsers', function(userList){
+		var scope = angular.element('[ng-controller=usersCtrl]').scope();
+		scope.setUserList(userList);
+		scope.$apply();
+	});
+}
+
 var app = angular.module('projectApp', []);
 
 // Controller for updating the Userlist on the client side
@@ -58,7 +67,6 @@ app.controller('usersCtrl', function($scope) {
 //Sets users in list
     $scope.setUserList = function(userList) {
       $scope.users = userList;
-			console.log('set the scope in angular');
     }
 //Generates the iconography for the user based on their state
     $scope.getUserColor = function(user) {
@@ -83,13 +91,3 @@ app.controller('messageCtrl', function($scope) {
 		}
 	];
 });
-
-
-
-function getUsers(){
-	socket.emit('getUsers', function(userList){
-		var scope = angular.element('[ng-controller=usersCtrl]').scope();
-		scope.setUserList(userList);
-		scope.$apply();
-	});
-}
