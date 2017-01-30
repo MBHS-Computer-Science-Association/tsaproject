@@ -18,17 +18,11 @@
     <!-- AngularJS CDN -->
     <script src="lib/angular.min.js"></script>
 
-    <!-- AngularJS Custom App -->
-    <script src="scripts/app.js"></script>
-
     <!-- All of our code -->
     <script src="scripts/main.js"></script>
 
 
     	<script>
-		// Query server for users online and offline
-		// 	also updates AngularJS model
-		getUsers();
 
 		var nickname = "";
 
@@ -53,7 +47,14 @@
     	$('.menu .item')
   		.tab();
   		});
+
+			$( document ).ready(function() {
+				// Query server for users online and offline
+				// 	also updates AngularJS model
+				getUsers();
+			});
   		</script>
+
 	</head>
 
 	<body style="margin-left:1vw;">
@@ -191,9 +192,9 @@
 		<div id="userList" class="ui right attached divided list" style="float:right; width:17.45vw;" ng-controller="usersCtrl">
 			Users:
 			<div class="item" ng-repeat="user in users">
-				<i ng-class="getColorFromStatus(user.status)" class="circle icon"></i>
+				<i ng-class="getUserColor(user)" class="circle icon"></i>
 				<div class="content">
-					<a class="header">{{user.name}}</a>
+					<a class="header">{{user.nick}}</a>
 				</div>
 			</div>
 		</div>
@@ -221,10 +222,6 @@
             </div>
           </div>
         </div>
-
-
 	</div>
-
-
 	</body>
 </html>

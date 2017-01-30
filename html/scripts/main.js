@@ -41,13 +41,6 @@ function createNewGroup(user, groupName){
 	io.emit('newGroup', user, groupName);
 }
 
-function getUsers(){
-	io.emit('getUsers', function(userList){
-		var scope = angular.element($("#userList")).scope();
-		scope.setUserList(userList);
-		scope.$apply();
-	});
-}
 
 // Sets a user to the given status
 function setOnline(user){
@@ -58,15 +51,18 @@ var app = angular.module('projectApp', []);
 
 // Controller for updating the Userlist on the client side
 app.controller('usersCtrl', function($scope) {
+		window.usersCtrl_scope = $scope;
+
 // Holds User list, including state, updated by server
     $scope.users = [];
 //Sets users in list
     $scope.setUserList = function(userList) {
       $scope.users = userList;
+			console.log('set the scope in angular');
     }
 //Generates the iconography for the user based on their state
-    $scope.getColorFromStatus = function(status) {
-    	switch(status){
+    $scope.getUserColor = function(user) {
+    	switch(user.status){
     		case "online":
     			return "green";
     		case "offline":
@@ -87,3 +83,13 @@ app.controller('messageCtrl', function($scope) {
 		}
 	];
 });
+
+
+
+function getUsers(){
+	io.emit('getUsers', function(userList){
+		var scope = angular.element('[ng-controller=usersCtrl]').scope();
+		scope.setUserList(userList);
+		scope.$apply();
+	});
+}
