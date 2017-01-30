@@ -45,6 +45,14 @@ io.on('connection', function(socket){
 	});
 
 	/**
+		User Object
+		id-Integer: The id of the the user
+		nick-String: The nickname of the user
+		pass-String: The hash of the user's password
+		status-String: status of user, "online" or "offline"
+	**/
+
+	/**
 		send message to groups
 	**/
 	socket.on('groupMessage', function(user, group, message){
@@ -132,6 +140,7 @@ io.on('connection', function(socket){
 
 /**
 	gets the user object from the db
+	param: userId
 **/
 function getUserObject(user){
 	for(var i =0; i<users.length; i++){
