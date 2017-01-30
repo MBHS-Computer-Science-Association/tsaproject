@@ -30,6 +30,13 @@ var announcements = new Array(); // Array of Message
 	username-String: username of author
 **/
 
+/**
+	User Object
+	id-Integer: The id of the the user
+	nick-String: The nickname of the user
+	pass-String: The hash of the user's password
+	status-String: status of user, "online" or "offline"
+**/
 
 /**
 	List of Users
@@ -37,6 +44,34 @@ var announcements = new Array(); // Array of Message
 **/
 var users = new Array();
 var nextUserID = 1; // id to serve to next new user
+
+users.push({
+	id: nextUserID++,
+	nick: "Nicholas",
+	pass: "passwd",
+	status: "online"
+});
+
+users.push({
+	id: nextUserID++,
+	nick: "Charles",
+	pass: "passwd",
+	status: "online"
+});
+
+users.push({
+	id: nextUserID++,
+	nick: "Lars",
+	pass: "passwd",
+	status: "online"
+});
+
+users.push({
+	id: nextUserID++,
+	nick: "Roth",
+	pass: "passwd",
+	status: "online"
+});
 
 // Load the database into groups, announcements and users
 function loadDB(){
@@ -53,14 +88,6 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(){
 		console.log('User Disconnected');
 	});
-
-	/**
-		User Object
-		id-Integer: The id of the the user
-		nick-String: The nickname of the user
-		pass-String: The hash of the user's password
-		status-String: status of user, "online" or "offline"
-	**/
 
 	/**
 		send message to groups
