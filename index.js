@@ -163,14 +163,13 @@ io.on('connection', function(socket){
 		gets list of users that are online
 	**/
 	socket.on('getUsers', function(callback){
-		// SECURITY: strip users of passwords before sending to client
-		// var serverList = users;
-		// var clientList = new Array();
-		// serverList.forEach(function(user) {
-		// 	clientList.push({nick: user.nick, status: user.status});
-		// });
-		// callback(clientList);
-		callback(users);
+		SECURITY: strip users of passwords before sending to client
+		var clientList = [];
+		users.forEach(function(user) {
+			clientList.push({nick: user.nick, status: user.status});
+		});
+		callback(clientList);
+		// callback(users);
 	});
 
 	socket.on('setStatus', function(user, status){
