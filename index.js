@@ -166,7 +166,7 @@ io.on('connection', function(socket){
 		// SECURITY: strip users of passwords before sending to client
 		var serverList = users;
 		var clientList = new Array();
-		for each (user in serverList) {
+		for (var user in serverList) {
 			clientList.push({nick: user.nick, status: user.status});
 		}
 		callback(clientList);
