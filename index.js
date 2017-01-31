@@ -164,12 +164,13 @@ io.on('connection', function(socket){
 	**/
 	socket.on('getUsers', function(callback){
 		// SECURITY: strip users of passwords before sending to client
-		var serverList = users;
-		var clientList = new Array();
-		for (var user in serverList) {
-			clientList.push({nick: user.nick, status: user.status});
-		}
-		callback(clientList);
+		// var serverList = users;
+		// var clientList = new Array();
+		// serverList.forEach(function(user) {
+		// 	clientList.push({nick: user.nick, status: user.status});
+		// });
+		// callback(clientList);
+		callback(users);
 	});
 
 	socket.on('setStatus', function(user, status){
