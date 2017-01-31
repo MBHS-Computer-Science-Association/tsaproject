@@ -18,14 +18,12 @@
     <!-- AngularJS CDN -->
     <script src="lib/angular.min.js"></script>
 
-    <!-- AngularJS Custom App -->
-    <script src="scripts/app.js"></script>
-
     <!-- All of our code -->
     <script src="scripts/main.js"></script>
 
 
     	<script>
+
 		var nickname = "";
 
 		//Function for the setting popup
@@ -49,7 +47,15 @@
     	$('.menu .item')
   		.tab();
   		});
+
+			// Grab the users from the server after document loads
+			$( document ).ready(function() {
+				// Query server for users online and offline
+				// 	also updates AngularJS model
+				getUsers();
+			});
   		</script>
+
 	</head>
 
 	<body style="margin-left:1vw;">
@@ -60,8 +66,8 @@
 		<h5>The one stop event app!</h5>
 	</div>
 		<div class = "ui raised purple center aligned top attached">
-		
-		
+
+
 		<!-- Tab menu for seperating the discussions -->
 			<div class="ui top attached tabular menu" style="float:left; width:80vw;">
   				<a class="active item" data-tab="tab-1">Discussion</a>
@@ -105,7 +111,7 @@
 				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
 				  	</div>
 
-				</div>				
+				</div>
 				<!-- Tab 2 - Announcements -->
 				<div class="ui attached tab segment" data-tab="tab-2" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">
 
@@ -177,7 +183,7 @@
 			<input id="inputtext" type="text" placeholder="Type a message here...">
 			<i class="comment icon"></i>
 		</div>
-		
+
 		<!-- Send Button -->
 		<button id="inputsub" class ="ui purple button" style="position: fixed; bottom: 7vh; right: 28.5vw; width: 10vw; height: 5vh">
 			Send
@@ -187,9 +193,9 @@
 		<div id="userList" class="ui right attached divided list" style="float:right; width:17.45vw;" ng-controller="usersCtrl">
 			Users:
 			<div class="item" ng-repeat="user in users">
-				<i ng-class="getColorFromState(user.state)" class="circle icon"></i>
+				<i ng-class="getUserColor(user)" class="circle icon"></i>
 				<div class="content">
-					<a class="header">{{user.name}}</a>
+					<a class="header">{{user.nick}}</a>
 				</div>
 			</div>
 		</div>
@@ -217,10 +223,6 @@
             </div>
           </div>
         </div>
-
-
 	</div>
-
-
 	</body>
 </html>

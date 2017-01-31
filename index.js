@@ -20,6 +20,23 @@ var nextGroupID = 1; // id to serve to next new group
 var announcements = new Array(); // Array of Message
 
 /**
+<<<<<<< HEAD
+=======
+	Message Object
+	text-String: text of message
+	username-String: username of author
+**/
+
+/**
+	User Object
+	id-Integer: The id of the the user
+	nick-String: The nickname of the user
+	pass-String: The hash of the user's password
+	status-String: status of user, "online" or "offline"
+**/
+
+/**
+>>>>>>> master
 	List of Users
 	key: id-Integer
 **/
@@ -28,9 +45,43 @@ var nextUserID = 1; // id to serve to next new user
 
 // Load the database into groups, announcements and users
 function loadDB(){
+<<<<<<< HEAD
 	users = db.readData('\'SELECT * name FROM Groups WHERE id=\'\'\'');
 	groups = db.readData('\'SELECT * name FROM Users WHERE id=\'\'\'');
 
+=======
+	// load the groups announcements users nextGroupID, and nextUserID from the db
+
+	// Database mock
+	// remove when database code is working
+	users.push({
+		id: nextUserID++,
+		nick: "Nicholas",
+		pass: "passwd",
+		status: "online"
+	});
+
+	users.push({
+		id: nextUserID++,
+		nick: "Charles",
+		pass: "passwd",
+		status: "offline"
+	});
+
+	users.push({
+		id: nextUserID++,
+		nick: "Lars",
+		pass: "passwd",
+		status: "offline"
+	});
+
+	users.push({
+		id: nextUserID++,
+		nick: "Roth",
+		pass: "passwd",
+		status: "offline"
+	});
+>>>>>>> master
 }
 
 loadDB();
@@ -43,14 +94,6 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(){
 		console.log('User Disconnected');
 	});
-
-	/**
-		User Object
-		id-Integer: The id of the the user
-		nick-String: The nickname of the user
-		pass-String: The hash of the user's password
-		status-String: status of user, "online" or "offline"
-	**/
 
 	/**
 		send message to groups
@@ -75,7 +118,6 @@ io.on('connection', function(socket){
 	**/
 	socket.on('announcement', function(user, announcement){
 		if(auth(user) && isAdmin(user)){
-
 
 			announcements.push(announcement);
 			// Write to DB
@@ -125,7 +167,13 @@ io.on('connection', function(socket){
 		gets list of users that are online
 	**/
 	socket.on('getUsers', function(callback){
-		callback(users);
+		// SECURITY: strip users of passwords before sending to client
+		var serverList = users;
+		var clientList = new Array();
+		for each (user in serverList) {
+			clientList.push({nick: user.nick, status: user.status});
+		}
+		callback(clientList);
 	});
 
 	socket.on('setStatus', function(user, status){

@@ -20,78 +20,60 @@ socket.on('newGroup', function(newGroup){
 	// put down new group
 });
 
-socket.on('setStateUser', function(user, state){
-	setStateUser(user, state);
-});
-
 //sends message to server
 function sendMessage(user, group, messages){
-	io.emit('groupMessage', user, group, messsage);
+	socket.emit('groupMessage', user, group, messsage);
 }
 
 //sends announcement to server
 function sendAnnouncement(user, announcement){
-	io.emit('announcement', user, announcement);
+	socket.emit('announcement', user, announcement);
 }
 
 // creates and returns a new user
 function getNewUser(user, pass){
-	return io.emit('newUser', user, pass, function(user){
+	return socket.emit('newUser', user, pass, function(user){
 		return user;
 	});
 }
 
 function createNewGroup(user, groupName){
-	io.emit('newGroup', user, groupName);
+	socket.emit('newGroup', user, groupName);
 }
 
-function getUsers(){
-	io.emit('getUsers', function(userList){
-		return userList;
-	});
-}
 
 // Sets a user to the given status
 function setOnline(user){
-	io.emit('setStatus', "online");
+	socket.emit('setStatus', "online");
 }
 
-// Sets the state of a different user in the list.
-function setStateUser(user, state) {
-  var scope = angular.element($("#userList")).scope();
-  scope.setStateUser(user, state);
-  scope.$apply();
+// Grabs the users from the server and updates AngularJS with them
+function getUsers(){
+	socket.emit('getUsers', function(userList){
+		var scope = angular.element('[ng-controller=usersCtrl]').scope();
+		scope.setUserList(userList);
+		scope.$apply();
+	});
 }
 
 var app = angular.module('projectApp', []);
 
 // Controller for updating the Userlist on the client side
 app.controller('usersCtrl', function($scope) {
+		window.usersCtrl_scope = $scope;
+
 // Holds User list, including state, updated by server
-    $scope.users = [
-    	{
-    		name: "Lars Memmington",
-    		state: "Active"
-    	},
-    	{
-    		name: "Zelaniaa",
-    		state: "Disabled"
-    	}
-    ];
-//Adds User to list
-    $scope.addUser = function(user) {
-      $scope.users.push(user);
-    }
-//Sets a user's state
-    $scope.setStateUser = function(user, state) {
-    	console.log('not implemented');
+    $scope.users = [];
+//Sets users in list
+    $scope.setUserList = function(userList) {
+      $scope.users = userList;
     }
 //Generates the iconography for the user based on their state
-    $scope.getColorFromState = function(state) {
-    	switch(state){
-    		case "Active":
+    $scope.getUserColor = function(user) {
+    	switch(user.status){
+    		case "online":
     			return "green";
-    		case "Disabled":
+    		case "offline":
     			return "light grey";
     	}
     }
