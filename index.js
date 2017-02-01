@@ -78,6 +78,14 @@ function loadDB(){
 		pass: "passwd",
 		status: "offline"
 	});
+
+
+	users.push({
+		id: nextUserID++,
+		nick: "Leo X",
+		pass: "passwd",
+		status: "online"
+	});
 }
 
 loadDB();
