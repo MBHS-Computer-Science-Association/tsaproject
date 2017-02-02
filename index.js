@@ -1,6 +1,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var db = require(database);
 
 var port = process.env.PORT || 80;
 
@@ -12,12 +13,6 @@ http.listen(port, function(){
 	console.log('listening on *:' + port);
 });
 
-/**
-	Group Object
-	id-Int: id of group
-	name-String: Name of group
-	messages-Array: List of messages
-**/
 var groups = new Array(); // Array of Group
 
 var nextGroupID = 1; // id to serve to next new group
@@ -25,6 +20,7 @@ var nextGroupID = 1; // id to serve to next new group
 var announcements = new Array(); // Array of Message
 
 /**
+
 	Message Object
 	text-String: text of message
 	username-String: username of author
@@ -47,6 +43,9 @@ var nextUserID = 1; // id to serve to next new user
 
 // Load the database into groups, announcements and users
 function loadDB(){
+	users = db.readData('SELECT * name FROM Groups');
+	groups = db.readData('SELECT * name FROM Users');
+
 	// load the groups announcements users nextGroupID, and nextUserID from the db
 
 	// Database mock
@@ -109,7 +108,7 @@ io.on('connection', function(socket){
 			for (var i = 0; i<groups.length; i++){
 				if(group.id==groups[i].id){
 					group[i].messages.push(message);
-					// Write to DB
+					db.insertData();
 				}
 			}
 
