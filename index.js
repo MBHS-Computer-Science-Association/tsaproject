@@ -20,8 +20,7 @@ var nextGroupID = 1; // id to serve to next new group
 var announcements = new Array(); // Array of Message
 
 /**
-<<<<<<< HEAD
-=======
+
 	Message Object
 	text-String: text of message
 	username-String: username of author
@@ -45,11 +44,9 @@ var nextUserID = 1; // id to serve to next new user
 
 // Load the database into groups, announcements and users
 function loadDB(){
-<<<<<<< HEAD
 	users = db.readData('\'SELECT * name FROM Groups WHERE id=\'\'\'');
 	groups = db.readData('\'SELECT * name FROM Users WHERE id=\'\'\'');
 
-=======
 	// load the groups announcements users nextGroupID, and nextUserID from the db
 
 	// Database mock
@@ -81,7 +78,14 @@ function loadDB(){
 		pass: "passwd",
 		status: "offline"
 	});
->>>>>>> master
+
+
+	users.push({
+		id: nextUserID++,
+		nick: "Leo X",
+		pass: "passwd",
+		status: "online"
+	});
 }
 
 loadDB();
@@ -168,12 +172,12 @@ io.on('connection', function(socket){
 	**/
 	socket.on('getUsers', function(callback){
 		// SECURITY: strip users of passwords before sending to client
-		var serverList = users;
-		var clientList = new Array();
-		for each (user in serverList) {
+		var clientList = [];
+		users.forEach(function(user) {
 			clientList.push({nick: user.nick, status: user.status});
-		}
+		});
 		callback(clientList);
+		// callback(users);
 	});
 
 	socket.on('setStatus', function(user, status){
