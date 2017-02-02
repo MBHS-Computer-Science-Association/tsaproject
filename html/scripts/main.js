@@ -67,7 +67,7 @@ app.controller('usersCtrl', function($scope) {
 //Sets users in list
     $scope.setUserList = function(userList) {
       $scope.users = userList;
-    }
+    };
 //Generates the iconography for the user based on their state
     $scope.getUserColor = function(user) {
     	switch(user.status){
@@ -76,7 +76,7 @@ app.controller('usersCtrl', function($scope) {
     		case "offline":
     			return "light grey";
     	}
-    }
+    };
 });
 
 app.controller('messageCtrl', function($scope) {
