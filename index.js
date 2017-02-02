@@ -12,12 +12,6 @@ http.listen(port, function(){
 	console.log('listening on *:' + port);
 });
 
-/**
-	Group Object
-	id-Int: id of group
-	name-String: Name of group
-	messages-Array: List of messages
-**/
 var groups = new Array(); // Array of Group
 
 var nextGroupID = 1; // id to serve to next new group
@@ -25,6 +19,7 @@ var nextGroupID = 1; // id to serve to next new group
 var announcements = new Array(); // Array of Message
 
 /**
+
 	Message Object
 	text-String: text of message
 	username-String: username of author
@@ -78,6 +73,14 @@ function loadDB(){
 		pass: "passwd",
 		status: "offline"
 	});
+
+
+	users.push({
+		id: nextUserID++,
+		nick: "Leo X",
+		pass: "passwd",
+		status: "online"
+	});
 }
 
 loadDB();
@@ -101,7 +104,7 @@ io.on('connection', function(socket){
 			for (var i = 0; i<groups.length; i++){
 				if(group.id==groups[i].id){
 					group[i].messages.push(message);
-					// Write to DB
+					db.insertData();
 				}
 			}
 
