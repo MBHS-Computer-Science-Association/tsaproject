@@ -35,7 +35,6 @@ var announcements = new Array(); // Array of Message
 **/
 
 /**
->>>>>>> master
 	List of Users
 	key: id-Integer
 **/
@@ -44,8 +43,8 @@ var nextUserID = 1; // id to serve to next new user
 
 // Load the database into groups, announcements and users
 function loadDB(){
-	users = db.readData('\'SELECT * name FROM Groups WHERE id=\'\'\'');
-	groups = db.readData('\'SELECT * name FROM Users WHERE id=\'\'\'');
+	users = db.readData('SELECT * name FROM Groups');
+	groups = db.readData('SELECT * name FROM Users');
 
 	// load the groups announcements users nextGroupID, and nextUserID from the db
 
