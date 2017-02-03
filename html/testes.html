@@ -54,7 +54,19 @@
 				// 	also updates AngularJS model
 				getUsers();
 			});
-  		</script>
+
+			$(document).ready(function() {
+				$('#inputsub').click(function() {
+					var content = $('#inputtext').val();
+					console.log('Your message was not actually sent.');
+					console.log(content);
+					socket.emit('message', content);
+
+					$('#inputtext').val('');
+				});
+			});
+
+		</script>
 
 	</head>
 
