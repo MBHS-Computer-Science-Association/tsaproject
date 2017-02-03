@@ -1,3 +1,4 @@
+var exports = module.exports = {};
 const pg = require('pg');
 
 var config = {
@@ -12,7 +13,7 @@ var config = {
 
 var pool = new pg.Pool(config);
 
-function database(){
+exports.database = function (){
   pool.connect(function (err, client, done){
     client.query('CREATE TABLE Users(name VARCHAR(64) NOT NULL, pin VARCHAR(4) NOT NULL, admin BOOLEAN NOT NULL, status BOOLEAN NOT NULL, userID INT PRIMARY KEY NOT NULL)', function(err, client, done) {
       if(err){
@@ -40,7 +41,7 @@ function database(){
 }
 database();
 
-function insertData(param){
+exports.insertData = function (param){
   pool.connect(function(err, client, done) {
     if(err) {
       done();
@@ -51,7 +52,7 @@ function insertData(param){
   });
 }
 
-function readData(param){
+exports.readData = function(param){
   var results = []
   pool.connect(function(err, client, done) {
     if(err) {
@@ -68,7 +69,7 @@ function readData(param){
   return results;
 }
 
-function udData(param){
+exports.udData = function(param){
   pool.connect(function(err, client, done) {
     if(err) {
       done();
