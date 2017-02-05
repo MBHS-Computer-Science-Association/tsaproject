@@ -191,7 +191,7 @@ io.on('connection', function(socket){
 **/
 function getUserObject(user){
 	for(var i =0; i<users.length; i++){
-		if(users[i].id = user.id){
+		if(users[i].id == user.id){
 			return users[i];
 		}
 	}
