@@ -1,5 +1,7 @@
 var assert = require('chai').assert;
 
+var db = require('../models/database');
+
 describe('PostgreSQL Database', function() {
   describe('get users function', function() {
     it('should return all of the users in json');
