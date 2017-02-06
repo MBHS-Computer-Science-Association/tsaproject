@@ -13,7 +13,7 @@ var config = {
 
 var pool = new pg.Pool(config);
 
-exports.database = function (){
+function database(){
   pool.connect(function (err, client, done){
     client.query('CREATE TABLE Users(name VARCHAR(64) NOT NULL, pin VARCHAR(4) NOT NULL, admin BOOLEAN NOT NULL, status BOOLEAN NOT NULL, userID INT PRIMARY KEY NOT NULL)', function(err, client, done) {
       if(err){
