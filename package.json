@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "mocha"
+    "test": "istanbul cover mocha"
   },
   "dependencies": {
     "express": "^4.14.0",
@@ -18,7 +18,8 @@
     "socket.io": "^1.7.2"
   },
   "devDependencies": {
-    "mocha": "*",
-    "chai": "*"
+    "chai": "*",
+    "istanbul": "*",
+    "mocha": "*"
   }
 }
