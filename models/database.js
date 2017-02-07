@@ -1,19 +1,26 @@
+var exports = module.exports = {};
+var url = require('url');
+
 const pg = require('pg');
 
+var params = url.parse(process.env.DATABASE_URL || 'postgres://postgres:password@localhost:5432/todo');
+var auth = params.auth.split(':');
+
 var config = {
-  user: 'postgres',
-  database: 'todo',
-  password: 'password',
-  host: 'localhost',
-  port: 5432,
+  user: auth[0],
+  password: auth[1],
+  host: params.hostname,
+  port: params.port,
+  database: params.pathname.split('/')[1],
   max: 10,
-  idleTimeoutMillis: 30000,
+  idleTimeoutMillis: 30000
 };
 
 var pool = new pg.Pool(config);
 
 function database(){
   pool.connect(function (err, client, done){
+    if (err) throw err;
     client.query('CREATE TABLE Users(name VARCHAR(64) NOT NULL, pin VARCHAR(4) NOT NULL, admin BOOLEAN NOT NULL, status BOOLEAN NOT NULL, userID INT PRIMARY KEY NOT NULL)', function(err, client, done) {
       if(err){
           return console.log("database already existing");
@@ -40,7 +47,7 @@ function database(){
 }
 database();
 
-function insertData(param){
+exports.insertData = function (param){
   pool.connect(function(err, client, done) {
     if(err) {
       done();
@@ -51,7 +58,7 @@ function insertData(param){
   });
 }
 
-function readData(param){
+exports.readData = function(param){
   var results = []
   pool.connect(function(err, client, done) {
     if(err) {
@@ -62,13 +69,13 @@ function readData(param){
     const query = client.query(param);
     query.on('row', (row) => {
       results.push(row);
-
+    });
     query.on('end', () => { done(); });
   });
   return results;
 }
 
-function udData(param){
+exports.udData = function(param){
   pool.connect(function(err, client, done) {
     if(err) {
       done();
