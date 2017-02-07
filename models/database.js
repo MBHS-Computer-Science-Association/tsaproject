@@ -63,7 +63,7 @@ exports.readData = function(param){
     const query = client.query(param);
     query.on('row', (row) => {
       results.push(row);
-
+    });
     query.on('end', () => { done(); });
   });
   return results;
