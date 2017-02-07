@@ -1,14 +1,19 @@
 var exports = module.exports = {};
+var url = require('url');
+
 const pg = require('pg');
 
+var params = url.parse(process.env.DATABASE_URL || 'postgres://postgres:password@localhost:5432/todo');
+var auth = params.auth.split(':');
+
 var config = {
-  user: 'postgres',
-  database: 'todo',
-  password: 'password',
-  host: 'localhost',
-  port: 5432,
+  user: auth[0],
+  password: auth[1],
+  host: params.hostname,
+  port: params.port,
+  database: params.pathname.split('/')[1],
   max: 10,
-  idleTimeoutMillis: 30000,
+  idleTimeoutMillis: 30000
 };
 
 var pool = new pg.Pool(config);
