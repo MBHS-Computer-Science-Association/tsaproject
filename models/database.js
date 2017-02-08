@@ -20,18 +20,18 @@ const pool = new Pool(config);
 
 exports.insertData = function(table, tableColumnsArray, jsonArray){
   pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
-    return client.query({text: "INSERT INTO $1($2) VALUES($3);", values: [table, tableColumnsArray, jsonArray]}).then(() => client)
+    return client.query({text: 'INSERT INTO $1($2) VALUES($3);', values: [table, tableColumnsArray, jsonArray]}).then(() => client)
   }).then(client => client.release());
 }
 
 exports.updateData = function(table, newValue, jsonPathway, column, oldValue){
   pool.connect().then(client => {
-    return client.query({text: "UPDATE $1 SET $2 WHERE $3#>>'{TODO:JSON PATH TO BE CHANGED ($4 ) }'=$5;", values: [table, newValue, jsonPathway, column, oldValue]}).then(() => client)
+    return client.query({text: 'UPDATE $1 SET $2 WHERE $3#>>\'{TODO:JSON PATH TO BE CHANGED ($4 ) }\'=$5;', values: [table, newValue, jsonPathway, column, oldValue]}).then(() => client)
   }).then(client => client.release());
 }
 
 exports.retrieveData = function(toBeSelected, jsonPathway, table){
   pool.connect().then(client => {
-    return client.query({text: "SELECT $1#>>'{TODO:JSON PATH TO BE CHANGED($2)}' AS  FROM $3", values: [toBeSelected, jsonPathway, table]}).then(() => client)
+    return client.query({text: 'SELECT $1#>>\'{TODO:JSON PATH TO BE CHANGED($2)}\' AS   FROM $3', values: [toBeSelected, jsonPathway, table]}).then(() => client)
   }).then(client => client.release());
 }
