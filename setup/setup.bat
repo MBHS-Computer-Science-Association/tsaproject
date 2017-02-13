@@ -1,2 +1,3 @@
 @echo off
-start node_setup.msi /passive
+start nodesetup.msi /passive
+start postgresqlsetup.exe --mode unattended --unattendedmodeui minimal --password password
