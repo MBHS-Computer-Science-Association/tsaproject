@@ -18,20 +18,71 @@ var config = {
 
 const pool = new Pool(config);
 
-exports.insertData = function(table, tableColumnsArray, jsonArray){
+function database(){
   pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
-    return client.query({text: 'INSERT INTO $1($2) VALUES($3);', values: [table, tableColumnsArray, jsonArray]}).then(() => client)
+    return client.query('CREATE TABLE IF NOT EXISTS Users(userID INT PRIMARY KEY NOT NULL, info json NOT NULL)').then(() => client)
   }).then(client => client.release());
 }
 
-exports.updateData = function(table, newValue, jsonPathway, column, oldValue){
-  pool.connect().then(client => {
-    return client.query({text: 'UPDATE $1 SET $2 WHERE $3#>>\'{TODO:JSON PATH TO BE CHANGED ($4 ) }\'=$5;', values: [table, newValue, jsonPathway, column, oldValue]}).then(() => client)
+
+exports.insertIntoUsers = function(tableColumnsArray, jsonArray){
+  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+    return client.query({text: 'INSERT INTO Users($1) VALUES($2);', values: [tableColumnsArray, jsonArray]}).then(() => client)
+  }).then(client => client.release());
+}
+exports.insertIntoGroups = function(tableColumnsArray, jsonArray){
+  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+    return client.query({text: 'INSERT INTO Groups($1) VALUES($2);', values: [tableColumnsArray, jsonArray]}).then(() => client)
+  }).then(client => client.release());
+}
+exports.insertIntoMessages = function(tableColumnsArray, jsonArray){
+  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+    return client.query({text: 'INSERT INTO Messages($1) VALUES($2);', values: [tableColumnsArray, jsonArray]}).then(() => client)
+  }).then(client => client.release());
+}
+exports.insertIntoAnnouncements = function(tableColumnsArray, jsonArray){
+  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+    return client.query({text: 'INSERT INTO Announcements($1) VALUES($2);', values: [tableColumnsArray, jsonArray]}).then(() => client)
   }).then(client => client.release());
 }
 
-exports.retrieveData = function(toBeSelected, jsonPathway, table){
+
+
+exports.updateUserData = function(newValue, jsonPathway, column, oldValue){
   pool.connect().then(client => {
-    return client.query({text: 'SELECT $1#>>\'{TODO:JSON PATH TO BE CHANGED($2)}\' AS   FROM $3', values: [toBeSelected, jsonPathway, table]}).then(() => client)
+    return client.query({text: 'UPDATE Users SET $1 WHERE $2#>>\'{TODO:JSON PATH TO BE CHANGED ($3) }\'=$4;', values: [newValue, jsonPathway, column, oldValue]}).then(() => client)
+  }).then(client => client.release());
+}
+exports.updateGroupData = function(newValue, jsonPathway, column, oldValue){
+  pool.connect().then(client => {
+    return client.query({text: 'UPDATE Groups SET $1 WHERE $2#>>\'{TODO:JSON PATH TO BE CHANGED ($3) }\'=$4;', values: [newValue, jsonPathway, column, oldValue]}).then(() => client)
+  }).then(client => client.release());
+}
+exports.updateMessagesData = function(newValue, jsonPathway, column, oldValue){
+  pool.connect().then(client => {
+    return client.query({text: 'UPDATE Messages SET $1 WHERE $2#>>\'{TODO:JSON PATH TO BE CHANGED ($3) }\'=$4;', values: [newValue, jsonPathway, column, oldValue]}).then(() => client)
+  }).then(client => client.release());
+}
+exports.updateAnnoucementData = function(newValue, jsonPathway, column, oldValue){
+  pool.connect().then(client => {
+    return client.query({text: 'UPDATE Annoucements SET $1 WHERE $2#>>\'{TODO:JSON PATH TO BE CHANGED ($3) }\'=$4;', values: [newValue, jsonPathway, column, oldValue]}).then(() => client)
+  }).then(client => client.release());
+}
+
+
+
+exports.retrieveUserData = function(toBeSelected, jsonPathway){
+  pool.connect().then(client => {
+    return client.query({text: 'SELECT $1#>>\'{TODO:JSON PATH TO BE CHANGED($2)}\' AS FROM Users', values: [toBeSelected, jsonPathway]}).then(() => client)
+  }).then(client => client.release());
+}
+exports.retrieveGroupData = function(toBeSelected, jsonPathway){
+  pool.connect().then(client => {
+    return client.query({text: 'SELECT $1#>>\'{TODO:JSON PATH TO BE CHANGED($2)}\' AS FROM Groups', values: [toBeSelected, jsonPathway]}).then(() => client)
+  }).then(client => client.release());
+}
+exports.retrieveMessageData = function(toBeSelected, jsonPathway){
+  pool.connect().then(client => {
+    return client.query({text: 'SELECT $1#>>\'{TODO:JSON PATH TO BE CHANGED($2)}\' AS FROM Messages', values: [toBeSelected, jsonPathway]}).then(() => client)
   }).then(client => client.release());
 }
