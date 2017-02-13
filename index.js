@@ -2,7 +2,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 3000;
 
 app.get(/^(.+)$/, function(req, res){
 	res.sendFile(__dirname + '/html' + req.params[0]);
@@ -12,12 +12,6 @@ http.listen(port, function(){
 	console.log('listening on *:' + port);
 });
 
-/**
-	Group Object
-	id-Int: id of group
-	name-String: Name of group
-	messages-Array: List of messages
-**/
 var groups = new Array(); // Array of Group
 
 var nextGroupID = 1; // id to serve to next new group
@@ -25,6 +19,7 @@ var nextGroupID = 1; // id to serve to next new group
 var announcements = new Array(); // Array of Message
 
 /**
+
 	Message Object
 	text-String: text of message
 	username-String: username of author
@@ -109,7 +104,7 @@ io.on('connection', function(socket){
 			for (var i = 0; i<groups.length; i++){
 				if(group.id==groups[i].id){
 					group[i].messages.push(message);
-					// Write to DB
+					db.insertData();
 				}
 			}
 
@@ -196,7 +191,7 @@ io.on('connection', function(socket){
 **/
 function getUserObject(user){
 	for(var i =0; i<users.length; i++){
-		if(users[i].id = user.id){
+		if(users[i].id == user.id){
 			return users[i];
 		}
 	}
