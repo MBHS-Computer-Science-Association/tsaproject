@@ -1,10 +1,10 @@
 var	socket = io();
 
-socket.emit('getGroups', function(){
+socket.emit('getGroups', function(groups){
 	// puts initial groups down
 });
 
-socket.emit('getAnnouncements', function(){
+socket.emit('getAnnouncements', function(announcements){
 	// puts initial announcements down
 });
 
