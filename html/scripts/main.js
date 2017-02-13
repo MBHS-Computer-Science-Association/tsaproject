@@ -22,7 +22,7 @@ socket.on('newGroup', function(newGroup){
 });
 
 //sends message to server
-function sendMessage(user, group, messages){
+function sendMessage(user, group, message){
 	socket.emit('groupMessage', user, group, messsage);
 }
 
