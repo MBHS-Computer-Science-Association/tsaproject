@@ -58,9 +58,9 @@
 			$(document).ready(function() {
 				$('#inputsub').click(function() {
 					var content = $('#inputtext').val();
-					console.log('Your message was not actually sent.');
-					console.log(content);
-					socket.emit('message', content);
+					// user, group, message (string)
+					// We don't have a way to get the user or the group yet.
+					sendMessage(null, null, content);
 
 					$('#inputtext').val('');
 				});
@@ -87,42 +87,12 @@
  				<a class="item" data-tab="tab-3">Moderator Chat</a>
 			</div>
 				<!-- Tab 1 - Discussion -->
-				<div class="ui attached tab active segment" data-tab="tab-1" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw; ">
-
-  					<div class="ui bottom attached padded raised left aligned purple segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
+				<div ng-controller="messageCtrl" class="ui attached tab active segment" data-tab="tab-1" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw; ">
+  					<div ng-repeat="msg in messages" class="ui bottom attached padded raised left aligned purple segment">
+							<p>{{msg.user}}</p>
+							<p>{{msg.group}}</p>
+							<p>{{msg.message}}</p>
 				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-
 				</div>
 				<!-- Tab 2 - Announcements -->
 				<div class="ui attached tab segment" data-tab="tab-2" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">
