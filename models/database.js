@@ -24,22 +24,35 @@ function database(){
   }).then(client => client.release());
 }
 
-
+/*
+    id primary key
+    json data
+*/
 exports.insertIntoUsers = function(row, value){
   pool.connect().then(client => {
     return client.query({text: 'INSERT INTO Users($1) VALUES($2);', values: [row, value]}).then(() => client)
   }).then(client => client.release());
 }
+/*
+    id primary key
+    json data
+*/
 exports.insertIntoGroups = function(row, value){
   pool.connect().then(client => {
     return client.query({text: 'INSERT INTO Groups($1) VALUES($2);', values: [row, value]}).then(() => client)
   }).then(client => client.release());
 }
+/*
+    json data
+*/
 exports.insertIntoMessages = function(row, value){
   pool.connect().then(client => {
     return client.query({text: 'INSERT INTO Messages($1) VALUES($2);', values: [row, value]}).then(() => client)
   }).then(client => client.release());
 }
+/*
+    json data
+*/
 exports.insertIntoAnnouncements = function(row, value){
   pool.connect().then(client => {
     return client.query({text: 'INSERT INTO Announcements($1) VALUES($2);', values: [row, value]}).then(() => client)
@@ -47,9 +60,9 @@ exports.insertIntoAnnouncements = function(row, value){
 }
 
 
-exports.updateUsers = function(newValue, jsonPathway, column, oldValue){
+exports.updateUsers = function(newValue, column, jsonPathway, oldValue){
   pool.connect().then(client => {
-    return client.query({text: 'UPDATE Users SET $1 WHERE $2#>>\'{TODO:JSON PATH TO BE CHANGED ($3) }\'=$4;', values: [newValue, jsonPathway, column, oldValue]}).then(() => client)
+    return client.query({text: 'UPDATE Users SET $1 WHERE info#>>\'status\'=$2', values: [newValue, oldValue]}).then(() => client)
   }).then(client => client.release());
 }
 
