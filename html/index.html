@@ -58,9 +58,9 @@
 			$(document).ready(function() {
 				$('#inputsub').click(function() {
 					var content = $('#inputtext').val();
-					console.log('Your message was not actually sent.');
-					console.log(content);
-					socket.emit('message', content);
+					// user, group, message (string)
+					// We don't have a way to get the user or the group yet.
+					sendMessage(null, null, content);
 
 					$('#inputtext').val('');
 				});
