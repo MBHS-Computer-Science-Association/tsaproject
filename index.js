@@ -2,7 +2,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 3000;
 
 app.get(/^(.+)$/, function(req, res){
 	res.sendFile(__dirname + '/html' + req.params[0]);
@@ -191,7 +191,7 @@ io.on('connection', function(socket){
 **/
 function getUserObject(user){
 	for(var i =0; i<users.length; i++){
-		if(users[i].id = user.id){
+		if(users[i].id == user.id){
 			return users[i];
 		}
 	}
