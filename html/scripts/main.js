@@ -10,6 +10,7 @@ socket.emit('getAnnouncements', function(announcements){
 
 socket.on('groupMessage', function(user, group, message){
 	// put down group message
+	displayGroupMessage(user, group, message);
 });
 
 socket.on('announcement', function(user, announcement){
@@ -21,7 +22,7 @@ socket.on('newGroup', function(newGroup){
 });
 
 //sends message to server
-function sendMessage(user, group, messages){
+function sendMessage(user, group, message){
 	socket.emit('groupMessage', user, group, messsage);
 }
 
@@ -56,6 +57,12 @@ function getUsers(){
 	});
 }
 
+function displayGroupMessage(user, group, message) {
+	var scope = angular.element('[ng-controller=messageCtrl]').scope();
+	scope.displayGroupMessage(user, group, message);
+	scope.$apply();
+}
+
 var app = angular.module('projectApp', []);
 
 // Controller for updating the Userlist on the client side
@@ -80,14 +87,11 @@ app.controller('usersCtrl', function($scope) {
 });
 
 app.controller('messageCtrl', function($scope) {
-	$scope.messages = [
-		{
-			username: "Zelanias",
-			content: "This is a first testing of the message."
-		},
-		{
-			username: "Jarodd",
-			content: "Hey, Zelanius."
-		}
-	];
+	$scope.messages = [];
+
+	// Updates the scope's array that represents all of the messages.
+	$scope.displayGroupMessage = function(usr, grp, msg) {
+		console.log('Displaying group message in the scope.');
+		$scope.messages.push({user: usr, group: grp, message: msg});
+	}
 });
