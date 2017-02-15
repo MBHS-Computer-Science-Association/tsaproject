@@ -43,29 +43,46 @@
 			  });
 
     	// Tabbing function
-		$( document ).ready(function() {
-    	$('.menu .item')
-  		.tab();
-  		});
+			$( document ).ready(function() {
+			  $('#menu .item').on('click', function() {
+			  	$('#menu .item').removeClass('active');
+			  	$(this).addClass('active');
+			  	});
+			  	});
+				//SendingMessages
+			  $(document).ready(function() {
+			    $('#inputsub').click(function() {
+						// user, group, message (string)
+						// We don't have a way to get the user or the group yet.
+			      var content = $('#inputtext').val();
+			      var agroup = $('#menu .active').attr("data-tab").substring(4);
+			      console.log(content);
+			      sendMessage(agroup,content);
+			      $('#inputtext').val('');
+			    });
+			  });
+				//Themeing
+			  $(document).ready(function(){
+			    // $("#ChangeTheme").click(function(){
+			      $("input:radio[name=ColorTheme]").click(function() {
+			        var value = $(this).val();
+			        console.log(value);
+			        if(value=="Light"){
+			          // $("#a").attr("class","ui bottom attached padded raised left aligned purple segment");
+			          $("#a").append("class","")
+			        }
+			        if(value=="Dark"){
+			          // $("#a").attr("class","ui bottom attached padded raied left alighned inverted grey segment");
+			        }
+			      });
 
+			  });
 			// Grab the users from the server after document loads
 			$( document ).ready(function() {
 				// Query server for users online and offline
 				// 	also updates AngularJS model
 				getUsers();
 			});
-
-			$(document).ready(function() {
-				$('#inputsub').click(function() {
-					var content = $('#inputtext').val();
-					console.log('Your message was not actually sent.');
-					console.log(content);
-					socket.emit('message', content);
-
-					$('#inputtext').val('');
-				});
-			});
-
 		</script>
 
 	</head>
@@ -81,48 +98,18 @@
 
 
 		<!-- Tab menu for seperating the discussions -->
-			<div class="ui top attached tabular menu" style="float:left; width:80vw;">
+			<div id="menu"class="ui top attached tabular menu" style="float:left; width:80vw;">
   				<a class="active item" data-tab="tab-1">Discussion</a>
  				<a class="item" data-tab="tab-2">Announcements</a>
  				<a class="item" data-tab="tab-3">Moderator Chat</a>
 			</div>
 				<!-- Tab 1 - Discussion -->
-				<div class="ui attached tab active segment" data-tab="tab-1" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw; ">
-
-  					<div class="ui bottom attached padded raised left aligned purple segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
+				<div ng-controller="messageCtrl" class="ui attached tab active segment" data-tab="tab-1" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw; ">
+  					<div ng-repeat="msg in messages" class="ui bottom attached left aligned purple segment">
+							<p>{{msg.user.nick}}</p>
+							<p>{{msg.group}}</p>
+							<p>{{msg.message}}</p>
 				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-
 				</div>
 				<!-- Tab 2 - Announcements -->
 				<div class="ui attached tab segment" data-tab="tab-2" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">
@@ -130,25 +117,6 @@
 					<div class="ui bottom attached left aligned purple segment">
 				  		<p>This is a test of tabular menus in Semantic UI-Second</p>
 				  	</div>
-				  	<div class="ui bottom attached  left aligned purple segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Second</p>
-				  	</div>
-				  	<div class="ui bottom attached  left aligned purple segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Second</p>
-				  	</div>
-				  	<div class="ui bottom attached  left aligned purple segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Second</p>
-				  	</div>
-				  	<div class="ui bottom attached  left aligned purple segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Second</p>
-				  	</div>
-				  	<div class="ui bottom attached  left aligned purple segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Second</p>
-				  	</div>
-				  	<div class="ui bottom attached  left aligned purple segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Second</p>
-				  	</div>
-
 				</div>
 				<!-- Tab 3 - Moderator Chat -->
 				<div class="ui attached tab segment" data-tab="tab-3" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">
@@ -156,39 +124,7 @@
   					<div class="ui bottom attached padded raised left aligned purple segment">
 				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
 				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-				  	<div class="ui bottom attached padded raised left aligned segment">
-				  		<p>This is a test of tabular menus in Semantic UI-Third</p>
-				  	</div>
-
 				</div>
-
 		</div>
 		<!-- Message Bar -->
 		<div class="ui icon attached input focus" style="position: fixed; bottom: 7vh; right: 39vw; width: 60vw; height: 5vh">
@@ -228,9 +164,23 @@
 							  		<input id="nicknamesub" type="button" autocomplete="off" value="Submit"></input>
 									</form>
 								</a>
-                <a class="item">Option x</a>
-                <a class="item">Option y</a>
-                <a class="item">OPtion z</a>
+								<div class="inline fields">
+						      <div class="field">
+						        <div class="ui radio checkbox">
+						          <input type="radio" name="ColorTheme" value="Light"checked="checked">
+						          <label>Light</label>
+						        </div>
+						      </div>
+						      <div class="field">
+						        <div class="ui radio checkbox">
+						          <input type="radio" name="ColorTheme" value="Dark">
+						          <label>Dark</label>
+						        </div>
+						      </div>
+						  </div>
+                <!-- <a class="item">Option x</a> -->
+                <!-- <a class="item">Option y</a> -->
+                <!-- <a class="item">OPtion z</a> -->
               </div>
             </div>
           </div>

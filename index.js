@@ -19,13 +19,6 @@ var nextGroupID = 1; // id to serve to next new group
 var announcements = new Array(); // Array of Message
 
 /**
-
-	Message Object
-	text-String: text of message
-	username-String: username of author
-**/
-
-/**
 	User Object
 	id-Integer: The id of the the user
 	nick-String: The nickname of the user
@@ -34,10 +27,17 @@ var announcements = new Array(); // Array of Message
 **/
 
 /**
+	Group Object
+	id-Integer: id of group
+	messages-Array[String]: array of messages
+	name-String: name of group
+**/
+
+/**
 	List of Users
 	key: id-Integer
 **/
-var users = new Array();
+var users = [];
 var nextUserID = 1; // id to serve to next new user
 
 // Load the database into groups, announcements and users
@@ -46,6 +46,13 @@ function loadDB(){
 
 	// Database mock
 	// remove when database code is working
+	users.push({
+		id: 0, 
+		nick: "Bismarck", 
+		pass: "password", 
+		status: "online"
+	});
+
 	users.push({
 		id: nextUserID++,
 		nick: "Nicholas",
@@ -81,6 +88,12 @@ function loadDB(){
 		pass: "passwd",
 		status: "online"
 	});
+
+	groups.push({
+		id: 0,
+		messages: [], 
+		name: "Group Name"
+	});
 }
 
 loadDB();
@@ -99,16 +112,14 @@ io.on('connection', function(socket){
 	**/
 	socket.on('groupMessage', function(user, group, message){
 		if(auth(user)){
-
-
 			for (var i = 0; i<groups.length; i++){
 				if(group.id==groups[i].id){
-					group[i].messages.push(message);
-					db.insertData();
+					groups[i].messages.push(message);
+					// db.insertData();
 				}
 			}
 
-			io.emit('groupMessage',user,group,message);
+			io.emit('groupMessage',user, group, message);
 		}
 	});
 
