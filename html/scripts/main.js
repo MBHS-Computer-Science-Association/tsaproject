@@ -1,7 +1,19 @@
 var	socket = io();
 
+var groupList = [];
+var userList = [];
+
+
+var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
+
 socket.emit('getGroups', function(groups){
 	// puts initial groups down
+	groupList = groups;
+});
+
+socket.emit('getUsers', function(users){
+	// grabs initial users
+	userList = users;
 });
 
 socket.emit('getAnnouncements', function(announcements){
@@ -22,8 +34,8 @@ socket.on('newGroup', function(newGroup){
 });
 
 //sends message to server
-function sendMessage(user, group, message){
-	socket.emit('groupMessage', user, group, messsage);
+function sendMessage(group, message){
+	socket.emit('groupMessage', thisUser, group, message);
 }
 
 //sends announcement to server
