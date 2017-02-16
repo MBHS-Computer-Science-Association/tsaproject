@@ -24,12 +24,11 @@
 
     	<script>
 
-		var nickname = "";
 
 		//Function for the setting popup
     	$( document ).ready(function() {
 				$("#nicknamesub").click(function(){
-			    nickname = $("#textinput").val();
+					thisUser.nick = $("#textinput").val();
 			    $("#textinput").val('');
 			  });
 				$('.menu .browse').popup({
