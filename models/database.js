@@ -16,13 +16,23 @@ var config = {
   idleTimeoutMillis: 30000
 };
 
-const pool = new Pool(config);
-
 function database(){
+  const pool = new Pool(config);
+
   pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
     return client.query('CREATE TABLE IF NOT EXISTS Users(userID INT PRIMARY KEY NOT NULL, info json NOT NULL)').then(() => client)
   }).then(client => client.release());
+  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+    return client.query('CREATE TABLE IF NOT EXISTS Messages(info json NOT NULL)').then(() => client)
+  }).then(client => client.release());
+  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+    return client.query('CREATE TABLE IF NOT EXISTS Groups(groupID INT PRIMARY KEY NOT NULL, info json NOT NULL)').then(() => client)
+  }).then(client => client.release());
+  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+    return client.query('CREATE TABLE IF NOT EXISTS Annoucements(info json NOT NULL)').then(() => client)
+  }).then(client => client.release());
 }
+database();
 
 /*
     id primary key
