@@ -44,9 +44,13 @@
 
     	// Tabbing function
 			$( document ).ready(function() {
+    	$('.menu .item')
+  		.tab();
+  		});
+			$( document ).ready(function() {
 			  $('#menu .item').on('click', function() {
-			  	$('#menu .item').removeClass('active');
-			  	$(this).addClass('active');
+			  	$('#menu .item').removeClass('online');
+			  	$(this).addClass('online');
 			  	});
 			  	});
 				//SendingMessages
@@ -57,6 +61,7 @@
 			      var content = $('#inputtext').val();
 			      var agroup = $('#menu .active').attr("data-tab").substring(4);
 			      console.log(content);
+						console.log(agroup);
 			      sendMessage(agroup,content);
 			      $('#inputtext').val('');
 			    });
