@@ -20,13 +20,13 @@ function database(){
   const pool = new Pool(config);
 
   pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
-    return client.query('CREATE TABLE IF NOT EXISTS Users(userID INT PRIMARY KEY NOT NULL, info json NOT NULL)').then(() => client)
+    return client.query('CREATE TABLE IF NOT EXISTS Users(info json NOT NULL)').then(() => client)
   }).then(client => client.release());
   pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
     return client.query('CREATE TABLE IF NOT EXISTS Messages(info json NOT NULL)').then(() => client)
   }).then(client => client.release());
   pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
-    return client.query('CREATE TABLE IF NOT EXISTS Groups(groupID INT PRIMARY KEY NOT NULL, info json NOT NULL)').then(() => client)
+    return client.query('CREATE TABLE IF NOT EXISTS Groups(info json NOT NULL)').then(() => client)
   }).then(client => client.release());
   pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
     return client.query('CREATE TABLE IF NOT EXISTS Annoucements(info json NOT NULL)').then(() => client)
@@ -80,21 +80,21 @@ exports.updateUsers = function(newValue, column, jsonPathway, oldValue){
 
 exports.retrieveUsers = function(toBeSelected, jsonPathway){
   pool.connect().then(client => {
-    return client.query({text: 'SELECT $1#>>\'{TODO:JSON PATH TO BE CHANGED($2)}\' AS FROM Users', values: [toBeSelected, jsonPathway]}).then(() => client)
+    return client.query({text: 'SELECT $1#>>\'{#2}\' AS FROM Users', values: [toBeSelected, jsonPathway]}).then(() => client)
   }).then(client => client.release());
 }
 exports.retrieveGroups = function(toBeSelected, jsonPathway){
   pool.connect().then(client => {
-    return client.query({text: 'SELECT $1#>>\'{TODO:JSON PATH TO BE CHANGED($2)}\' AS FROM Groups', values: [toBeSelected, jsonPathway]}).then(() => client)
+    return client.query({text: 'SELECT $1#>>\'{#2}\' AS FROM Groups', values: [toBeSelected, jsonPathway]}).then(() => client)
   }).then(client => client.release());
 }
 exports.retrieveMessages = function(toBeSelected, jsonPathway){
   pool.connect().then(client => {
-    return client.query({text: 'SELECT $1#>>\'{TODO:JSON PATH TO BE CHANGED($2)}\' AS FROM Messages', values: [toBeSelected, jsonPathway]}).then(() => client)
+    return client.query({text: 'SELECT $1#>>\'{#2}\' AS FROM Messages', values: [toBeSelected, jsonPathway]}).then(() => client)
   }).then(client => client.release());
 }
 exports.retrieveAnnouncements = function(toBeSelected, jsonPathway, table){
   pool.connect().then(client => {
-    return client.query({text: 'SELECT $1#>>\'{TODO:JSON PATH TO BE CHANGED($2)}\' AS FROM Annoucements', values: [toBeSelected, jsonPathway]}).then(() => client)
+    return client.query({text: 'SELECT $1#>>\'{#2}\' AS FROM Annoucements', values: [toBeSelected, jsonPathway]}).then(() => client)
   }).then(client => client.release());
 }

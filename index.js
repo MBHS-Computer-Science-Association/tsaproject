@@ -12,44 +12,27 @@ http.listen(port, function(){
 	console.log('listening on *:' + port);
 });
 
-var groups = new Array(); // Array of Group
+var groups = new Array();
 
-var nextGroupID = 1; // id to serve to next new group
+var nextGroupID = 1;
 
-var announcements = new Array(); // Array of Message
+var announcements = new Array();
 
-/**
-	User Object
-	id-Integer: The id of the the user
-	nick-String: The nickname of the user
-	pass-String: The hash of the user's password
-	status-String: status of user, "online" or "offline"
-**/
-
-/**
-	Group Object
-	id-Integer: id of group
-	messages-Array[String]: array of messages
-	name-String: name of group
-**/
-
-/**
-	List of Users
-	key: id-Integer
-**/
 var users = [];
-var nextUserID = 1; // id to serve to next new user
+var nextUserID = 1;
 
-// Load the database into groups, announcements and users
 function loadDB(){
-	// load the groups announcements users nextGroupID, and nextUserID from the db
+	
+  var isGetting = true;
+	while(isGetting){
+		var data = db.retrieveUsers( );
+		if()
+	}
 
-	// Database mock
-	// remove when database code is working
 	users.push({
-		id: 0, 
-		nick: "Bismarck", 
-		pass: "password", 
+		id: 0,
+		nick: "Bismarck",
+		pass: "password",
 		status: "online"
 	});
 
@@ -91,7 +74,7 @@ function loadDB(){
 
 	groups.push({
 		id: 0,
-		messages: [], 
+		messages: [],
 		name: "Group Name"
 	});
 }
