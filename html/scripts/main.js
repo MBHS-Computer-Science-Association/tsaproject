@@ -20,6 +20,11 @@ socket.emit('getAnnouncements', function(announcements){
 	// puts initial announcements down
 });
 
+socket.on('updateUserList', function(newUserList){
+	userList = newUserList;
+	updateUserDisplay();
+});
+
 socket.on('groupMessage', function(user, group, message){
 	// put down group message
 	displayGroupMessage(user, group, message);
@@ -63,15 +68,21 @@ function setOnline(user){
 //Sets nickname to user
 function changeNickname(name){
 	thisUser.nick=name;
-	socket.emit('changeNickname',name);
+	socket.emit('setNickname',thisUser, name);
 }
+
 // Grabs the users from the server and updates AngularJS with them
 function getUsers(){
-	socket.emit('getUsers', function(userList){
-		var scope = angular.element('[ng-controller=usersCtrl]').scope();
-		scope.setUserList(userList);
-		scope.$apply();
+	socket.emit('getUsers', function(newUserList){
+		userList = newUserList;
+		updateUserDisplay();
 	});
+}
+
+function updateUserDisplay(){
+	var scope = angular.element('[ng-controller=usersCtrl]').scope();
+	scope.setUserList(userList);
+	scope.$apply();
 }
 
 function displayGroupMessage(user, group, message) {

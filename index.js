@@ -184,14 +184,14 @@ io.on('connection', function(socket){
 		if(auth(user)){
 			getUserObject(user).status = "online";
 		}
-		socket.emit('updateUserLists', getStrippedUsers());
+		socket.emit('updateUserList', getStrippedUsers());
 	});
 
-	socket.on('setNickname', function(user, nickname){
+	socket.on('setNickname', function(user, nick){
 		if(auth(user)){
-			getUserObject(user).nickname = nickname;
+			getUserObject(user).nick = nick;
 		}
-		socket.emit('updateUserLists', getStrippedUsers());
+		socket.emit('updateUserList', getStrippedUsers());
 	});
 
 	socket.on('', function(user){
