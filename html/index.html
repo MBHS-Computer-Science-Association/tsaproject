@@ -28,8 +28,8 @@
 		//Function for the setting popup
     	$( document ).ready(function() {
 				$("#nicknamesub").click(function(){
-					thisUser.nick = $("#textinput").val();
-			    $("#textinput").val('');
+					changeNickname($("#NicenameField").val());
+			    $("#NicknameField").val('');
 			  });
 				$('.menu .browse').popup({
 							inline     : false,
@@ -164,7 +164,7 @@
               <div class="ui link list">
                 <a class="item">
 									<form>
-							  		<input id="textinput" class = "ui container" type ="text" style="width:100px">
+							  		<input id="NicenameField" class = "ui container" type ="text" style="width:100px">
 							  		<input id="nicknamesub" type="button" autocomplete="off" value="Submit"></input>
 									</form>
 								</a>

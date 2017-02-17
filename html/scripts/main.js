@@ -60,6 +60,11 @@ function setOnline(user){
 	socket.emit('setStatus', "online");
 }
 
+//Sets nickname to user
+function changeNickname(name){
+	thisUser.nick=name;
+	socket.emit('changeNickname',name);
+}
 // Grabs the users from the server and updates AngularJS with them
 function getUsers(){
 	socket.emit('getUsers', function(userList){
