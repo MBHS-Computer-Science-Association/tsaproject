@@ -110,48 +110,16 @@
 
 		<!-- Tab menu for seperating the discussions -->
 			<div id="menu"class="ui top attached tabular menu" style="float:left; width:80vw;">
-  			<a class="active item" data-tab="tab-1">Discussion</a>
- 				<a class="item" data-tab="tab-2">Announcements</a>
- 				<a class="item" data-tab="tab-3">Moderator Chat</a>
-				<a class="item" data-tab="tab-4">Important Information</a>
-				<a class="item" data-tab="tab-5">Other Stuff ;)</a>
+  				<a class="active item" data-tab="tab-1">Discussion</a>
+ 				<a class="item" data-tab="tab-2">Moderator Chat</a>
 			</div>
 				<!-- Tab 1 - Discussion -->
-				<div ng-controller="messageCtrl" class="ui attached tab active segment" data-tab="tab-1" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw; ">
-  					<div ng-repeat="msg in messages" class="ui bottom attached left aligned purple segment">
-							<p>{{msg.user.nick}}</p>
-							<p>{{msg.group}}</p>
-							<p>{{msg.message}}</p>
-				  	</div>
+				<div class="ui attached tab active segment" data-tab="tab-1" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw;">
+  					<div id="tab-1-spot" class="ui bottom attached left aligned purple segment"></div>
 				</div>
-				<!-- Tab 2 - Announcements -->
-				<div class="ui attached tab segment" data-tab="tab-2" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">
-
-					<div class="ui bottom attached left aligned purple segment">
-				  		<p>Hey kids dont take drugs and dont drink water</p>
-				  	</div>
-				</div>
-				<!-- Tab 3 - Moderator Chat -->
-				<div class="ui attached tab segment" data-tab="tab-3" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">
-
-  					<div class="ui bottom attached left aligned purple segment">
-				  		<p>So this disruptive kid we need to take care of.</p>
-				  	</div>
-				</div>
-				<div class="ui attached tab segment" data-tab="tab-4" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">
-
-  					<div class="ui bottom attached left aligned purple segment">
-				  		<p>Venue Map</p>
-				  	</div>
-						<div class="ui bottom attached left aligned purple segment">
-				  		<p>Important Contact Information:</p>
-				  	</div>
-				</div>
-				<div class="ui attached tab segment" data-tab="tab-5" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">
-
-  					<div class="ui bottom attached left aligned purple segment">
-				  		<p>Hi ;)</p>
-				  	</div>
+				<!-- Tab 2 - Discussion -->
+				<div class="ui attached tab segment" data-tab="tab-2" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw;">
+  					<div id="tab-2-spot" class="ui bottom attached left aligned purple segment"></div>
 				</div>
 		</div>
 		<!-- Message Bar -->

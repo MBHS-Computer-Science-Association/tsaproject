@@ -72,9 +72,8 @@ function updateUserDisplay(){
 }
 
 function displayGroupMessage(user, group, message) {
-	var scope = angular.element('[ng-controller=messageCtrl]').scope();
-	scope.displayGroupMessage(user, group, message);
-	scope.$apply();
+	var s = '#tab-'+group+'-spot';
+	$('#tab-'+group+'-spot').append(message);
 }
 function addTab(){
 	tabcount = tabcount+1;
@@ -107,11 +106,14 @@ app.controller('usersCtrl', function($scope) {
 });
 
 app.controller('messageCtrl', function($scope) {
+	// $scope.groups = [];
 	$scope.messages = [];
-
+	 $scope.messages[1] = [];
+	 $scope.messages[2] = [];
+	 $scope.messages[3] = [];
 	// Updates the scope's array that represents all of the messages.
 	$scope.displayGroupMessage = function(usr, grp, msg) {
-		console.log('Displaying group message in the scope.');
-		$scope.messages.push({user: usr, group: grp, message: msg});
+		console.log('Displaying group message in the scope.' + grp);
+			$scope.messages[2].push({user: usr, group: grp, message: msg});
 	}
 });

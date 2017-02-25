@@ -111,6 +111,7 @@ io.on('connection', function(socket){
 		send message to groups
 	**/
 	socket.on('groupMessage', function(user, group, message){
+		console.log(group);
 		if(auth(user)){
 			for (var i = 0; i<groups.length; i++){
 				if(group.id==groups[i].id){
