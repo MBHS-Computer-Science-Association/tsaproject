@@ -27,6 +27,13 @@
 
 		//Function for the setting popup
     	$( document ).ready(function() {
+				admin = user.isAdmin;
+				if(admin){
+				  $("#settings").append('<a class="item"><form><input id="createTab" class = "ui container" type ="text" style="width:100px"><input id="createTabB" type="button" autocomplete="off" value="Submit"></input></form></a>');
+				}
+				$("#createTabB").click(function(){
+				  addTab();
+				});
 				$("#nicknamesub").click(function(){
 					changeNickname($("#NicknameField").val());
 			    $("#NicknameField").val('');
@@ -98,12 +105,12 @@
 	<div class="ui purple vertical segment">
 		<h5>The one stop event app!</h5>
 	</div>
-		<div class = "ui raised purple center aligned top attached">
+		<div id="tabbingwut"class = "ui raised purple center aligned top attached">
 
 
 		<!-- Tab menu for seperating the discussions -->
 			<div id="menu"class="ui top attached tabular menu" style="float:left; width:80vw;">
-  				<a class="active item" data-tab="tab-1">Discussion</a>
+  			<a class="active item" data-tab="tab-1">Discussion</a>
  				<a class="item" data-tab="tab-2">Announcements</a>
  				<a class="item" data-tab="tab-3">Moderator Chat</a>
 				<a class="item" data-tab="tab-4">Important Information</a>
@@ -178,7 +185,7 @@
           <div class="ui one column relaxed divided grid">
             <div class="column">
               <h4 class="ui header">Settings</h4>
-              <div class="ui link list">
+              <div id="settings" class="ui link list">
                 <a class="item">
 									<form>
 							  		<input id="NicknameField" class = "ui container" type ="text" style="width:100px">
