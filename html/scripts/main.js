@@ -16,10 +16,6 @@ socket.emit('getUsers', function(users){
 	userList = users;
 });
 
-socket.emit('getAnnouncements', function(announcements){
-	// puts initial announcements down
-});
-
 socket.on('updateUserList', function(newUserList){
 	userList = newUserList;
 	updateUserDisplay();
@@ -30,10 +26,6 @@ socket.on('groupMessage', function(user, group, message){
 	displayGroupMessage(user, group, message);
 });
 
-socket.on('announcement', function(user, announcement){
-	// put down annoucement
-});
-
 socket.on('newGroup', function(newGroup){
 	// put down new group
 });
@@ -41,11 +33,6 @@ socket.on('newGroup', function(newGroup){
 //sends message to server
 function sendMessage(group, message){
 	socket.emit('groupMessage', thisUser, group, message);
-}
-
-//sends announcement to server
-function sendAnnouncement(user, announcement){
-	socket.emit('announcement', user, announcement);
 }
 
 // creates and returns a new user
@@ -58,7 +45,6 @@ function getNewUser(user, pass){
 function createNewGroup(user, groupName){
 	socket.emit('newGroup', user, groupName);
 }
-
 
 // Sets a user to the given status
 function setOnline(user){
