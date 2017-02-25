@@ -27,9 +27,9 @@
 
 		//Function for the setting popup
     	$( document ).ready(function() {
-				admin = user.isAdmin;
-				if(admin){
-				  $("#settings").append('<a class="item"><form><input id="createTab" class = "ui container" type ="text" style="width:100px"><input id="createTabB" type="button" autocomplete="off" value="Submit"></input></form></a>');
+				// admin = user.isAdmin;
+				if(true){
+				  $("#settings").append('<a class="item"><form><input id="createTab" class = "ui container" type ="text" style="width:100px"><input id="createTabB" type="button" autocomplete="off" value="AddTab"></input></form></a>');
 				}
 				$("#createTabB").click(function(){
 				  addTab();
@@ -189,7 +189,7 @@
                 <a class="item">
 									<form>
 							  		<input id="NicknameField" class = "ui container" type ="text" style="width:100px">
-							  		<input id="nicknamesub" type="button" autocomplete="off" value="Submit"></input>
+							  		<input id="nicknamesub" type="button" autocomplete="off" value="NickName"></input>
 									</form>
 								</a>
 								<div class="inline fields">
