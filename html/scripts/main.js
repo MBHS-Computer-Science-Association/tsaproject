@@ -2,7 +2,7 @@ var	socket = io();
 
 var groupList = [];
 var userList = [];
-
+var tabcount = 5;
 
 var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
 
@@ -76,7 +76,13 @@ function displayGroupMessage(user, group, message) {
 	scope.displayGroupMessage(user, group, message);
 	scope.$apply();
 }
-
+function addTab(){
+	tabcount = tabcount+1;
+	$("#menu").append('<a class="item" data-tab="tab-'+tabcount+'">'+$("#createTab").val()+'</a>');
+	$("#tabbingwut").append('<div class="ui attached tab segment" data-tab="tab-'+tabcount+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+	$('.menu .item')
+	.tab();
+}
 var app = angular.module('projectApp', []);
 
 // Controller for updating the Userlist on the client side
