@@ -94,6 +94,7 @@ io.on('connection', function(socket){
 		send message to groups
 	**/
 	socket.on('groupMessage', function(user, group, message){
+		console.log(group);
 		if(auth(user)){
 			for (var i = 0; i<groups.length; i++){
 				if(group.id==groups[i].id){
@@ -160,17 +161,21 @@ io.on('connection', function(socket){
 		gets list of users that are online
 	**/
 	socket.on('getUsers', function(callback){
-		// SECURITY: strip users of passwords before sending to client
-		var clientList = [];
-		users.forEach(function(user) {
-			clientList.push({nick: user.nick, status: user.status});
-		});
-		callback(clientList);
-		// callback(users);
+		callback(getStrippedUsers());
 	});
 
 	socket.on('setStatus', function(user, status){
+		if(auth(user)){
+			getUserObject(user).status = "online";
+		}
+		socket.emit('updateUserList', getStrippedUsers());
+	});
 
+	socket.on('setNickname', function(user, nick){
+		if(auth(user)){
+			getUserObject(user).nick = nick;
+		}
+		socket.emit('updateUserList', getStrippedUsers());
 	});
 
 	socket.on('', function(user){
@@ -208,4 +213,14 @@ function auth(user){
 **/
 function isAdmin(user){
 	return getUserObject(user).isAdmin;
+}
+
+// returns users stripped on passowrks
+function getStrippedUsers(){
+	// SECURITY: strip users of passwords before sending to client
+	var clientList = [];
+	users.forEach(function(user) {
+		clientList.push({nick: user.nick, status: user.status});
+	});
+	return clientList;
 }
