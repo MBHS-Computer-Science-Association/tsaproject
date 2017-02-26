@@ -12,7 +12,7 @@
 
     <!-- Semantic UI CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" integrity="sha256-BQwSEeLxuDggfePeFdo3V906rcvcJpkSAYr/Lqc2oSo="
-      crossorigin="anonymous" />
+      crossorigin="anonymous"/>
     <script type="text/javascript" src="lib/semantic.min.js"></script>
 
     <!-- AngularJS CDN -->
@@ -50,10 +50,6 @@
 
     	// Tabbing function
 			$( document ).ready(function() {
-    	$('.menu .item')
-  		.tab();
-  		});
-			$( document ).ready(function() {
 			  $('#menu .item').on('click', function() {
 			  	$('#menu .item').removeClass('online');
 			  	$(this).addClass('online');
@@ -67,7 +63,7 @@
 			      var content = $('#inputtext').val();
 			      var agroup = $('#menu .active').attr("data-tab").substring(4);
 			      console.log(content);
-						console.log(agroup);
+				  console.log(agroup);
 			      sendMessage(agroup,content);
 			      $('#inputtext').val('');
 			    });
@@ -106,7 +102,6 @@
 		<h5>The one stop event app!</h5>
 	</div>
 		<div id="tabbingwut"class = "ui raised purple center aligned top attached">
-
 
 		<!-- Tab menu for seperating the discussions -->
 			<div id="menu"class="ui top attached tabular menu" style="float:left; width:80vw;">
