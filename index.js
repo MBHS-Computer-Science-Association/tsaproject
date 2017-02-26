@@ -22,13 +22,10 @@ var users = [];
 var nextUserID = 1;
 
 function loadDB(){
-	
-  var isGetting = true;
-	while(isGetting){
-		var data = db.retrieveUsers( );
-		if()
+	var num = db.queryDB("SELECT count(*) from Users");
+	while(num-- > 0){
+		
 	}
-
 	users.push({
 		id: 0,
 		nick: "Bismarck",

@@ -19,68 +19,78 @@ var config = {
 function database(){
   const pool = new Pool(config);
 
-  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+  pool.connect().then(client => {
     return client.query('CREATE TABLE IF NOT EXISTS Users(info json NOT NULL)').then(() => client);
   }).then(client => client.release());
-  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+  pool.connect().then(client => {
     return client.query('CREATE TABLE IF NOT EXISTS Messages(info json NOT NULL)').then(() => client);
   }).then(client => client.release());
-  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+  pool.connect().then(client => {
     return client.query('CREATE TABLE IF NOT EXISTS Groups(info json NOT NULL)').then(() => client);
   }).then(client => client.release());
-  pool.connect().then(client => {                  // tableColumnsArray will not work like this as of right now TODO: change it!
+  pool.connect().then(client => {
     return client.query('CREATE TABLE IF NOT EXISTS Annoucements(info json NOT NULL)').then(() => client);
   }).then(client => client.release());
 }
 database();
 
+exxports.queryDB = function(queryVal){
+  var num = 0;
+  var query = null;
+  pool.connect().then(client => {
+  query = client.query({text: '$1', values: [queryVal]})}).then(client => client.release());
+  query.on('row', function(row) {
+    var num = row;
+  });
+    return num;
+};
+
 /*
-    id primary key
     json data
 */
-exports.insertIntoUsers = function(row, value){
+exports.insertIntoUsers = function(value){
   pool.connect().then(client => {
-    return client.query({text: 'INSERT INTO Users($1) VALUES($2);', values: [row, value]}).then(() => client);
+    return client.query({text: 'INSERT INTO Users(info) VALUES($1);', values: [value]}).then(() => client);
   }).then(client => client.release());
 };
 /*
-    id primary key
     json data
 */
 exports.insertIntoGroups = function(row, value){
   pool.connect().then(client => {
-    return client.query({text: 'INSERT INTO Groups($1) VALUES($2);', values: [row, value]}).then(() => client);
+    return client.query({text: 'INSERT INTO Groups(info) VALUES($1);', values: [value]}).then(() => client);
   }).then(client => client.release());
 };
 /*
     json data
 */
-exports.insertIntoMessages = function(row, value){
+exports.insertIntoMessages = function(value){
   pool.connect().then(client => {
-    return client.query({text: 'INSERT INTO Messages($1) VALUES($2);', values: [row, value]}).then(() => client);
+    return client.query({text: 'INSERT INTO Messages(info) VALUES($1);', values: [value]}).then(() => client);
   }).then(client => client.release());
 };
 /*
     json data
 */
-exports.insertIntoAnnouncements = function(row, value){
+exports.insertIntoAnnouncements = function(value){
   pool.connect().then(client => {
-    return client.query({text: 'INSERT INTO Announcements($1) VALUES($2);', values: [row, value]}).then(() => client);
+    return client.query({text: 'INSERT INTO Announcements(info) VALUES($1);', values: [value]}).then(() => client);
+  }).then(client => client.release());
+};
+
+//only information ever to be updated is user status, function to update user status
+exports.updateUserStatus = function(newValue, user){
+  pool.connect().then(client => {
+    return client.query({text: 'UPDATE Users SET $1 WHERE info#>>\'status\' AND info#>>\'name\'=$2', values: [newValue, user]}).then(() => client);
   }).then(client => client.release());
 };
 
 
-exports.updateUsers = function(newValue, column, jsonPathway, oldValue){
+
+exports.retrieveUsers = function(object){
+  var query = null;
   pool.connect().then(client => {
-    return client.query({text: 'UPDATE Users SET $1 WHERE info#>>\'status\'=$2', values: [newValue, oldValue]}).then(() => client);
-  }).then(client => client.release());
-};
-
-
-
-exports.retrieveUsers = function(toBeSelected, jsonPathway){
-  pool.connect().then(client => {
-    return client.query({text: 'SELECT $1#>>\'{#2}\' AS FROM Users', values: [toBeSelected, jsonPathway]}).then(() => client);
+    return client.query({text: 'SELECT info ->\'#1\' AS #2 FROM Users', values: [obect, object]}).then(() => client);
   }).then(client => client.release());
 };
 exports.retrieveGroups = function(toBeSelected, jsonPathway){
