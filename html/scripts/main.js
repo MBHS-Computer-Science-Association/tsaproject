@@ -2,14 +2,14 @@ var	socket = io();
 
 var groupList = [];
 var userList = [];
-var tabcount = grouplist.length;
+var tabcount = groupList.length;
 
 var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
 
 socket.emit('getGroups', function(groups){
 	// puts initial groups down
 	groupList = groups;
-	tabcount = grouplist.length;
+	tabcount = groupList.length;
 	updateGroups(groupList);
 });
 
@@ -73,21 +73,30 @@ function updateUserDisplay(){
 	scope.$apply();
 }
 function updateGroups(grp){
+	console.log(grp);
 	for(i = 0; i<grp.length;i++){
-		$("#menu").append('<a class="item" data-tab="tab-'+grp.id+'">'+grp.name+'</a>');
-		$("#tabbingwut").append('<div class="ui attached tab segment" data-tab="tab-'+grp.id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+		if(i==0){
+			$("#menu").append('<a class="active item" data-tab="tab-'+grp[i].id+'">'+grp[i].name+'</a>');
+			$("#tabbingwut").append('<div id="tab-'+grp[i].id+'" class="ui attached tab segment active" data-tab="tab-'+grp[i].id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+			$('.menu .item')
+			.tab();
+		}else{
+		$("#menu").append('<a class="item" data-tab="tab-'+grp[i].id+'">'+grp[i].name+'</a>');
+		$("#tabbingwut").append('<div id="tab-'+grp[i].id+'" class="ui attached tab segment" data-tab="tab-'+grp[i].id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 		$('.menu .item')
-		.tab();
+		.tab();}
 	}
+
 }
 function displayGroupMessage(user, group, message) {
 	var s = '#tab-'+group+'-spot';
-	$('#tab-'+group+'-spot').append(message);
+	var outline = '<div class= \"ui bottom attached purple text segment\">' + user.name + ': ' + message + "</div>"
+	$('#tab-'+group).append(outline);
 }
 function addTab(){
 	tabcount = tabcount+1;
 	$("#menu").append('<a class="item" data-tab="tab-'+tabcount+'">'+$("#createTab").val()+'</a>');
-	$("#tabbingwut").append('<div class="ui attached tab segment" data-tab="tab-'+tabcount+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+	$("#tabbingwut").append('<div id="tab-'+tabcount+'" class="ui attached tab segment" data-tab="tab-'+tabcount+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 	$('.menu .item')
 	.tab();
 }
