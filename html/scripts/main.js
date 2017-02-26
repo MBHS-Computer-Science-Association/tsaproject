@@ -2,13 +2,15 @@ var	socket = io();
 
 var groupList = [];
 var userList = [];
-var tabcount = 5;
+var tabcount = grouplist.length;
 
 var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
 
 socket.emit('getGroups', function(groups){
 	// puts initial groups down
 	groupList = groups;
+	tabcount = grouplist.length;
+	updateGroups(groupList);
 });
 
 socket.emit('getUsers', function(users){
@@ -70,7 +72,14 @@ function updateUserDisplay(){
 	scope.setUserList(userList);
 	scope.$apply();
 }
-
+function updateGroups(grp){
+	for(i = 0; i<grp.length;i++){
+		$("#menu").append('<a class="item" data-tab="tab-'+grp.id+'">'+grp.name+'</a>');
+		$("#tabbingwut").append('<div class="ui attached tab segment" data-tab="tab-'+grp.id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+		$('.menu .item')
+		.tab();
+	}
+}
 function displayGroupMessage(user, group, message) {
 	var s = '#tab-'+group+'-spot';
 	$('#tab-'+group+'-spot').append(message);
