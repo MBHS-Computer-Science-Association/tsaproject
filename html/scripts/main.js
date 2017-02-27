@@ -28,8 +28,10 @@ socket.on('groupMessage', function(user, group, message){
 	displayGroupMessage(user, group, message);
 });
 
-socket.on('newGroup', function(newGroup){
-	// put down new group
+socket.on('newGroup', function(newGroupList){
+	console.log('New Group');
+	groupList = newGroupList;
+	updateGroups(groupList);
 });
 
 //sends message to server
@@ -45,6 +47,7 @@ function getNewUser(user, pass){
 }
 
 function createNewGroup(user, groupName){
+	console.log('creation of new group');
 	socket.emit('newGroup', user, groupName);
 }
 
@@ -90,7 +93,7 @@ function updateGroups(grp){
 }
 function displayGroupMessage(user, group, message) {
 	var s = '#tab-'+group+'-spot';
-	var outline = '<div class= \"ui bottom attached purple text segment\">' + user.name + ': ' + message + "</div>"
+	var outline = '<div class= \"ui bottom attached purple text segment\">' + thisUser.nick + ': ' + message + "</div>"
 	$('#tab-'+group).append(outline);
 }
 function addTab(){
