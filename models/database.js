@@ -15,9 +15,9 @@ var config = {
   max: 10,
   idleTimeoutMillis: 30000
 };
+const pool = new Pool(config);
 
 function database(){
-  const pool = new Pool(config);
 
   pool.connect().then(client => {
     return client.query('CREATE TABLE IF NOT EXISTS Users(info json NOT NULL)').then(() => client);
@@ -34,17 +34,12 @@ function database(){
 }
 database();
 
-exxports.queryDB = function(queryVal){
-  var num = 0;
-  var query = null;
+exports.queryDB = function(value){
   pool.connect().then(client => {
-  query = client.query({text: '$1', values: [queryVal]})}).then(client => client.release());
-  query.on('row', function(row) {
-    var num = row;
-  });
-    return num;
+    return client.query({text: '$1', values: [value]}).then(() => client);
+  }).then(client => client.release());
+  console.log('this worked');
 };
-
 /*
     json data
 */
@@ -87,24 +82,26 @@ exports.updateUserStatus = function(newValue, user){
 
 
 
-exports.retrieveUsers = function(object){
-  var query = null;
+exports.retrieveUsers = function(object, val){
+  console.log('yes')
   pool.connect().then(client => {
-    return client.query({text: 'SELECT info ->\'#1\' AS #2 FROM Users', values: [obect, object]}).then(() => client);
+    return client.query({text: 'SELECT info -> \'$1\' AS $2 FROM Users;', values: [object, val]}, function(err, result){
+      console.log('hi :::: ' + err);
+    }).then(() => client);
   }).then(client => client.release());
 };
 exports.retrieveGroups = function(toBeSelected, jsonPathway){
   pool.connect().then(client => {
-    return client.query({text: 'SELECT $1#>>\'{#2}\' AS FROM Groups', values: [toBeSelected, jsonPathway]}).then(() => client);
+    return client.query({text: 'SELECT $1#>>\'{$2}\' AS FROM Groups;', values: [toBeSelected, jsonPathway]}).then(() => client);
   }).then(client => client.release());
 };
 exports.retrieveMessages = function(toBeSelected, jsonPathway){
   pool.connect().then(client => {
-    return client.query({text: 'SELECT $1#>>\'{#2}\' AS FROM Messages', values: [toBeSelected, jsonPathway]}).then(() => client);
+    return client.query({text: 'SELECT $1#>>\'{$2}\' AS FROM Messages;', values: [toBeSelected, jsonPathway]}).then(() => client);
   }).then(client => client.release());
 };
 exports.retrieveAnnouncements = function(toBeSelected, jsonPathway, table){
   pool.connect().then(client => {
-    return client.query({text: 'SELECT $1#>>\'{#2}\' AS FROM Annoucements', values: [toBeSelected, jsonPathway]}).then(() => client);
+    return client.query({text: 'SELECT $1#>>\'{$2}\' AS FROM Annoucements;', values: [toBeSelected, jsonPathway]}).then(() => client);
   }).then(client => client.release());
 };
