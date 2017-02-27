@@ -32,7 +32,7 @@
 				  $("#settings").append('<a class="item"><form><input id="createTab" class = "ui container" type ="text" style="width:100px"><input id="createTabB" type="button" autocomplete="off" value="AddTab"></input></form></a>');
 				}
 				$("#createTabB").click(function(){
-				  addTab();
+				  createNewGroup(this,user,$("#createTab"));
 				});
 				$("#nicknamesub").click(function(){
 					changeNickname($("#NicknameField").val());
