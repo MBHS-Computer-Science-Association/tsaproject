@@ -32,7 +32,7 @@ database();
 exports.addUser = function(array){
   db.query("INSERT INTO users(info) VALUES($1)", [JSON.stringify(array)]);
 }
-exports.getAllUsers = function(){
+exports.getAllUsers = function(func){
   var row = [];
   var data = [];
   var query = db.query('SELECT * FROM users');
@@ -40,6 +40,6 @@ exports.getAllUsers = function(){
         data.push({id: row.info.id, nick: row.info.nick, pass: row.info.pass, status: row.info.status});
     });
     query.on('end', function(){
-      return data;
-    })
+      func(data);
+    });
 }
