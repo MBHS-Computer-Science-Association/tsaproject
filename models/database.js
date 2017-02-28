@@ -83,11 +83,12 @@ exports.updateUserStatus = function(newValue, user){
 
 
 exports.retrieveUsers = function(object, val){
-  console.log('yes')
+  console.log('yes');
   pool.connect().then(client => {
-    return client.query({text: 'SELECT info -> \'$1\' AS $2 FROM Users;', values: [object, val]}, function(err, result){
-      console.log('hi :::: ' + err);
-    }).then(() => client);
+    return client.query({text: 'SELECT info -> \'$1\' AS $2 FROM Users;', values: [object, val]
+  }).then(() => client).then(res => {
+    console.log(res.rows[0]); console.log('hi')
+  });
   }).then(client => client.release());
 };
 exports.retrieveGroups = function(toBeSelected, jsonPathway){
