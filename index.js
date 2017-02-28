@@ -124,7 +124,7 @@ io.on('connection', function(socket){
 		newGroup.messages = new Array();
 		// write to DB
 		groups.push(newGroup);
-		io.emit('newGroup', newGroup);
+		io.emit('newGroup', groups);
 	});
 
 	/**
