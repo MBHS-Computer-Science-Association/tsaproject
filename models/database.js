@@ -21,10 +21,10 @@ function database(){
   db.connect(function(err) {
     if (err) throw err;
     console.log('PostgreSQL is connected!');
-    db.query('CREATE TABLE IF NOT EXISTS users(info json NOT NULL)');
-    db.query('CREATE TABLE IF NOT EXISTS messages(info json NOT NULL)');
-    db.query('CREATE TABLE IF NOT EXISTS groups(info json NOT NULL)');
-    db.query('CREATE TABLE IF NOT EXISTS announcements(info json NOT NULL)');
+    db.query('CREATE TABLE IF NOT EXISTS users(info JSON NOT NULL);');
+    db.query('CREATE TABLE IF NOT EXISTS messages(info JSON NOT NULL);');
+    db.query('CREATE TABLE IF NOT EXISTS groups(info JSON NOT NULL);');
+    db.query('CREATE TABLE IF NOT EXISTS announcements(info JSON NOT NULL);');
   });
 }
 database();
@@ -32,9 +32,14 @@ database();
 exports.addUser = function(array){
   db.query("INSERT INTO users(info) VALUES($1)", [JSON.stringify(array)]);
 }
-exports.getAllUsers = function(array){
+exports.getAllUsers = function(){
+  var row = [];
+  var data = [];
   var query = db.query('SELECT * FROM users');
     query.on('row', function(row, result) {
-        rows.unshift(row.data);
+        data.push({id: row.info.id, nick: row.info.nick, pass: row.info.pass, status: row.info.status});
     });
+    query.on('end', function(){
+      return data;
+    })
 }

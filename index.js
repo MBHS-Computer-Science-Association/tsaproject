@@ -1,6 +1,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var db = require(__dirname + '/models/database.js');
 
 var port = process.env.PORT || 3000;
 
@@ -22,58 +23,8 @@ var users = [];
 var nextUserID = 1;
 
 function loadDB(){
-	var num = db.queryDB("SELECT count(*) from Users");
-	while(num-- > 0){
-		
-	}
-	users.push({
-		id: 0,
-		nick: "Bismarck",
-		pass: "password",
-		status: "online"
-	});
-
-	users.push({
-		id: nextUserID++,
-		nick: "Nicholas",
-		pass: "passwd",
-		status: "online"
-	});
-
-	users.push({
-		id: nextUserID++,
-		nick: "Charles",
-		pass: "passwd",
-		status: "offline"
-	});
-
-	users.push({
-		id: nextUserID++,
-		nick: "Lars",
-		pass: "passwd",
-		status: "offline"
-	});
-
-	users.push({
-		id: nextUserID++,
-		nick: "Roth",
-		pass: "passwd",
-		status: "offline"
-	});
-
-
-	users.push({
-		id: nextUserID++,
-		nick: "Leo X",
-		pass: "passwd",
-		status: "online"
-	});
-
-	groups.push({
-		id: 0,
-		messages: [],
-		name: "Group Name"
-	});
+	users = db.getAllUsers();
+	console.log(users);
 }
 
 loadDB();
