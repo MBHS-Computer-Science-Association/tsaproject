@@ -31,7 +31,7 @@ database();
 
 exports.addUser = function(array){
   db.query("INSERT INTO users(info) VALUES($1)", [JSON.stringify(array)]);
-}
+};
 exports.getAllUsers = function(){
   var row = [];
   var data = [];
@@ -41,5 +41,5 @@ exports.getAllUsers = function(){
     });
     query.on('end', function(){
       return data;
-    })
-}
+    });
+};
