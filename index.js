@@ -23,8 +23,9 @@ var users = [];
 var nextUserID = 1;
 
 function loadDB(){
-	users = db.getAllUsers();
-	console.log(users);
+	db.getAllUsers((data)=>{
+		users = data;
+	});
 }
 
 loadDB();
