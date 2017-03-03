@@ -6,6 +6,8 @@ var tabcount = groupList.length;
 
 var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
 
+getNewUser("Default", "hunter2");
+
 socket.emit('getGroups', function(groups){
 	// puts initial groups down
 	groupList = groups;
@@ -25,6 +27,7 @@ socket.on('updateUserList', function(newUserList){
 
 socket.on('groupMessage', function(user, group, message){
 	// put down group message
+	console.log(message);
 	displayGroupMessage(user, group, message);
 });
 
@@ -36,13 +39,15 @@ socket.on('newGroup', function(newGroupList){
 
 //sends message to server
 function sendMessage(group, message){
-	socket.emit('groupMessage', thisUser, group, message);
+	console.log(thisUser);
+	socket.emit('groupMessage', thisUser, group, thisUser.nick + ': ' + message);
+	console.log("Message Sent!");
 }
 
 // creates and returns a new user
-function getNewUser(user, pass){
-	return socket.emit('newUser', user, pass, function(user){
-		return user;
+function getNewUser(name, pass){
+	socket.emit('newUser', name, pass, function(user){
+		thisUser = user;
 	});
 }
 
@@ -93,7 +98,7 @@ function updateGroups(grp){
 }
 function displayGroupMessage(user, group, message) {
 	var s = '#tab-'+group+'-spot';
-	var outline = '<div class= \"ui bottom attached purple text segment\">' + thisUser.nick + ': ' + message + "</div>"
+	var outline = '<div class= \"ui bottom attached purple text segment\">' + message + "</div>"
 	$('#tab-'+group).append(outline);
 }
 function addTab(){

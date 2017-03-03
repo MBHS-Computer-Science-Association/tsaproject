@@ -111,7 +111,6 @@ io.on('connection', function(socket){
 		send message to groups
 	**/
 	socket.on('groupMessage', function(user, group, message){
-		console.log(group);
 		if(auth(user)){
 			for (var i = 0; i<groups.length; i++){
 				if(group.id==groups[i].id){
@@ -151,13 +150,15 @@ io.on('connection', function(socket){
 		creates a new user
 	**/
 	socket.on('newUser', function(name, pass, callback){
-		var newUser;
-		newUser.name = name;
+		var newUser = {};
+		newUser.nick = name;
 		newUser.pass = pass;
+		newUser.status = "online";
+		//newUser.id =nextUserID++;
 		newUser.id =nextUserID++;
 		users.push(newUser);
 		// write to DB
-		callback(user);
+		callback(newUser);
 	});
 
 	/**
