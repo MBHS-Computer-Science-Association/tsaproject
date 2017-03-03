@@ -47,9 +47,9 @@ function loadDB(){
 	// Database mock
 	// remove when database code is working
 	users.push({
-		id: 0, 
-		nick: "Bismarck", 
-		pass: "password", 
+		id: 0,
+		nick: "Bismarck",
+		pass: "password",
 		status: "online"
 	});
 
@@ -91,7 +91,7 @@ function loadDB(){
 
 	groups.push({
 		id: 0,
-		messages: [], 
+		messages: [],
 		name: "Group Name"
 	});
 }

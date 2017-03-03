@@ -43,7 +43,22 @@
 								hide: 800
 			}});
 			  });
+			// Admin function
+			function updateAdmin(){
+				if(!user.admin){
+					var g = parseInt($('#menu .active').attr("data-tab").substring(4));
+					var a = groupList[g].isAdmin;
+					if(a){
+						$("#inputtext").prop('disabled',true);
+					}
+				}
+				if(user.admin){
+					$("#settings").append('<a class="item"><form><input id="createTab" class = "ui container" type ="text" style="width:100px"><input id="createTabB" type="button" autocomplete="off" value="AddTab"></input></form></a>');
+				}
+			}
+			function checkAdmin(){
 
+			}
     	// Tabbing function
 			$( document ).ready(function() {
 				//image upload
@@ -59,12 +74,7 @@
 			  $('#menu .item').on('click', function() {
 			  	$('#menu .item').removeClass('online');
 			  	$(this).addClass('online');
-					var admin = user.isAdmin;
-					if(!admin){
-						var g = parseInt($('#menu .active').attr("data-tab").substring(4));
-						var a = groupList[g].isAdmin;
-						$("#inputtext").prop('disabled',true);
-					}
+					updateAdmin();
 			  	});
 			  	});
 				//SendingMessages
@@ -74,15 +84,9 @@
 						// We don't have a way to get the user or the group yet.
 			      var content = $('#inputtext').val();
 			      // var agroup = $('#menu .active').attr("data-tab").substring(4);
-			      console.log(content);
-				  console.log(agroup);
 			      sendMessage(agroup,content);
 			      $('#inputtext').val('');
 			    });
-					var admin = user.isAdmin;
-					if(admin){
-					  $("#settings").append('<a class="item"><form><input id="createTab" class = "ui container" type ="text" style="width:100px"><input id="createTabB" type="button" autocomplete="off" value="AddTab"></input></form></a>');
-					}
 			  });
 				//Themeing
 			  $(document).ready(function(){

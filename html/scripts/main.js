@@ -103,6 +103,7 @@ function addTab(){
 	$('.menu .item')
 	.tab();
 }
+
 var app = angular.module('projectApp', []);
 
 // Controller for updating the Userlist on the client side
