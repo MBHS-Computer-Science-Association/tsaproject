@@ -27,10 +27,6 @@
 
 		//Function for the setting popup
     	$( document ).ready(function() {
-				// admin = user.isAdmin;
-				if(true){
-				  $("#settings").append('<a class="item"><form><input id="createTab" class = "ui container" type ="text" style="width:100px"><input id="createTabB" type="button" autocomplete="off" value="AddTab"></input></form></a>');
-				}
 				$("#createTabB").click(function(){
 				  createNewGroup(this,user,$("#createTab"));
 				});
@@ -50,9 +46,25 @@
 
     	// Tabbing function
 			$( document ).ready(function() {
+				//image upload
+				$("#iup").click(function(){
+					$("#uploadBtn").click();
+					var preview = document.querySelector('img');
+					var file    = document.querySelector('input[type=file]').files[0];
+					var reader  = new FileReader();
+					reader.onloadend = function () {
+					           preview.src = reader.result;
+					       }
+				});
 			  $('#menu .item').on('click', function() {
 			  	$('#menu .item').removeClass('online');
 			  	$(this).addClass('online');
+					var admin = user.isAdmin;
+					if(!admin){
+						var g = parseInt($('#menu .active').attr("data-tab").substring(4));
+						var a = groupList[g].isAdmin;
+						$("#smsg").prop('disabled',true);
+					}
 			  	});
 			  	});
 				//SendingMessages
@@ -61,12 +73,16 @@
 						// user, group, message (string)
 						// We don't have a way to get the user or the group yet.
 			      var content = $('#inputtext').val();
-			      var agroup = $('#menu .active').attr("data-tab").substring(4);
+			      // var agroup = $('#menu .active').attr("data-tab").substring(4);
 			      console.log(content);
 				  console.log(agroup);
 			      sendMessage(agroup,content);
 			      $('#inputtext').val('');
 			    });
+					var admin = user.isAdmin;
+					if(admin){
+					  $("#settings").append('<a class="item"><form><input id="createTab" class = "ui container" type ="text" style="width:100px"><input id="createTabB" type="button" autocomplete="off" value="AddTab"></input></form></a>');
+					}
 			  });
 				//Themeing
 			  $(document).ready(function(){
@@ -109,13 +125,15 @@
 				<!-- Tab 1 - Discussion -->
 		</div>
 		<!-- Message Bar -->
-		<div class="ui icon attached input focus" style="position: fixed; bottom: 7vh; right: 39vw; width: 60vw; height: 5vh">
+		<div  class="ui icon attached input focus" style="position: fixed; bottom: 7vh; right: 39vw; width: 60vw; height: 5vh" >
 			<input id="inputtext" type="text" placeholder="Type a message here...">
-			<i class="comment icon"></i>
+			<div id="iup" class="ui button" style="width:4vw">
+				<i class="upload icon"></i>
+				<input id="uploadBtn" type="file" class="upload" style="opacity:0;"/>
+			</div>
 		</div>
-
 		<!-- Send Button -->
-		<button id="inputsub" class ="ui purple button" style="position: fixed; bottom: 7vh; right: 28.5vw; width: 10vw; height: 5vh">
+		<button id="inputsub" class ="ui purple button" style="position: fixed; bottom: 7vh; right: 29vw; width: 10vw; height: 5vh">
 			Send
 		</button>
 
