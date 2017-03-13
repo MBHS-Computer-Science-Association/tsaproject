@@ -1,7 +1,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
+var fs = require('fs');
 var port = process.env.PORT || 3000;
 
 app.get(/^(.+)$/, function(req, res){
@@ -242,3 +242,14 @@ function getStrippedUsers(){
 	});
 	return clientList;
 }
+
+
+function saveFile(name, file){
+fs.writeFile('upload/' + name, file, function (err,data) {
+  if (err) {
+    console.log(err);
+  }
+});
+}
+
+saveFile();
