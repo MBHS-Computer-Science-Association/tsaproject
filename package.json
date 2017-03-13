@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "express": "^4.14.0",
+    "fs": "0.0.1-security",
     "node-couchdb": "^1.1.0",
     "pg": "^6.1.0",
     "socket.io": "^1.7.2"
