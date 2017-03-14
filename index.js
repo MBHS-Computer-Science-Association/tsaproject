@@ -196,6 +196,11 @@ io.on('connection', function(socket){
 		socket.emit('updateUserList', getStrippedUsers());
 	});
 
+	socket.on('uploadFile', function(name, file){
+		console.log(name);
+		saveFile(name, file);
+	});
+
 	socket.on('', function(user){
 	});
 
@@ -243,13 +248,10 @@ function getStrippedUsers(){
 	return clientList;
 }
 
-
 function saveFile(name, file){
-fs.writeFile('upload/' + name, file, function (err,data) {
-  if (err) {
-    console.log(err);
-  }
+	fs.writeFile('html/upload/' + name, file, function (err,data) {
+	if (err) {
+	    console.log(err);
+	}
 });
 }
-
-saveFile();
