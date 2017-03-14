@@ -108,6 +108,9 @@ function addTab(){
 	$('.menu .item')
 	.tab();
 }
+function uploadfile(file){
+	
+}
 
 var app = angular.module('projectApp', []);
 

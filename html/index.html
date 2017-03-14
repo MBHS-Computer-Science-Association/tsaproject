@@ -62,14 +62,12 @@
     	// Tabbing function
 			$( document ).ready(function() {
 				//image upload
-				$("#iup").click(function(){
-					$("#uploadBtn").click();
-					var preview = document.querySelector('img');
-					var file    = document.querySelector('input[type=file]').files[0];
-					var reader  = new FileReader();
-					reader.onloadend = function () {
-					           preview.src = reader.result;
-					       }
+				$("#divUpload").on("click", function() {
+   				$('#hidde-new-file').click();
+				});
+				$("#hidde-new-file").change(function() {
+					uploadfile($('#hidde-new-file')[0].files[0]);
+					console.log($('#hidde-new-file')[0].files[0]);
 				});
 			  $('#menu .item').on('click', function() {
 			  	$('#menu .item').removeClass('online');
@@ -126,15 +124,16 @@
 		<!-- Tab menu for seperating the discussions -->
 			<div id="menu"class="ui top attached tabular menu" style="float:left; width:80vw;">
 			</div>
-				<!-- Tab 1 - Discussion -->
 		</div>
-		<!-- Message Bar -->
+		<!-- Message Bar and Upload File-->
 		<div  class="ui icon attached input focus" style="position: fixed; bottom: 7vh; right: 39vw; width: 60vw; height: 5vh" >
 			<input id="inputtext" type="text" placeholder="Type a message here...">
-			<div id="iup" class="ui button" style="width:4vw">
-				<i class="upload icon"></i>
-				<input id="uploadBtn" type="file" class="upload" style="opacity:0;"/>
-			</div>
+			<div class="ui icon big button" id="divUpload">
+        <i class="cloud icon"></i>
+			 </div>
+			 <form enctype="multipart/form-data" method="post">
+			 	<input type="file" id="hidde-new-file" style="display: none">
+			</form>
 		</div>
 		<!-- Send Button -->
 		<button id="inputsub" class ="ui purple button" style="position: fixed; bottom: 7vh; right: 29vw; width: 10vw; height: 5vh">
