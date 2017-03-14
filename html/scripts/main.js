@@ -110,8 +110,13 @@ function addTab(){
 }
 
 function uploadfile(file){
+	var fileName = file.name;
 	console.log(file.name);
-	socket.emit('uploadFile', file.name, file);	
+	socket.emit('uploadFile', file.name, file, function(){
+		console.log("Sending image message");
+		console.log(file.name);
+		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"">');
+	});	
 }
 
 var app = angular.module('projectApp', []);
