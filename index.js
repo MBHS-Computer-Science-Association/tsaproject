@@ -196,9 +196,10 @@ io.on('connection', function(socket){
 		socket.emit('updateUserList', getStrippedUsers());
 	});
 
-	socket.on('uploadFile', function(name, file){
+	socket.on('uploadFile', function(name, file, callback){
 		console.log(name);
 		saveFile(name, file);
+		callback();
 	});
 
 	socket.on('', function(user){
