@@ -116,7 +116,16 @@ function uploadfile(file){
 		console.log("Sending image message");
 		console.log(file.name);
 		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"">');
-	});	
+	});
+}
+function loadLandingPage(){
+	tabcount = tabcount+1;
+	code = 	getLandingCode();//string of htmlcode
+	$("#menu").append('<a class="item" data-tab="tab-'+tabcount+'">'+$("#createTab").val()+'</a>');
+	$("#tabbingwut").append('<div id="tab-'+tabcount+'" class="ui attached tab segment" data-tab="tab-'+tabcount+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+	$('.menu .item')
+	.tab();
+	$("#tab-"+tabcount).append(code);
 }
 
 var app = angular.module('projectApp', []);
