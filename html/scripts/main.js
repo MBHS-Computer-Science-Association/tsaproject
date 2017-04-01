@@ -3,6 +3,8 @@ var	socket = io();
 var groupList = [];
 var userList = [];
 var tabcount = groupList.length;
+var oc = 0 //temp old length of group list
+var nc = groupList.length; //temp new length of group listl
 
 var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
 getNewUser("Default", "hunter2");
@@ -33,6 +35,7 @@ socket.on('groupMessage', function(user, group, message){
 socket.on('newGroup', function(newGroupList){
 	console.log('New Group');
 	groupList = newGroupList;
+	nc = groupList.length;
 	updateGroups(groupList);
 });
 
@@ -91,12 +94,22 @@ function getCode(grp){
 	getLandingCode(grp);
 }
 function updateGroups(grp){
+	if(nc-oc!=1){
 	for(i = 0; i<grp.length;i++){
+		oc++;
 		$("#menu").append('<a class="item" data-tab="tab-'+grp[i].id+'">'+grp[i].name+'</a>');
 		$("#tabbingwut").append('<div id="tab-'+grp[i].id+'" class="ui attached tab segment" data-tab="tab-'+grp[i].id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 		$('.menu .item')
 		.tab();}
+	}else{
+		$("#menu").append('<a class="item" data-tab="tab-'+grp[oc].id+'">'+grp[oc].name+'</a>');
+		$("#tabbingwut").append('<div id="tab-'+grp[oc].id+'" class="ui attached tab segment" data-tab="tab-'+grp[oc].id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+		$('.menu .item')
+		.tab();
+		oc++;
 	}
+}
+
 
 
 function displayGroupMessage(user, group, message) {
@@ -123,9 +136,9 @@ function uploadfile(file){
 }
 function loadLandingPage(code,grp){
 	tabcount = tabcount+1;
-	$("#menu").append('<a class="active item" data-tab="tab-0"> Landing Page </a>');
-	$("#tabbingwut").append('<div id="tab-0" class="ui attached tab segment" data-tab="tab-0" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
-	$("#tab-0").append(code);
+	$("#menu").append('<a class="active item" data-tab="tab-L"> Landing Page </a>');
+	$("#tabbingwut").append('<div id="tab-L" class="ui attached tab segment active" data-tab="tab-L" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+	$("#tab-L").append(code);
 	$('.menu .item')
 	.tab();
 	updateGroups(grp);
