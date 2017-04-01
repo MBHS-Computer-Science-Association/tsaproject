@@ -137,7 +137,7 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('newGroup', function(user, groupName){
-		var newGroup;
+		var newGroup = {};
 		newGroup.id = nextGroupID++;
 		newGroup.name = groupName;
 		newGroup.messages = new Array();
@@ -207,7 +207,6 @@ io.on('connection', function(socket){
 			if (err) {
     			console.log(err);
   			}
-  			console.log(data);
   			callback(data);
 		});
 	});
