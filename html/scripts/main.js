@@ -34,7 +34,7 @@ socket.on('groupMessage', function(user, group, message){
 socket.on('newGroup', function(newGroupList){
 	console.log('New Group');
 	groupList = newGroupList;
-	updateGroups(groupList);
+	getcode(groupList);
 });
 
 //sends message to server
@@ -51,11 +51,11 @@ function getNewUser(name, pass){
 	});
 }
 
-function getLandingCode(){
+function getLandingCode(grp){
 	var code = "404";
 	socket.emit('getLandingCode', function(callback){
 		code = callback;
-		loadLandingPage(code);
+		loadLandingPage(code,grp);
 	});
 }
 
@@ -88,15 +88,11 @@ function updateUserDisplay(){
 	scope.setUserList(userList);
 	scope.$apply();
 }
+function getCode(grp){
+	getLandingCode(grp);
+}
 function updateGroups(grp){
-	getLandingCode();
 	for(i = 0; i<grp.length;i++){
-		if(i==0){
-			$("#menu").append('<a class="active item" data-tab="tab-'+grp[i].id+'">'+grp[i].name+'</a>');
-			$("#tabbingwut").append('<div id="tab-'+grp[i].id+'" class="ui attached tab segment active" data-tab="tab-'+grp[i].id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
-			$('.menu .item')
-			.tab();
-		}else{
 		$("#menu").append('<a class="item" data-tab="tab-'+grp[i].id+'">'+grp[i].name+'</a>');
 		$("#tabbingwut").append('<div id="tab-'+grp[i].id+'" class="ui attached tab segment" data-tab="tab-'+grp[i].id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 		$('.menu .item')
@@ -127,13 +123,14 @@ function uploadfile(file){
 		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"" width="200px"  height="200px">');
 	});
 }
-function loadLandingPage(a){
+function loadLandingPage(a,grp){
 	tabcount = tabcount+1;
-	$("#menu").append('<a class="item" data-tab="tab-'+0+'">'+$("#createTab").val()+'</a>');
+	$("#menu").append('<a class="active item" data-tab="tab-'+0+'">'+'Landing Page'+'</a>');
 	$("#tabbingwut").append('<div id="tab-'+0+'" class="ui attached tab segment" data-tab="tab-'+0+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 	$('.menu .item')
 	.tab();
 	$("#tab-"+0).append(a);
+	updateGroups(grp);
 }
 
 var app = angular.module('projectApp', []);
