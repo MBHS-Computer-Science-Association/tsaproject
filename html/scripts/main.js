@@ -5,7 +5,6 @@ var userList = [];
 var tabcount = groupList.length;
 
 var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
-var code = "";
 getNewUser("Default", "hunter2");
 
 socket.emit('getGroups', function(groups){
@@ -122,14 +121,13 @@ function uploadfile(file){
 		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"" width="200px"  height="200px">');
 	});
 }
-function loadLandingPage(a,grp){
+function loadLandingPage(code,grp){
 	tabcount = tabcount+1;
 	$("#menu").append('<a class="active item" data-tab="tab-0"> Landing Page </a>');
 	$("#tabbingwut").append('<div id="tab-0" class="ui attached tab segment" data-tab="tab-0" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
-	$("#tab-0").append(a);
+	$("#tab-0").append(code);
 	$('.menu .item')
 	.tab();
-	
 	updateGroups(grp);
 }
 
