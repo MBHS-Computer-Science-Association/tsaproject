@@ -115,7 +115,7 @@ function uploadfile(file){
 	socket.emit('uploadFile', file.name, file, function(){
 		console.log("Sending image message");
 		console.log(file.name);
-		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"">');
+		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"" width="200px"  height="200px">');
 	});
 }
 function loadLandingPage(){
