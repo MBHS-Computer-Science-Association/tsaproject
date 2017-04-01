@@ -126,9 +126,10 @@ function loadLandingPage(a,grp){
 	tabcount = tabcount+1;
 	$("#menu").append('<a class="active item" data-tab="tab-0"> Landing Page </a>');
 	$("#tabbingwut").append('<div id="tab-0" class="ui attached tab segment" data-tab="tab-0" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+	$("#tab-0").append(a);
 	$('.menu .item')
 	.tab();
-	$("#tab-0").append(a);
+	
 	updateGroups(grp);
 }
 
