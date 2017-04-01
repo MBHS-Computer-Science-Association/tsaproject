@@ -90,7 +90,7 @@ function loadDB(){
 	});
 
 	groups.push({
-		id: 0,
+		id: 1,
 		messages: [],
 		name: "Group Name"
 	});

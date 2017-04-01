@@ -129,11 +129,11 @@ function uploadfile(file){
 }
 function loadLandingPage(a){
 	tabcount = tabcount+1;
-	$("#menu").append('<a class="item" data-tab="tab-'+tabcount+'">'+$("#createTab").val()+'</a>');
-	$("#tabbingwut").append('<div id="tab-'+tabcount+'" class="ui attached tab segment" data-tab="tab-'+tabcount+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+	$("#menu").append('<a class="item" data-tab="tab-'+0+'">'+$("#createTab").val()+'</a>');
+	$("#tabbingwut").append('<div id="tab-'+0+'" class="ui attached tab segment" data-tab="tab-'+0+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 	$('.menu .item')
 	.tab();
-	$("#tab-"+tabcount).append(a);
+	$("#tab-"+0).append(a);
 }
 
 var app = angular.module('projectApp', []);
