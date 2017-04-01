@@ -202,6 +202,15 @@ io.on('connection', function(socket){
 		callback();
 	});
 
+	socket.on('getLandingCode', function(callback){
+		fs.readFile('/etc/hosts', 'utf8', function (err,data) {
+			if (err) {
+    			console.log(err);
+  			}
+		});
+		callback(data);
+	});
+
 	socket.on('', function(user){
 	});
 
