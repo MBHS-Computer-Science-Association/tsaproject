@@ -90,6 +90,7 @@ function updateUserDisplay(){
 }
 function updateGroups(grp){
 	console.log(grp);
+	loadLandingPage();
 	for(i = 0; i<grp.length;i++){
 		if(i==0){
 			$("#menu").append('<a class="active item" data-tab="tab-'+grp[i].id+'">'+grp[i].name+'</a>');
@@ -102,6 +103,7 @@ function updateGroups(grp){
 		$('.menu .item')
 		.tab();}
 	}
+
 
 }
 function displayGroupMessage(user, group, message) {
@@ -135,7 +137,6 @@ function loadLandingPage(){
 	.tab();
 	$("#tab-"+tabcount).append(code);
 }
-
 
 var app = angular.module('projectApp', []);
 
