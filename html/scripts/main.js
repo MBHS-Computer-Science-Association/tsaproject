@@ -55,8 +55,9 @@ function getLandingCode(){
 	var code = "404";
 	socket.emit('getLandingCode', function(callback){
 		code = callback;
+		console.log(code);
+		
 	});
-	return code;
 }
 
 function createNewGroup(user, groupName){

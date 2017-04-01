@@ -203,12 +203,13 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('getLandingCode', function(callback){
-		fs.readFile('/etc/hosts', 'utf8', function (err,data) {
+		fs.readFile('server/landing.html', 'utf8', function (err,data) {
 			if (err) {
     			console.log(err);
   			}
+  			console.log(data);
+  			callback(data);
 		});
-		callback(data);
 	});
 
 	socket.on('', function(user){
