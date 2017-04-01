@@ -51,6 +51,14 @@ function getNewUser(name, pass){
 	});
 }
 
+function getLandingCode(){
+	var code = "404";
+	socket.emit('getLandingCode', function(callback){
+		code = callback;
+	});
+	return code;
+}
+
 function createNewGroup(user, groupName){
 	console.log('creation of new group');
 	socket.emit('newGroup', user, groupName);
@@ -127,6 +135,7 @@ function loadLandingPage(){
 	.tab();
 	$("#tab-"+tabcount).append(code);
 }
+
 
 var app = angular.module('projectApp', []);
 
