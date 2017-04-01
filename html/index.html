@@ -78,12 +78,18 @@
 				//SendingMessages
 			  $(document).ready(function() {
 			    $('#inputsub').click(function() {
+					if($('#menu .active').attr("data-tab").substring(4)=="L"){
+						$("#inputtext").prop('disabled',true);
+					}else{
+						$("#inputtext").prop('disabled',false);
+						var content = $('#inputtext').val();
+						var agroup = $('#menu .active').attr("data-tab").substring(4);
+						sendMessage(parseInt(agroup),content);
+						$('#inputtext').val('');
+					}
 						// user, group, message (string)
 						// We don't have a way to get the user or the group yet.
-			      var content = $('#inputtext').val();
-			      var agroup = $('#menu .active').attr("data-tab").substring(4);
-			      sendMessage(parseInt(agroup),content);
-			      $('#inputtext').val('');
+			      
 			    });
 			  });
 
