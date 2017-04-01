@@ -12,7 +12,7 @@ socket.emit('getGroups', function(groups){
 	// puts initial groups down
 	groupList = groups;
 	tabcount = groupList.length;
-	updateGroups(groupList);
+	getCode(groupList);
 });
 
 socket.emit('getUsers', function(users){
@@ -34,7 +34,7 @@ socket.on('groupMessage', function(user, group, message){
 socket.on('newGroup', function(newGroupList){
 	console.log('New Group');
 	groupList = newGroupList;
-	getcode(groupList);
+	updateGroups(groupList);
 });
 
 //sends message to server
@@ -124,11 +124,11 @@ function uploadfile(file){
 }
 function loadLandingPage(a,grp){
 	tabcount = tabcount+1;
-	$("#menu").append('<a class="active item" data-tab="tab-'+0+'">'+'Landing Page'+'</a>');
-	$("#tabbingwut").append('<div id="tab-'+0+'" class="ui attached tab segment" data-tab="tab-'+0+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
+	$("#menu").append('<a class="active item" data-tab="tab-0"> Landing Page </a>');
+	$("#tabbingwut").append('<div id="tab-0" class="ui attached tab segment" data-tab="tab-0" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 	$('.menu .item')
 	.tab();
-	$("#tab-"+0).append(a);
+	$("#tab-0").append(a);
 	updateGroups(grp);
 }
 
