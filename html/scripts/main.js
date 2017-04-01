@@ -100,7 +100,6 @@ function updateGroups(grp){
 	}
 
 
-}
 function displayGroupMessage(user, group, message) {
 	var s = '#tab-'+group+'-spot';
 	var outline = '<div class= \"ui bottom attached purple text segment\">' + message + "</div>"
