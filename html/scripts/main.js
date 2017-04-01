@@ -5,7 +5,7 @@ var userList = [];
 var tabcount = groupList.length;
 
 var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
-
+var code = "";
 getNewUser("Default", "hunter2");
 
 socket.emit('getGroups', function(groups){
@@ -55,8 +55,7 @@ function getLandingCode(){
 	var code = "404";
 	socket.emit('getLandingCode', function(callback){
 		code = callback;
-		console.log(code);
-		
+		loadLandingPage(code);
 	});
 }
 
@@ -90,8 +89,7 @@ function updateUserDisplay(){
 	scope.$apply();
 }
 function updateGroups(grp){
-	console.log(grp);
-	loadLandingPage();
+	getLandingCode();
 	for(i = 0; i<grp.length;i++){
 		if(i==0){
 			$("#menu").append('<a class="active item" data-tab="tab-'+grp[i].id+'">'+grp[i].name+'</a>');
@@ -129,14 +127,13 @@ function uploadfile(file){
 		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"" width="200px"  height="200px">');
 	});
 }
-function loadLandingPage(){
+function loadLandingPage(a){
 	tabcount = tabcount+1;
-	code = 	getLandingCode();//string of htmlcode
 	$("#menu").append('<a class="item" data-tab="tab-'+tabcount+'">'+$("#createTab").val()+'</a>');
 	$("#tabbingwut").append('<div id="tab-'+tabcount+'" class="ui attached tab segment" data-tab="tab-'+tabcount+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 	$('.menu .item')
 	.tab();
-	$("#tab-"+tabcount).append(code);
+	$("#tab-"+tabcount).append(a);
 }
 
 var app = angular.module('projectApp', []);
