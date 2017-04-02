@@ -75,6 +75,7 @@ function setOnline(user){
 function changeNickname(name){
 	thisUser.nick=name;
 	socket.emit('setNickname',thisUser, name);
+	$("#NicknameField").val(name); // sets the change nickname input to requested nickname
 }
 
 // Grabs the users from the server and updates AngularJS with them
@@ -142,6 +143,7 @@ function loadLandingPage(code,grp){
 	$('.menu .item')
 	.tab();
 	updateGroups(grp);
+	$("#NicknameField").val(thisUser.nick); // sets the change nickname input to current nickname
 }
 
 var app = angular.module('projectApp', []);
