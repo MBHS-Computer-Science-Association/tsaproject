@@ -100,7 +100,9 @@
 						$("#inputtext").prop('disabled',false);
 						var content = $('#inputtext').val();
 						var agroup = $('#menu .active').attr("data-tab").substring(4);
-						sendMessage(parseInt(agroup),content);
+						if(content != ""){
+							sendMessage(parseInt(agroup),content);
+						}
 						$('#inputtext').val('');
 					}
 						// user, group, message (string)
@@ -114,6 +116,14 @@
 				// Query server for users online and offline
 				// 	also updates AngularJS model
 				getUsers();
+			});
+
+			$( document ).ready(function() {
+				$("#inputtext").keydown(function(event){
+					if(event.keyCode == 13){
+						$("#inputsub").click();
+					}
+				});
 			});
 		</script>
 
@@ -133,7 +143,7 @@
 			</div>
 		</div>
 		<!-- Message Bar and Upload File-->
-		<div  class="ui icon attached input focus" style="position: fixed; bottom: 7vh; right: 39vw; width: 60vw; height: 5vh" >
+		<div  class="ui icon attached input focus" style="position: fixed; bottom: 7vh; right: 28.75vw; width: 70.25vw; height: 5vh" >
 			<input id="inputtext" type="text" placeholder="Type a message here...">
 			<div class="ui icon big button" id="divUpload">
         <i class="cloud icon"></i>
@@ -143,7 +153,7 @@
 			</form>
 		</div>
 		<!-- Send Button -->
-		<button id="inputsub" class ="ui purple button" style="position: fixed; bottom: 7vh; right: 29vw; width: 10vw; height: 5vh">
+		<button id="inputsub" class ="ui purple button" style="position: fixed; bottom: 7vh; right: 18.75vw; width: 10vw; height: 5vh">
 			Send
 		</button>
 
