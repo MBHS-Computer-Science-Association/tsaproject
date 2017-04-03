@@ -100,10 +100,9 @@
 			});
 
 			$( document ).ready(function() {
-				var keys = [];
-				#(window).on('keydown', function(e) {
-					if(e.keycode == 13) {
-						$('inputsub').click();
+				$("#inputtext").keydown(function(event){
+					if(event.keyCode == 13){
+						$("#inputsub").click();
 					}
 				});
 			});
