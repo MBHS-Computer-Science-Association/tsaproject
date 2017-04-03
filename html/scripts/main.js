@@ -126,13 +126,20 @@ function addTab(){
 	.tab();
 }
 
-function uploadfile(file){
+function uploadfile(file, width, height){
 	var fileName = file.name;
 	console.log(file.name);
 	socket.emit('uploadFile', file.name, file, function(){
 		console.log("Sending image message");
 		console.log(file.name);
-		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"" width="200px"  height="200px">');
+		var maxWidth = 1000; // this block crops the image. It works. Do the math if you want.
+		var maxHeight = 500;
+		var ratio = width/height;
+		var newWidth = Math.min(width, maxWidth);
+		var newHeight = Math.round(newWidth / ratio);
+		newHeight = Math.min(newHeight, maxHeight);
+		newWidth = Math.round(newHeight * ratio);
+		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"" width="'+newWidth+'px"  height="'+newHeight+'px">');
 	});
 }
 function loadLandingPage(code,grp){

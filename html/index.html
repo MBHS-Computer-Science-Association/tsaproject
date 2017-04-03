@@ -58,16 +58,33 @@
 			function checkAdmin(){
 
 			}
+
+
+			var fiz = "vagina";
     	// Tabbing function
 			$( document ).ready(function() {
 				//image upload
 				$("#divUpload").on("click", function() {
-   				$('#hidde-new-file').click();
+
+   					$('#hidde-new-file').click();
 				});
+
 				$("#hidde-new-file").change(function() {
-					uploadfile($('#hidde-new-file')[0].files[0]);
-					console.log($('#hidde-new-file')[0].files[0]);
+					var fr = new FileReader;
+    
+    				fr.onload = function() {
+        				var img = new Image;
+        
+        				img.onload = function() {
+            				uploadfile($('#hidde-new-file')[0].files[0], img.width, img.height);
+        				};
+            			img.src = fr.result;
+   					};
+    
+    				fr.readAsDataURL(this.files[0]);
+					//console.log($('#hidde-new-file')[0].files[0]);
 				});
+
 			  $('#menu .item').on('click', function() {
 			  	$('#menu .item').removeClass('online');
 			  	$(this).addClass('online');
