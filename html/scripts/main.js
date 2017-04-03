@@ -117,6 +117,7 @@ function displayGroupMessage(user, group, message) {
 	var s = '#tab-'+group+'-spot';
 	var outline = '<div class= \"ui bottom attached purple text segment\">' + message + "</div>"
 	$('#tab-'+group).append(outline);
+	$("#tab-"+group).animate({ scrollTop: $('#tab-'+group).prop("scrollHeight")}, 1000);
 }
 function addTab(){
 	tabcount = tabcount+1;
