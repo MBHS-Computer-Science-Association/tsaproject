@@ -139,7 +139,7 @@ function uploadfile(file, width, height){
 		var newHeight = Math.round(newWidth / ratio);
 		newHeight = Math.min(newHeight, maxHeight);
 		newWidth = Math.round(newHeight * ratio);
-		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img src="upload/'+ file.name +'"" width="'+newWidth+'px"  height="'+newHeight+'px">');
+		sendMessage(parseInt($('#menu .active').attr("data-tab").substring(4)),'<img style="display:block; margin-left:auto; margin-right:auto;" src="upload/'+ file.name +'"" width="'+newWidth+'px"  height="'+newHeight+'px">');
 	});
 }
 function loadLandingPage(code,grp){
