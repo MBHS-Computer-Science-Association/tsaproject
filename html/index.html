@@ -107,16 +107,16 @@
 
 				$("#hidde-new-file").change(function() {
 					var fr = new FileReader;
-    
+
     				fr.onload = function() {
         				var img = new Image;
-        
+
         				img.onload = function() {
             				uploadfile($('#hidde-new-file')[0].files[0], img.width, img.height);
         				};
             			img.src = fr.result;
    					};
-    
+
     				fr.readAsDataURL(this.files[0]);
 					//console.log($('#hidde-new-file')[0].files[0]);
 				});
@@ -143,14 +143,14 @@
 					}
 						// user, group, message (string)
 						// We don't have a way to get the user or the group yet.
-			      
+
 			    });
 			  });
 
 			$(document).ready(function() {
 					$('.menu .item')
     				.tab();
-    				$("#inputsub").prop('disabled',false); 
+    				$("#inputsub").prop('disabled',false);
 			});
 
 			// Grab the users from the server after document loads
@@ -168,32 +168,32 @@
 				});
 			});
 
-			$(document).ready(function() {	
+			$(document).ready(function() {
 
 			var id = '#dialog';
-				
+
 			//Get the screen height and width
 			var maskHeight = $(document).height();
 			var maskWidth = $(window).width();
-				
+
 			//Set heigth and width to mask to fill up the whole screen
 			$('#mask').css({'width':maskWidth,'height':maskHeight});
 
 			//transition effect
-			$('#mask').fadeIn(500);	
-			$('#mask').fadeTo("slow",0.9);	
-				
+			$('#mask').fadeIn(500);
+			$('#mask').fadeTo("slow",0.9);
+
 			//Get the window height and width
 			var winH = $(window).height();
 			var winW = $(window).width();
-						  
+
 			//Set the popup window to center
 			$(id).css('top',  winH/2-$(id).height()/2);
 			$(id).css('left', winW/2-$(id).width()/2);
-				
+
 			//transition effect
-			$(id).fadeIn(2000); 	
-				
+			$(id).fadeIn(2000);
+
 			//if login button is clicked
 			$('#loginButton').click(function(){
 			//Login check
@@ -204,7 +204,7 @@
 				$('.window').hide();
 			}
 			});
-				
+
 			});
 		</script>
 
@@ -278,7 +278,7 @@
 				</a>
 				<a class="item">
 					<form>
-					<input type="button" value="Refresh Page" onClick="window.location.reload()">
+					<input type="button" value="LogOut" onClick="window.location.reload()">
 					</form>
 				</a>
               </div>
