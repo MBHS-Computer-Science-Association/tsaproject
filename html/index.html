@@ -83,7 +83,9 @@
 						$("#inputtext").prop('disabled',false);
 						var content = $('#inputtext').val();
 						var agroup = $('#menu .active').attr("data-tab").substring(4);
-						sendMessage(parseInt(agroup),content);
+						if(content != ""){
+							sendMessage(parseInt(agroup),content);
+						}
 						$('#inputtext').val('');
 					}
 						// user, group, message (string)
