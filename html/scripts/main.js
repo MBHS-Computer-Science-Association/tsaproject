@@ -42,7 +42,7 @@ socket.on('newGroup', function(newGroupList){
 //sends message to server
 function sendMessage(group, message){
 	console.log(thisUser);
-	socket.emit('groupMessage', thisUser, group, thisUser.nick + ': ' + message);
+	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';">'+ thisUser.nick + '</b><br/> ' + message);
 	console.log("Message Sent!");
 }
 
@@ -189,3 +189,13 @@ app.controller('messageCtrl', function($scope) {
 			$scope.messages[2].push({user: usr, group: grp, message: msg});
 	}
 });
+
+
+function hashColor(str){ // to set color represenation of usernames
+	var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    var c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+    return "00000".substring(0, 6 - c.length) + c;
+}
