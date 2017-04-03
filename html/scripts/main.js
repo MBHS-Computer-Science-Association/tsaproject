@@ -148,8 +148,8 @@ function loadLandingPage(code,grp){
 	$("#menu").append('<a class="active item" data-tab="tab-L"> Landing Page </a>');
 	$("#tabbingwut").append('<div id="tab-L" class="ui attached tab segment active" data-tab="tab-L" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 	$("#tab-L").append(code);
-	$('.menu .item')
-	.tab();
+//	$('.menu .item')
+//  .tab();
 	updateGroups(grp);
 	$("#NicknameField").val(thisUser.nick); // sets the change nickname input to current nickname
 }

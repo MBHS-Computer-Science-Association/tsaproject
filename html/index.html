@@ -97,7 +97,6 @@
 			}
 
 
-			var fiz = "vagina";
     	// Tabbing function
 			$( document ).ready(function() {
 				//image upload
@@ -131,10 +130,10 @@
 				//SendingMessages
 			  $(document).ready(function() {
 			    $('#inputsub').click(function() {
+			    	$("#inputsub").prop('disabled',false);
 					if($('#menu .active').attr("data-tab").substring(4)=="L"){
-						$("#inputtext").prop('disabled',true);
+						$("#inputsub").prop('disabled',true);
 					}else{
-						$("#inputtext").prop('disabled',false);
 						var content = $('#inputtext').val();
 						var agroup = $('#menu .active').attr("data-tab").substring(4);
 						if(content != ""){
@@ -147,6 +146,12 @@
 			      
 			    });
 			  });
+
+			$(document).ready(function() {
+					$('.menu .item')
+    				.tab();
+    				$("#inputsub").prop('disabled',false); 
+			});
 
 			// Grab the users from the server after document loads
 			$( document ).ready(function() {
@@ -162,6 +167,7 @@
 					}
 				});
 			});
+
 			$(document).ready(function() {	
 
 			var id = '#dialog';
