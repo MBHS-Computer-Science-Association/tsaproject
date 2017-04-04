@@ -178,7 +178,13 @@
 
 			//Set heigth and width to mask to fill up the whole screen
 			$('#mask').css({'width':maskWidth,'height':maskHeight});
-
+			//Set height and width on resize
+			$( window ).resize(function() {
+				var maskHeight = $(document).height();
+				var maskWidth = $(window).width();
+				var winH = $(window).height();
+				var winW = $(window).width();
+			});
 			//transition effect
 			$('#mask').fadeIn(500);
 			$('#mask').fadeTo("slow",0.9);
@@ -204,12 +210,14 @@
 				$('.window').hide();
 			}
 			});
-			$("loginCreateUserButton").click(function(){
+			$("#loginCreateUserButton").click(function(){
 				var pass = $('#loginPass').val();
 				var lUser = $('#loginUser').val();
-					createNewUser(lUser,pass);
-					$('#mask').hide();
-					$('.window').hide();
+				if(!pass==""&&!lUser==""){
+				createNewUser(lUser,pass);
+				$('#mask').hide();
+				$('.window').hide();
+				}
 			});
 			});
 		</script>
@@ -230,7 +238,12 @@
 						<input id="loginUser" class = "ui input" type ="text" style="width:100px" placeholder="Username"><br>
 						<input id="loginPass" class = "ui input" type ="text" style="width:100px" placeholder="Password">
 					</form>
-			<div id="popupfoot"> <a href="#" class="close agree"><input id="loginButton" class="ui button" type="button" value="Login"></a> <a href="#" class="close agree"><input id="loginCreateUserButton" class="ui button" type="button" value="Create Account"></a></div>
+			<div id="popupfoot">
+				 <a href="#" class="close agree">
+					 <input id="loginButton" class="ui button" type="button" value="Login"></a>
+				 <a href="#" class="close agree">
+					 <input id="loginCreateUserButton" class="ui button" type="button" value="Create Account"></a>
+			 </div>
 		</div>
 		<div id="mask"></div>
 	</div>
@@ -277,17 +290,21 @@
               <h4 class="ui header">Settings</h4>
               <div id="settings" class="ui link list">
                 <a class="item">
-					<form>
-						<input id="NicknameField" class = "ui input" type ="text" style="width:100px">
-						<input id="nicknamesub" type="button" autocomplete="off" value="Set Nickname"></input>
-					</form>
-				</a>
-				<a class="item">
-					<form>
-					<input type="button" value="LogOut" onClick="window.location.reload()">
-					</form>
-				</a>
-              </div>
+									<form>
+										<div class="ui input">
+										<input id="NicknameField" class = "ui input" type ="text" style="width:100px" placeholder="Nickname">
+										<input id="nicknamesub" type="button" autocomplete="off" value="Set Nickname"></input>
+									</div>
+									</form>
+								</a>
+								<a class="item">
+									<form>
+										<div class="ui input">
+										<input type="button" value="Log Out" onClick="window.location.reload()">
+										</div>
+									</form>
+								</a>
+            	</div>
             </div>
           </div>
         </div>
