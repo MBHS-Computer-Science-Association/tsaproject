@@ -35,8 +35,8 @@
 			  position: absolute;
 			  left: 0;
 			  top: 0;
-			  width: 440px;
-			  height: 200px;
+			  width: 220px;
+			  height: 100px;
 			  display: none;
 			  z-index: 9999;
 			  padding: 20px;
@@ -45,8 +45,8 @@
 			}
 
 			#boxes #dialog {
-			  width: 750px;
-			  height: 300px;
+			  width: 375px;
+			  height: 150px;
 			  padding: 10px;
 			  background-color: #ffffff;
 			  font-family: 'Segoe UI Light', sans-serif;
@@ -58,7 +58,7 @@
 			  position: absolute;
 			  bottom: 0px;
 			  width: 250px;
-			  left: 250px;
+			  left: 75px;
 			}
 		</style>
     	<script>
@@ -199,12 +199,18 @@
 			//Login check
 			var pass = $('#loginPass').val();
 			var lUser = $('#loginUser').val();
-			if(pass=="a"&&lUser=="a"){
+			if(authenticate(lUser,pass)){
 				$('#mask').hide();
 				$('.window').hide();
 			}
 			});
-
+			$("loginCreateUserButton").click(function(){
+				var pass = $('#loginPass').val();
+				var lUser = $('#loginUser').val();
+					createNewUser(lUser,pass);
+					$('#mask').hide();
+					$('.window').hide();
+			});
 			});
 		</script>
 
@@ -221,10 +227,10 @@
 		<div id="dialog" class="window">
 				Login
 					<form>
-						<input id="loginUser" class = "ui container" type ="text" style="width:100px">
-						<input id="loginPass" class = "ui container" type ="text" style="width:100px">
+						<input id="loginUser" class = "ui input" type ="text" style="width:100px" placeholder="Username"><br>
+						<input id="loginPass" class = "ui input" type ="text" style="width:100px" placeholder="Password">
 					</form>
-			<div id="popupfoot"> <a href="#" class="close agree"><input id="loginButton" type="button" value="Login"></a></div>
+			<div id="popupfoot"> <a href="#" class="close agree"><input id="loginButton" class="ui button" type="button" value="Login"></a> <a href="#" class="close agree"><input id="loginCreateUserButton" class="ui button" type="button" value="Create Account"></a></div>
 		</div>
 		<div id="mask"></div>
 	</div>
@@ -272,7 +278,7 @@
               <div id="settings" class="ui link list">
                 <a class="item">
 					<form>
-						<input id="NicknameField" class = "ui container" type ="text" style="width:100px">
+						<input id="NicknameField" class = "ui input" type ="text" style="width:100px">
 						<input id="nicknamesub" type="button" autocomplete="off" value="Set Nickname"></input>
 					</form>
 				</a>

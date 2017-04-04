@@ -47,7 +47,7 @@ function sendMessage(group, message){
 }
 
 // creates and returns a new user
-function getNewUser(name, pass){
+function createNewUser(name, pass){
 	socket.emit('newUser', name, pass, function(user){
 		thisUser = user;
 	});
