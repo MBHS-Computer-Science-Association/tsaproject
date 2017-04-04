@@ -7,7 +7,7 @@ var oc = 0 //temp old length of group list
 var nc = groupList.length; //temp new length of group listl
 
 var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
-getNewUser("Default", "hunter2");
+createNewUser("Default", "hunter2");
 
 socket.emit('getGroups', function(groups){
 	// puts initial groups down
