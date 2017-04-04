@@ -95,9 +95,6 @@
 			function checkAdmin(){
 
 			}
-
-
-    	// Tabbing function
 			$( document ).ready(function() {
 				//image upload
 				$("#divUpload").on("click", function() {
@@ -146,7 +143,7 @@
 
 			    });
 			  });
-
+			//tabbing functionality
 			$(document).ready(function() {
 					$('.menu .item')
     				.tab();
@@ -159,7 +156,7 @@
 				// 	also updates AngularJS model
 				getUsers();
 			});
-
+			//Funtionality to press the "Enter" button to send a message
 			$( document ).ready(function() {
 				$("#inputtext").keydown(function(event){
 					if(event.keyCode == 13){
@@ -178,7 +175,7 @@
 
 			//Set heigth and width to mask to fill up the whole screen
 			$('#mask').css({'width':maskWidth,'height':maskHeight});
-			//Set height and width on resize
+			//Set height and width on resize of window
 			$( window ).resize(function() {
 				var maskHeight = $(document).height();
 				var maskWidth = $(window).width();
@@ -213,6 +210,7 @@
 				$('.window').hide();
 			}
 			});
+			//Javascript for Creating a new User
 			$("#loginCreateUserButton").click(function(){
 				var pass = $('#loginPass').val();
 				var lUser = $('#loginUser').val();
@@ -220,6 +218,14 @@
 				createNewUser(lUser,pass);
 				$('#mask').hide();
 				$('.window').hide();
+				}
+			});
+			//javascript for changing password
+			$("#changePasswordButton").click(function(){
+				var pass = $('#changePassword').val();
+				var cpass = $('#changePasswordConfirm').val();
+				if(pass==cpass){
+					cPassword(pass);
 				}
 			});
 			});
@@ -240,7 +246,7 @@
 				<br><br>
 					<form>
 						<input id="loginUser" class = "ui input" type ="text" style="" placeholder="Username"><br>
-						<input id="loginPass" class = "ui input" type ="text" style="" placeholder="Password">
+						<input id="loginPass" class = "ui input" type ="password" style="" name="password" placeholder="Password">
 					</form>
 			<div id="popupfoot">
 				 <a href="#" class="close agree">
@@ -296,8 +302,17 @@
                 <a class="item">
 									<form>
 										<div class="ui input">
-										<input id="NicknameField" class = "ui input" type ="text" style="width:100px" placeholder="Nickname">
-										<input id="nicknamesub" type="button" autocomplete="off" value="Set Nickname"></input>
+										<input id="NicknameField" class="ui input" type="text" style="width:200px" placeholder="Nickname">
+										<input id="nicknamesub" type="button" value="Set Nickname"></input>
+									</div>
+									</form>
+								</a>
+								<a class="item">
+									<form>
+										<div class="ui input">
+										<input id="changePassword" class="ui input" type="password" name="password" style="width:200px" placeholder="New Password">
+										<input id="changePasswordConfirm" class="ui input"type="password" name="password" style="width:200px" placeholder="Confirm Password"></input>
+										<input id="changePasswordButton" type="button" value="Change Password"></input>
 									</div>
 									</form>
 								</a>

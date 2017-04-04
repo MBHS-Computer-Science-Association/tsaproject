@@ -202,3 +202,6 @@ function hashColor(str){ // to set color represenation of usernames
 function authenticate(username,password){
 	return true;
 }
+function cPassword(pass){
+	//CJ do this part
+}
