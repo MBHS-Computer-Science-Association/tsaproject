@@ -41,9 +41,8 @@ socket.on('newGroup', function(newGroupList){
 
 //sends message to server
 function sendMessage(group, message){
-	console.log(thisUser);
 	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';">'+ thisUser.nick + '</b><br/> ' + message);
-	console.log("Message Sent!");
+
 }
 
 // creates and returns a new user
@@ -198,4 +197,11 @@ function hashColor(str){ // to set color represenation of usernames
     }
     var c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
     return "00000".substring(0, 6 - c.length) + c;
+}
+//authentication function td
+function authenticate(username,password){
+	return true;
+}
+function cPassword(pass){
+	//CJ do this part
 }
