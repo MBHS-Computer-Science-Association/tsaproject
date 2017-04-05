@@ -113,6 +113,7 @@ io.on('connection', function(socket){
 	socket.on('newUser', function(name, pass, callback){
 		var newUser = {};
 		newUser.nick = name;
+		newUser.name = name;
 		newUser.pass = pass;
 		newUser.status = "online";
 		//newUser.id =nextUserID++;
