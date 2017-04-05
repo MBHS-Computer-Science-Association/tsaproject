@@ -89,7 +89,6 @@ io.on('connection', function(socket){
 					// db.insertData();
 				}
 			}
-
 			io.emit('groupMessage',user, group, message);
 		}
 	});
@@ -121,6 +120,7 @@ io.on('connection', function(socket){
 		users.push(newUser);
 		// write to DB
 		callback(newUser);
+		socket.emit('updateUserList', getStrippedUsers());
 	});
 
 	/**
