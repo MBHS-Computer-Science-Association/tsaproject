@@ -204,9 +204,15 @@ function authenticate(username,password){
 		if(user!=null){
 			thisUser = user;
 			auth = true;
+			hideLogin();
 		}
 	});
 }
 function cPassword(pass){
 	socket.emit('changePassword', user, pass);
+}
+
+function hideLogin(){
+	$('#mask').hide();
+	$('.window').hide();
 }
