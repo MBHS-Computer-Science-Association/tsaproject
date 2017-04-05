@@ -16,8 +16,6 @@ var groups = new Array(); // Array of Group
 
 var nextGroupID = 1; // id to serve to next new group
 
-var announcements = new Array(); // Array of Message
-
 /**
 	User Object
 	id-Integer: The id of the the user
@@ -40,9 +38,9 @@ var announcements = new Array(); // Array of Message
 var users = [];
 var nextUserID = 1; // id to serve to next new user
 
-// Load the database into groups, announcements and users
+// Load the database into groups, and users
 function loadDB(){
-	// load the groups announcements users nextGroupID, and nextUserID from the db
+	// load the groups users nextGroupID, and nextUserID from the db
 
 	// Database mock
 	// remove when database code is working
@@ -96,18 +94,6 @@ io.on('connection', function(socket){
 		}
 	});
 
-	/**
-		send announcements to entire group
-	**/
-	socket.on('announcement', function(user, announcement){
-		if(auth(user) && isAdmin(user)){
-
-			announcements.push(announcement);
-			// Write to DB
-
-			io.emit('announcement',user, announcement);
- 		}
-	});
 
 	/**
 		creates a new group
@@ -144,12 +130,6 @@ io.on('connection', function(socket){
 		callback(groups);
 	});
 
-	/**
-		gets announcements
-	**/
-	socket.on('getAnnouncements', function(callback){
-		callback(announcements);
-	});
 
 	/**
 		gets list of users that are online
