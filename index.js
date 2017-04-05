@@ -75,6 +75,7 @@ function loadDB(){
 	  	u.status = "offline";
 	  	users.push(u);
 	  }
+	  nextUserID = users[users.length -1].id+1;
 	});
 }
 
