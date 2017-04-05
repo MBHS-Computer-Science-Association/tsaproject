@@ -200,8 +200,10 @@ io.on('connection', function(socket){
 		Grabs the user object and returns it.  Null if doesn't exist
 	**/
 	socket.on('grabUserObjectByUserPass', function(username, password, callback){
-		var u = getUserObjectByUserPass(username,passowrd);
-		u.pass = "";
+		var u = getUserObjectByUserPass(username,password);
+		if(u!=null){
+			u.pass = "";
+		}
 		callback(u);
 	});
 
@@ -216,11 +218,11 @@ io.on('connection', function(socket){
 });
 
 /**
-	returns the user object that has the same username and passowrd
+	returns the user object that has the same username and password
 **/
 function getUserObjectByUserPass(username, password){
 	for(var i =0; i<users.length; i++){
-		if(users[i].name == username && users[i].pass = password){
+		if(users[i].name == username && users[i].pass == password){
 			return users[i];
 		}
 	}
@@ -258,7 +260,7 @@ function isAdmin(user){
 	return getUserObjectByIDObject(user).isAdmin;
 }
 
-// returns users stripped on passowrks
+// returns users stripped on passwords
 function getStrippedUsers(){
 	// SECURITY: strip users of passwords before sending to client
 	var clientList = [];
