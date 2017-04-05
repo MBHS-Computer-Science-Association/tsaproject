@@ -99,7 +99,7 @@ function updateGroups(grp){
 		$("#tabbingwut").append('<div id="tab-'+grp[i].id+'" class="ui attached tab segment" data-tab="tab-'+grp[i].id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 		$('.menu .item')
 		.tab();
-		for(o=0;grp[i].messages.length;o++){
+		for(o=0;o<grp[i].messages.length;o++){
 			var s = '#tab-'+grp[i].id+'-spot';
 			var outline = '<div class= \"ui bottom attached purple text segment\">' + grp[i].messages[o] + "</div>"
 			$('#tab-'+grp[i].id).append(outline);
