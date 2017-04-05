@@ -120,7 +120,7 @@ io.on('connection', function(socket){
 		users.push(newUser);
 		// write to DB
 		callback(newUser);
-		socket.emit('updateUserList', getStrippedUsers());
+		io.emit('updateUserList', getStrippedUsers());
 	});
 
 	/**
@@ -145,7 +145,7 @@ io.on('connection', function(socket){
 		if(auth(user)){
 			getUserObjectByIDObject(user).status = "online";
 		}
-		socket.emit('updateUserList', getStrippedUsers());
+		io.emit('updateUserList', getStrippedUsers());
 	});
 
 	/**
@@ -155,7 +155,7 @@ io.on('connection', function(socket){
 		if(auth(user)){
 			getUserObjectByIDObject(user).nick = nick;
 		}
-		socket.emit('updateUserList', getStrippedUsers());
+		io.emit('updateUserList', getStrippedUsers());
 	});
 
 	socket.on('uploadFile', function(name, file, callback){
