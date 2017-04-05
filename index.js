@@ -62,8 +62,8 @@ function loadDB(){
 
 	groups.push({
 		id: 0,
-		messages: [],
-		name: "Group Name"
+		messages: ["penish"],
+		name: "General Chats"
 	});
 }
 
@@ -81,15 +81,15 @@ io.on('connection', function(socket){
 	/**
 		send message to groups
 	**/
-	socket.on('groupMessage', function(user, group, message){
+	socket.on('groupMessage', function(user, groupID, message){
 		if(auth(user)){
 			for (var i = 0; i<groups.length; i++){
-				if(group.id==groups[i].id){
+				if(groupID==groups[i].id){
 					groups[i].messages.push(message);
 					// db.insertData();
 				}
 			}
-			io.emit('groupMessage',user, group, message);
+			io.emit('groupMessage',user, groupID, message);
 		}
 	});
 
