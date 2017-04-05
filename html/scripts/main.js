@@ -200,8 +200,12 @@ function hashColor(str){ // to set color represenation of usernames
 }
 //authentication function td
 function authenticate(username,password){
-	return true;
+	socket.emit('grabUserObjectByUserPass',username,password, function callback(user){
+		if(user!=null){
+			thisUser = user;
+		}
+	});
 }
 function cPassword(pass){
-	//CJ do this part
+	socket.emit('changePassword', user, pass);
 }
