@@ -40,8 +40,7 @@ socket.on('newGroup', function(newGroupList){
 
 //sends message to server
 function sendMessage(group, message){
-	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';"> '+ thisUser.nick + '</b>     '+Date().substring(16,Date().indexOf('G'))+'</i>' + message);
-	console.log(group);
+	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';"> '+ thisUser.nick + '</b>     '+Date().substring(16,Date().indexOf('G'))+'</i><br>' + message);
 }
 
 // creates and returns a new user
