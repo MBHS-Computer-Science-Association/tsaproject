@@ -5,7 +5,7 @@ var userList = [];
 var tabcount = groupList.length;
 var oc = 0 //temp old length of group list
 var nc = groupList.length; //temp new length of group listl
-
+var auth = false;
 var thisUser = {id: 0, nick: "Bismarck", pass: "password", status: "online"};
 createNewUser("Default", "hunter2");
 
@@ -41,7 +41,7 @@ socket.on('newGroup', function(newGroupList){
 
 //sends message to server
 function sendMessage(group, message){
-	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';">'+ thisUser.nick + '</b><br/> ' + message);
+	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';"> '+ thisUser.nick + '</b><i>'+Date().substring(0,Date().indexOf('G'))+'</i><br/> ' + message);
 
 }
 
@@ -203,6 +203,7 @@ function authenticate(username,password){
 	socket.emit('grabUserObjectByUserPass',username,password, function callback(user){
 		if(user!=null){
 			thisUser = user;
+			auth = true;
 		}
 	});
 }

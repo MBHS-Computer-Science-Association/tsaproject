@@ -205,7 +205,8 @@
 			//Login check
 			var pass = $('#loginPass').val();
 			var lUser = $('#loginUser').val();
-			if(authenticate(lUser,pass)){
+			authenticate(lUser,pass);
+			if(auth){
 				$('#mask').hide();
 				$('.window').hide();
 			}
