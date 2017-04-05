@@ -40,8 +40,7 @@ socket.on('newGroup', function(newGroupList){
 
 //sends message to server
 function sendMessage(group, message){
-	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';"> '+ thisUser.nick + '</b><p align="right"><i>'+Date().substring(16,Date().indexOf('G'))+'</i></p><br/> ' + message);
-
+	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';"> '+ thisUser.nick + '</b>     '+Date().substring(16,Date().indexOf('G'))+'</i>' + message);
 }
 
 // creates and returns a new user
@@ -99,7 +98,14 @@ function updateGroups(grp){
 		$("#menu").append('<a class="item" data-tab="tab-'+grp[i].id+'">'+grp[i].name+'</a>');
 		$("#tabbingwut").append('<div id="tab-'+grp[i].id+'" class="ui attached tab segment" data-tab="tab-'+grp[i].id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
 		$('.menu .item')
-		.tab();}
+		.tab();
+		for(o=0;grp[i].messages.length;o++){
+			var s = '#tab-'+grp[i].id+'-spot';
+			var outline = '<div class= \"ui bottom attached purple text segment\">' + grp[i].messages[o] + "</div>"
+			$('#tab-'+grp[i].id).append(outline);
+			$("#tab-"+grp[i].id).animate({ scrollTop: $('#tab-'+grp[i].id).prop("scrollHeight")}, 1000);
+		}
+	}
 	}else{
 		$("#menu").append('<a class="item" data-tab="tab-'+grp[oc].id+'">'+grp[oc].name+'</a>');
 		$("#tabbingwut").append('<div id="tab-'+grp[oc].id+'" class="ui attached tab segment" data-tab="tab-'+grp[oc].id+'" style="overflow-y: scroll; height: 70vh ; float:left; width:80vw">');
