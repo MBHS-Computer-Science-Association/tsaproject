@@ -44,6 +44,7 @@ function loadDB(){
 
 	// Database mock
 	// remove when database code is working
+	/**
 	users.push({
 		id: 0,
 		name: "Bismarck",
@@ -51,19 +52,30 @@ function loadDB(){
 		pass: "password",
 		status: "online"
 	});
-
-	users.push({
-		id: nextUserID++,
-		name: "Nicholas",
-		nick: "Nicholas",
-		pass: "passwd",
-		status: "offline"
-	});
+	**/
 
 	groups.push({
 		id: 0,
-		messages: ["penish"],
-		name: "General Chats"
+		messages: [],
+		name: "General"
+	});
+
+	fs = require('fs')
+	fs.readFile('server/users.dat', 'utf8', function (err,data) {
+	  if (err) {
+	    return console.log(err);
+	  }
+	  var strList = data.split(/\r?\n/);
+	  for(var i =0; i<strList.length;){
+	  	var u = {};
+	  	u.id = strList[i++];
+	  	u.name = strList[i++];
+	  	u.nick = strList[i++];
+	  	u.pass = strList[i++];
+	  	u.status = "offline";
+	  	users.push(u);
+	  }
+	  nextUserID = users[users.length -1].id+1;
 	});
 }
 
@@ -117,12 +129,21 @@ io.on('connection', function(socket){
 		newUser.pass = pass;
 		newUser.status = "online";
 		//newUser.id =nextUserID++;
-		newUser.id =nextUserID++;
+		newUser.id = nextUserID++;
 		users.push(newUser);
-		// write to DB
+		addUsertoDB(newUser);
+
 		callback(newUser);
 		io.emit('updateUserList', getStrippedUsers());
 	});
+
+	function addUsertoDB(newUser){
+		// write to DB
+		fs.appendFileSync('server/users.dat', newUser.id+'\n');
+		fs.appendFileSync('server/users.dat', newUser.name+'\n');
+		fs.appendFileSync('server/users.dat', newUser.nick+'\n');
+		fs.appendFileSync('server/users.dat', newUser.pass+'\n');
+	}
 
 	/**
 		gets groups and messages under it
