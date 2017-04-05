@@ -48,6 +48,7 @@ function loadDB(){
 	// remove when database code is working
 	users.push({
 		id: 0,
+		name: "Bismarck",
 		nick: "Bismarck",
 		pass: "password",
 		status: "online"
@@ -55,38 +56,10 @@ function loadDB(){
 
 	users.push({
 		id: nextUserID++,
+		name: "Nicholas",
 		nick: "Nicholas",
 		pass: "passwd",
-		status: "online"
-	});
-
-	users.push({
-		id: nextUserID++,
-		nick: "Charles",
-		pass: "passwd",
 		status: "offline"
-	});
-
-	users.push({
-		id: nextUserID++,
-		nick: "Lars",
-		pass: "passwd",
-		status: "offline"
-	});
-
-	users.push({
-		id: nextUserID++,
-		nick: "Roth",
-		pass: "passwd",
-		status: "offline"
-	});
-
-
-	users.push({
-		id: nextUserID++,
-		nick: "Leo X",
-		pass: "passwd",
-		status: "online"
 	});
 
 	groups.push({
@@ -136,6 +109,9 @@ io.on('connection', function(socket){
  		}
 	});
 
+	/**
+		creates a new group
+	**/
 	socket.on('newGroup', function(user, groupName){
 		var newGroup = {};
 		newGroup.id = nextGroupID++;
@@ -182,16 +158,22 @@ io.on('connection', function(socket){
 		callback(getStrippedUsers());
 	});
 
+	/**
+		sets the status of the user
+	**/
 	socket.on('setStatus', function(user, status){
 		if(auth(user)){
-			getUserObject(user).status = "online";
+			getUserObjectByIDObject(user).status = "online";
 		}
 		socket.emit('updateUserList', getStrippedUsers());
 	});
 
+	/**
+		sets the nickname of the user
+	**/
 	socket.on('setNickname', function(user, nick){
 		if(auth(user)){
-			getUserObject(user).nick = nick;
+			getUserObjectByIDObject(user).nick = nick;
 		}
 		socket.emit('updateUserList', getStrippedUsers());
 	});
@@ -202,6 +184,9 @@ io.on('connection', function(socket){
 		callback();
 	});
 
+	/**
+		Returns the code of the landing page
+	**/
 	socket.on('getLandingCode', function(callback){
 		fs.readFile('server/landing.html', 'utf8', function (err,data) {
 			if (err) {
@@ -211,17 +196,42 @@ io.on('connection', function(socket){
 		});
 	});
 
-	socket.on('', function(user){
+	/**
+		Grabs the user object and returns it.  Null if doesn't exist
+	**/
+	socket.on('grabUserObjectByUserPass', function(username, password, callback){
+		var u = getUserObjectByUserPass(username,passowrd);
+		u.pass = "";
+		callback(u);
 	});
 
+	socket.on('changePassword', function(user, newPassword){
+		if(auth(user)){
+			getUserObjectByIDObject(user.id).pass = newPassword;
+		}
+	});
 
+	socket.on('', function(user){
+	});
 });
+
+/**
+	returns the user object that has the same username and passowrd
+**/
+function getUserObjectByUserPass(username, password){
+	for(var i =0; i<users.length; i++){
+		if(users[i].name == username && users[i].pass = password){
+			return users[i];
+		}
+	}
+}
+
 
 /**
 	gets the user object from the db
 	param: userId
 **/
-function getUserObject(user){
+function getUserObjectByIDObject(user){
 	for(var i =0; i<users.length; i++){
 		if(users[i].id == user.id){
 			return users[i];
@@ -234,7 +244,7 @@ function getUserObject(user){
 	return: Boolean
 **/
 function auth(user){
-	if(getUserObject(user).password === user.password){
+	if(getUserObjectByIDObject(user).password === user.password){
 		return true;
 	}
 	return false;
@@ -245,7 +255,7 @@ function auth(user){
 	return: Boolean
 **/
 function isAdmin(user){
-	return getUserObject(user).isAdmin;
+	return getUserObjectByIDObject(user).isAdmin;
 }
 
 // returns users stripped on passowrks
