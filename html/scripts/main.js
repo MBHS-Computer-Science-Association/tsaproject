@@ -41,7 +41,7 @@ socket.on('newGroup', function(newGroupList){
 
 //sends message to server
 function sendMessage(group, message){
-	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';"> '+ thisUser.nick + '</b><i>'+Date().substring(0,Date().indexOf('G'))+'</i><br/> ' + message);
+	socket.emit('groupMessage', thisUser, group, '<b style="color: '+hashColor(thisUser.nick)+';"> '+ thisUser.nick + '</b><p align="right"><i>'+Date().substring(16,Date().indexOf(,'G'))+'</i></p><br/> ' + message);
 
 }
 
