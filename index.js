@@ -101,7 +101,7 @@ function loadDB(){
 		}
 		groups.push(group);
 	  }
-
+	  nextGroupID = groups.length;
 	});
 }
 
@@ -145,7 +145,7 @@ io.on('connection', function(socket){
 		groups.push(newGroup);
 		console.log(groupName);
 		fs.writeFileSync("server/group"+newGroup.id+".dat", groupName); 
-
+		console.log(nextGroupID);
 		fs.writeFileSync("server/numGroup.dat", nextGroupID);
 
 		io.emit('newGroup', groups);
