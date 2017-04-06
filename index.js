@@ -49,18 +49,20 @@ function loadDB(){
 		id: 0,
 		name: "Bismarck",
 		nick: "Bismarck",
+		isAdmin: true,
 		pass: "password",
 		status: "online"
 	});
 	**/
 
+	/**
 	groups.push({
 		id: 0,
-		messages: [],
-		name: "General"
+		name: "General",
+		messages: []
 	});
+	**/
 
-	fs = require('fs')
 	fs.readFile('server/users.dat', 'utf8', function (err,data) {
 	  if (err) {
 	    return console.log(err);
@@ -71,11 +73,35 @@ function loadDB(){
 	  	u.id = strList[i++];
 	  	u.name = strList[i++];
 	  	u.nick = strList[i++];
+	  	u.isAdmin = strList[i++];
 	  	u.pass = strList[i++];
 	  	u.status = "offline";
 	  	users.push(u);
 	  }
 	  nextUserID = users[users.length -1].id+1;
+	});
+
+
+	fs.readFile('server/numGroup.dat', 'utf8', function (err,data) {
+	  if (err) {
+	    return console.log(err);
+	  }
+	  
+	  var numGroup = data;
+
+	  for(var i = 0; i<numGroup; i++) {
+	  	data = fs.readFileSync('server/group'+i+'.dat', 'utf8');
+		var strList = data.split(/\r?\n/);
+		var group = {};
+		group.id = i;
+		group.messages = [];
+		group.name =strList[0];
+		for(var n = 1; n<strList.length; n++){
+			group.messages.push(strList[n]);
+		}
+		groups.push(group);
+	  }
+
 	});
 }
 
@@ -84,7 +110,7 @@ loadDB();
 
 // User connection
 io.on('connection', function(socket){
-	console.log('User Connected');
+	console.log('User Connected');	
 
 	socket.on('disconnect', function(){
 		console.log('User Disconnected');
@@ -101,6 +127,7 @@ io.on('connection', function(socket){
 					// db.insertData();
 				}
 			}
+			fs.appendFileSync('server/group'+groupID+'.dat', '\n'+message);
 			io.emit('groupMessage',user, groupID, message);
 		}
 	});
@@ -116,16 +143,30 @@ io.on('connection', function(socket){
 		newGroup.messages = new Array();
 		// write to DB
 		groups.push(newGroup);
+
+		fs.writeFileSync("server/group"+newGroup.id+".dat", groupName, function(err) {
+		    if(err) {
+		        return console.log(err)	;
+		    }
+		}); 
+
+		fs.writeFile("server/numGroup.dat", nextGroupID, function(err) {
+		    if(err) {
+		        return console.log(err);
+		    }
+		});
+
 		io.emit('newGroup', groups);
 	});
 
 	/**
 		creates a new user
 	**/
-	socket.on('newUser', function(name, pass, callback){
+	socket.on('newUser', function(name, pass, isAdmin, callback){
 		var newUser = {};
 		newUser.nick = name;
 		newUser.name = name;
+		newUser.isAdmin = isAdmin;
 		newUser.pass = pass;
 		newUser.status = "online";
 		//newUser.id =nextUserID++;
@@ -139,10 +180,11 @@ io.on('connection', function(socket){
 
 	function addUsertoDB(newUser){
 		// write to DB
-		fs.appendFileSync('server/users.dat', newUser.id+'\n');
+		fs.appendFileSync('server/users.dat', '\n'+newUser.id+'\n');
 		fs.appendFileSync('server/users.dat', newUser.name+'\n');
 		fs.appendFileSync('server/users.dat', newUser.nick+'\n');
-		fs.appendFileSync('server/users.dat', newUser.pass+'\n');
+		fs.appendFileSync('server/users.dat', newUser.isAdmin+'\n');
+		fs.appendFileSync('server/users.dat', newUser.pass);
 	}
 
 	/**
@@ -204,7 +246,7 @@ io.on('connection', function(socket){
 	socket.on('grabUserObjectByUserPass', function(username, password, callback){
 		var u = getUserObjectByUserPass(username,password);
 		if(u!=null){
-			u.pass = "";
+			
 		}
 		callback(u);
 	});
@@ -224,6 +266,7 @@ io.on('connection', function(socket){
 **/
 function getUserObjectByUserPass(username, password){
 	for(var i =0; i<users.length; i++){
+		console.log(users[i]);
 		if(users[i].name == username && users[i].pass == password){
 			return users[i];
 		}
