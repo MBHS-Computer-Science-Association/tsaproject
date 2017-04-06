@@ -81,19 +81,9 @@
 			  });
 			// Admin function
 			function updateAdmin(){
-				if(!user.admin){
-					var g = parseInt($('#menu .active').attr("data-tab").substring(4));
-					var a = groupList[g].isAdmin;
-					if(a){
-						$("#inputtext").prop('disabled',true);
-					}
-				}
 				if(user.admin){
-					$("#settings").append('<a class="item"><form><input id="createTab" class = "ui container" type ="text" style="width:100px"><input id="createTabB" type="button" autocomplete="off" value="AddTab"></input></form></a>');
+					$("#settingsAppendAdmin").append('<input id="createTab" class = "ui container" type ="text" style="width:200px"><input id="createTabB" type="button" autocomplete="off" value="AddTab">');
 				}
-			}
-			function checkAdmin(){
-
 			}
 			$( document ).ready(function() {
 				//image upload
@@ -208,6 +198,7 @@
 			authenticate(lUser,pass);
 			if(auth){
 				hideLogin();
+				updateAdmin();
 			}
 			});
 			//Javascript for Creating a new User
@@ -309,10 +300,9 @@
 								</a>
 								<a class="item">
 									<form>
-										<div class="ui input">
+										<div class="ui input" id="settingsAppendAdmin">
 										<input id="changePassword" class="ui input" type="password" name="password" style="width:200px" placeholder="New Password">
 										<input id="changePasswordButton" type="button" value="Change Password">
-
 									</div>
 									<div class="ui input">
 									<input id="changePasswordConfirm" class="ui input"type="password" name="password" style="width:200px" placeholder="Confirm Password">
