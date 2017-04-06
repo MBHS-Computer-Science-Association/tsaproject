@@ -143,18 +143,10 @@ io.on('connection', function(socket){
 		newGroup.messages = new Array();
 		// write to DB
 		groups.push(newGroup);
+		console.log(groupName);
+		fs.writeFileSync("server/group"+newGroup.id+".dat", groupName); 
 
-		fs.writeFileSync("server/group"+newGroup.id+".dat", groupName, function(err) {
-		    if(err) {
-		        return console.log(err)	;
-		    }
-		}); 
-
-		fs.writeFile("server/numGroup.dat", nextGroupID, function(err) {
-		    if(err) {
-		        return console.log(err);
-		    }
-		});
+		fs.writeFileSync("server/numGroup.dat", nextGroupID);
 
 		io.emit('newGroup', groups);
 	});
@@ -266,7 +258,6 @@ io.on('connection', function(socket){
 **/
 function getUserObjectByUserPass(username, password){
 	for(var i =0; i<users.length; i++){
-		console.log(users[i]);
 		if(users[i].name == username && users[i].pass == password){
 			return users[i];
 		}
