@@ -45,7 +45,7 @@ function sendMessage(group, message){
 
 // creates and returns a new user
 function createNewUser(name, pass){
-	socket.emit('newUser', name, pass, function(user){
+	socket.emit('newUser', name, pass, false, function(user){
 		thisUser = user;
 	});
 }
@@ -103,8 +103,8 @@ function updateGroups(grp){
 			var s = '#tab-'+grp[i].id+'-spot';
 			var outline = '<div class= \"ui bottom attached purple text segment\">' + grp[i].messages[o] + "</div>"
 			$('#tab-'+grp[i].id).append(outline);
-			$("#tab-"+grp[i].id).animate({ scrollTop: $('#tab-'+grp[i].id).prop("scrollHeight")}, 1000);
 		}
+		//$("#tab-"+grp[i].id).animate({ scrollTop: $('#tab-'+grp[i].id).prop("scrollHeight")}, 20);
 	}
 	}else{
 		$("#menu").append('<a class="item" data-tab="tab-'+grp[oc].id+'">'+grp[oc].name+'</a>');
@@ -205,11 +205,13 @@ function hashColor(str){ // to set color represenation of usernames
 }
 //authentication function td
 function authenticate(username,password){
-	socket.emit('grabUserObjectByUserPass',username,password, function callback(user){
+	socket.emit('grabUserObjectByUserPass',username, password, function callback(user){
+		console.log(user);
 		if(user!=null){
 			thisUser = user;
 			auth = true;
 			hideLogin();
+			socket.emit('setStatus',thisUser,"online");
 		}
 	});
 }
