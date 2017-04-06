@@ -82,7 +82,7 @@
 			// Admin function
 			function updateAdmin(){
 				if(thisUser.isAdmin){
-					$("#settingsAppendAdmin").append('<input id="createTab" class="ui container" type="text" style="width:200px"><input id="createTabB" type="button" autocomplete="off" value="AddTab">');
+					$("#settingsAppendAdmin").append('<input id="createTab" class="ui container" type="text" style="width:200px"><input id="createTabB" type="button" autocomplete="off" value="Add Tab">');
 				}
 			}
 			$( document ).ready(function() {
@@ -299,14 +299,14 @@
 									</form>
 								</a>
 								<a class="item">
-									<form>
-										<div class="ui input" id="settingsAppendAdmin">
+									<form id="settingsAppendAdmin">
+										<div class="ui input">
 										<input id="changePassword" class="ui input" type="password" name="password" style="width:200px" placeholder="New Password">
 										<input id="changePasswordButton" type="button" value="Change Password">
 									</div>
 									<div class="ui input">
-									<input id="changePasswordConfirm" class="ui input"type="password" name="password" style="width:200px" placeholder="Confirm Password">
-								</div>
+										<input id="changePasswordConfirm" class="ui input"type="password" name="password" style="width:200px" placeholder="Confirm Password">
+									</div>
 									</form>
 								</a>
 								<a class="item">
