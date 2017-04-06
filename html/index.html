@@ -64,12 +64,9 @@
     	<script>
 		//Function for the setting popup
     	$( document ).ready(function() {
-				$("#createTabB").click(function(){
-				  createNewGroup(thisUser,$("#createTab"));
-				});
 				$("#nicknamesub").click(function(){
-					changeNickname($("#NicknameField").val());
-			  });
+				  changeNickname($("#NicknameField").val());
+			  	});
 				$('.menu .browse').popup({
 							inline     : false,
 							hoverable  : true,
@@ -77,13 +74,17 @@
 							delay: {
 								show: 300,
 								hide: 800
-			}});
+					}});
 			  });
 			// Admin function
 			function updateAdmin(){
 				if(thisUser.isAdmin){
 					$("#settingsAppendAdmin").append('<div class="ui input"><input id="createTab" class="ui container" type="text" style="width:200px" placeholder="Group Name"><input id="createTabB" type="button" autocomplete="off" value="Add Tab"></div>');
 				}
+				$("#createTabB").click(function(){
+				  console.log("whyyounowor");
+				  createNewGroup(thisUser,$("#createTab").val());
+				});
 			}
 			$( document ).ready(function() {
 				//image upload
