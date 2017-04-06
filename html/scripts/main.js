@@ -211,6 +211,7 @@ function authenticate(username,password){
 			thisUser = user;
 			auth = true;
 			hideLogin();
+			updateAdmin();
 			socket.emit('setStatus',thisUser,"online");
 		}
 	});
