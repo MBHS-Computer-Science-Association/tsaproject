@@ -110,9 +110,11 @@ loadDB();
 
 // User connection
 io.on('connection', function(socket){
-	console.log('User Connected');	
+	console.log('User Connected');
 
 	socket.on('disconnect', function(){
+		loggedInUser.status = "offline";
+		io.emit('updateUserList', getStrippedUsers());
 		console.log('User Disconnected');
 	});
 
@@ -165,7 +167,7 @@ io.on('connection', function(socket){
 		newUser.id = nextUserID++;
 		users.push(newUser);
 		addUsertoDB(newUser);
-
+		loggedInUser = newUser;
 		callback(newUser);
 		io.emit('updateUserList', getStrippedUsers());
 	});
@@ -199,7 +201,7 @@ io.on('connection', function(socket){
 	**/
 	socket.on('setStatus', function(user, status){
 		if(auth(user)){
-			getUserObjectByIDObject(user).status = "online";
+			getUserObjectByIDObject(user).status = status;
 		}
 		io.emit('updateUserList', getStrippedUsers());
 	});
@@ -232,6 +234,7 @@ io.on('connection', function(socket){
 		});
 	});
 
+	var loggedInUser = null;
 	/**
 		Grabs the user object and returns it.  Null if doesn't exist
 	**/
@@ -240,6 +243,7 @@ io.on('connection', function(socket){
 		if(u!=null){
 			
 		}
+		loggedInUser = u;
 		callback(u);
 	});
 
