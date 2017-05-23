@@ -65,7 +65,7 @@ function createNewGroup(user, groupName){
 
 // Sets a user to the given status
 function setOnline(user){
-	socket.emit('setStatus', "online");
+	socket.emit('setStatus', user, "online");
 }
 
 //Sets nickname to user
